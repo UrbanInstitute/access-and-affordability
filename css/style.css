@@ -1,0 +1,164 @@
+/* On mouse hover, lighten state color */
+path {
+	fill: #1696d2;
+}
+path:hover {
+	fill: #fdbf11;
+	pointer-events: all;
+}
+
+select:focus{ outline: none; }
+select {
+  background-color: #f8f8f8;
+	display: block;
+  border-width: 1px;
+  width: 220px;
+  height: 34px;
+  border: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: auto;
+  font: 20px Lato;
+  font-weight: 400;
+  color: #29abe2;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ select {
+  background-color: #f8f8f8;
+  }
+
+  }
+.state-text {
+	float: left;
+	margin-left: 2em;
+}
+
+.tooltip-container {
+  height: 80px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 0;
+  width: 501px;
+  position: relative;
+  z-index: 2;
+ 
+}
+
+
+.tooltip-title {
+	font-family: Lato;
+  font-size: 13px;
+  color: #000;
+  font-weight: 400;
+}
+
+.region-text{
+	float: left;
+  margin-top: 30px;
+  width: 50%;
+}
+.dropdown-text{
+  float: left;
+  margin-top: 30px;
+  width: 50%;
+
+}
+.dropdown-container {
+
+}
+
+
+
+.tooltip-data {
+	font-family: Lato;
+  font-size: 20px;
+  color: #29abe2;
+  font-weight: 400;
+  margin-top: 10px;
+}
+
+.state-label {
+  font-family: Lato;
+  font-size: 12px;
+  fill: #000000;
+  font-weight: 800;
+  margin-top: 10px;
+  pointer-events: all;
+}
+
+#map-container {
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  position: relative;
+  z-index: 1;
+
+}
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.state-label:hover {
+	fill: #fdbf11;
+}
+
+#tooltip-header {
+  width: 100%;
+}
+
+/*BAR CHART */
+.bar {
+  fill: #1696d2;
+}
+path.domain {
+  fill: none;
+}
+
+/**MOBILE SCREEN WIDTHS **/
+
+#isMobile, #isPhone{
+    display: none;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+@media (max-width: 600px) {
+  #isPhone {
+    display: block;
+  }
+  .state-label {
+    font-size: 10px;
+  }
+  .region-text {
+    width: 100%;
+
+  }
+  .dropdown-text {
+    width: 100%;
+  }
+  .tooltip-container {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  #isMobile {
+    display: block;
+  }
+
+
+}
+
+@media (max-width: 1100px) {
+  .wrapper {
+    width: 100%;
+  }
+}
