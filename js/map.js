@@ -19,6 +19,18 @@ function drawMap(container_width) {
 	      var dataState = data[i].state;
 	      var dataAbbr = data[i].abbr;
 	      var dataLink = data[i].link;
+        var data_homevalue = data[i].homevalue;
+        var data_fthb = data[i].fthb;
+        var data_cs = data[i].cs;
+        var data_origltv = data[i].origltv;
+        var data_dti = data[i].dti;
+        var data_orignoterate = data[i].orignoterate;
+        var data_conv = data[i].conv;
+        var data_fha = data[i].fha;
+        var data_va = data[i].va;
+        var data_ltv_fico = data[i].ltv_fico;
+        var data_hfa_agencies = data[i].hfa_agencies;
+        var data_total = data[i].total;
 
 	      for (var j = 0; j < json.features.length; j++)  {
 	        var jsonState = json.features[j].properties.name;
@@ -26,6 +38,19 @@ function drawMap(container_width) {
 	        // Copy the data value into the JSON
 	        json.features[j].properties.abbr = dataAbbr; 
 	        json.features[j].properties.link= dataLink;
+          json.features[j].properties.state= dataState;
+          json.features[j].properties.homevalue= data_homevalue;
+          json.features[j].properties.fthb= data_fthb;
+          json.features[j].properties.cs= data_cs;
+          json.features[j].properties.origltv= data_origltv;
+          json.features[j].properties.dti= data_dti;
+          json.features[j].properties.orignoterate= data_orignoterate;
+          json.features[j].properties.conv= data_conv;
+          json.features[j].properties.fha= data_fha;
+          json.features[j].properties.va= data_va;
+          json.features[j].properties.ltv_fico= data_ltv_fico;
+          json.features[j].properties.hfa_agencies= data_hfa_agencies;
+          json.features[j].properties.total= data_total;
 
 	        // Stop looking through the JSON
 	        break;
@@ -35,7 +60,19 @@ function drawMap(container_width) {
 	    }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
+  var quantize = d3.scaleQuantize()
+    .domain([0, MAXVALUE["cs"]])
+    .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
 
+  var COLORS = 
+  {
+    "q0-6": "#cae0e7",
+    "q1-6": "#95c0cf",
+    "q2-6": "#60a1b6",
+    "q3-6": "#008bb0",
+    "q4-6": "#1d5669",
+    "q5-6": "#0e2b35"
+  }
   //Width and height of map
     $mapContainer = $("#map-container")
     $chartContainer = $("#chart-container")
@@ -81,6 +118,9 @@ function drawMap(container_width) {
     	})
     	.style("stroke", "#fff")
     	.style("stroke-width", "1")
+      .style("fill", function(d) { 
+        return COLORS[quantize(d.properties.cs)]
+      })
 
   //ADD LEADER LINE FOR DC
     var dcData = json.features.filter(function(d) {return d.properties.name == "District of Columbia"})
@@ -174,13 +214,20 @@ function drawMap(container_width) {
 
     dispatch.on("hoverState", function (selectedState) {
             var stateName = d3.select(this).datum().properties.name
+            var abbr = d3.select(this).datum().properties.abbr
             selectState(selectedState);
             d3.select(".tooltip-data")
-    	     	.html(stateName)
+    	     	 .html(stateName)
+            d3.select(this)
+              .classed("hover", true)
+            d3.select(".bar-" + abbr)
+              .classed("hover", true)
           });
     dispatch.on("dehoverState", function() {
           d3.select(".tooltip-data")
-          .html("Click on a state")
+            .html("Click on a state")
+          d3.selectAll(".state, .bar")
+            .classed("hover", false)
     })
 
 
@@ -233,6 +280,7 @@ function drawMap(container_width) {
            change: function(event, data){ 
             var variable = data.item.value;
               updateBars(variable)
+              updateMap(variable)
             }
         })     
         .selectmenu( "menuWidget" )
@@ -298,7 +346,7 @@ function drawMap(container_width) {
       y = d3.scaleLinear().rangeRound([graphHeight, 0]);
       y.domain([0, MAXVALUE[variable]]);
      var t = d3.transition()
-          .duration(800)
+        .duration(800)
       barG.select(".axis--y")
         .transition(t)
         .call(d3.axisLeft(y).tickSize(-width))
@@ -309,10 +357,16 @@ function drawMap(container_width) {
           return y(d[variable])
         })
         .attr("height", function(d) {
-          console.log(d.state)
-          console.log(graphHeight - y(d[variable])); 
           return graphHeight - y(d[variable]); });
-
+    }
+    function updateMap(variable){
+      var quantize = d3.scaleQuantize()
+        .domain([0, MAXVALUE[variable]])
+        .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
+      mapG.selectAll('path')
+        .style("fill", function(d) { 
+          return COLORS[quantize(d.properties[variable])]
+        })
     }
   });
 

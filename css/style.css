@@ -117,7 +117,7 @@ select {
 }
 
 .hover {
-  fill: #fdbf11;
+  fill: #fdbf11 !important;
 }
 path.domain {
   fill: none;
