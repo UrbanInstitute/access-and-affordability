@@ -712,8 +712,8 @@ button.ui-button::-moz-focus-inner {
 	position: relative;
 	margin-right: 20px;
 	overflow: hidden;
-	width: 111px;
-	text-overflow: ellipsis;
+/*	width: 111px;
+*/	text-overflow: ellipsis;
 	font-family: Lato;
 	margin-top: 2px;
 	font-size: 16px;
@@ -724,7 +724,7 @@ button.ui-button::-moz-focus-inner {
 	text-align: left;
 	white-space: nowrap;
 	width: 14em;
-   	background: url(../images/urban-select-2x.png) no-repeat right #efefef;
+   	background: url(../img/urban-select-2x.png) no-repeat right #efefef;
    	background-size: 45px 45px;
 	border: none;   	
    	/*width: 45px;*/
@@ -1005,7 +1005,7 @@ a.ui-button:active,
 	color: #ffffff;
 }
 .ui-button:active{
-   	background: url(../images/urban-select-2x.png) no-repeat right #d2d2d2;
+   	background: url(../img/urban-select-2x.png) no-repeat right #d2d2d2;
    	background-size: 45px 45px;
 }
 .ui-icon-background,

@@ -8,7 +8,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-
+var MAXVALUE = {"cs": 800, "homevalue": 550000, "fthb": .7, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 1, "fha": .4, "va": .35, "ltv_fico": .4, "hfa_agencies": 300, "total": 70 }
 
 function drawMap(container_width) {
 
@@ -198,6 +198,7 @@ function drawMap(container_width) {
     var dropdownMenu =dropdown.append('div')
           .attr('class', 'dropdown-container')
           .append("select")
+          .attr('id', 'state-menu')
           // .attr("onChange", "window.open(this.link, '_blank') ")
           .selectAll("option")
           .data(dropdownDataFiltered)
@@ -205,12 +206,13 @@ function drawMap(container_width) {
           .append("option")
           .text(function(d, i) {
             // data.forEach(function(row) {
-              return dropdownData[i]
+              return dropdownDataFiltered[i]
             // })
           })
           .attr("value", function(d,i) {
-            return dropdownData[i]
+            return dropdownDataFiltered[i]
           })
+
     d3.select('select')
           .append("option")
           .text("Select a category")
@@ -218,25 +220,43 @@ function drawMap(container_width) {
           .attr("selected", "selected")
           .attr("disabled", "disabled")
           .attr("hidden", "hidden")
-    
+
+      $("#state-menu")
+        .selectmenu({
+
+           open: function( event, ui ) { 
+          
+            },
+            close: function(event, ui){
+            
+            },
+           change: function(event, data){ 
+            var variable = data.item.value;
+              updateBars(variable)
+            }
+        })     
+        .selectmenu( "menuWidget" )
+        .addClass( "ui-menu-icons customicons" );
+
     //ADD BAR GRAPH
 
     var graphData = data.filter(function(d) {
       return d.abbr != ""
     })
     var graphHeight = height*.7,
-        x = d3.scaleBand().rangeRound([0, width]).padding(0.15),
+        x = d3.scaleBand().rangeRound([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(graphData.map(function(d) { return d.abbr; }));
-    y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
+    // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
+    y.domain([0, MAXVALUE["cs"]])
 
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
     var barG  = barSvg.append("g")
-      .attr("class", "mapG")
-      .attr("transform", "translate("+ 20 +","+height/5+")")
+      .attr("class", "barG")
+      .attr("transform", "translate("+ 30 +","+height/5+")")
 
     barG.append("g")
       .attr("class", "axis axis--x")
@@ -248,7 +268,7 @@ function drawMap(container_width) {
       .call(d3.axisLeft(y))
       .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
+      .attr("y", 0)
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
       .text("Units");
@@ -263,9 +283,27 @@ function drawMap(container_width) {
         .attr("y", function(d) { return y(d.cs); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) {return graphHeight - y(d.cs); });
+    function updateBars(variable) {
+      y = d3.scaleLinear().rangeRound([graphHeight, 0]);
+      y.domain([0, MAXVALUE[variable]]);
+     var t = d3.transition()
+          .duration(800)
+      barG.select(".axis--y")
+        .transition(t)
+        .call(d3.axisLeft(y))
+      barG.selectAll(".bar")
+        .transition()
+        .duration(800)
+        .attr("y", function(d) { 
+          return y(d[variable])
+        })
+        .attr("height", function(d) {return graphHeight - y(d[variable]); });
+
+    }
   });
 
 })
 }
+
 
 var pymChild = new pym.Child({ renderCallback: drawMap, polling: 500 });
