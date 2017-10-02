@@ -113,11 +113,25 @@ select {
 /*BAR CHART */
 .bar {
   fill: #1696d2;
+  cursor: pointer;
+}
+
+.hover {
+  fill: #fdbf11;
 }
 path.domain {
   fill: none;
 }
+.tick > text {
+  font-size: 11px;
+}
 
+.axis--y > path.domain {
+  stroke: #fff;
+}
+.tick > line {
+  stroke: #cccccc;
+}
 /**MOBILE SCREEN WIDTHS **/
 
 #isMobile, #isPhone{

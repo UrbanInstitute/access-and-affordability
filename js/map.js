@@ -244,7 +244,7 @@ function drawMap(container_width) {
       return d.abbr != ""
     })
     var graphHeight = height*.7,
-        x = d3.scaleBand().rangeRound([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
+        x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(graphData.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
@@ -265,7 +265,7 @@ function drawMap(container_width) {
 
     barG.append("g")
       .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y))
+      .call(d3.axisLeft(y).tickSize(-width))
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 0)
@@ -282,7 +282,18 @@ function drawMap(container_width) {
         .attr("x", function(d) { return x(d.abbr) })
         .attr("y", function(d) { return y(d.cs); })
         .attr("width", x.bandwidth())
-        .attr("height", function(d) {return graphHeight - y(d.cs); });
+        .attr("height", function(d) {return graphHeight - y(d.cs); })
+        .on('mouseover', function(d) {
+          hoverBar(d)
+        })
+        .on('mouseout', function() {
+          d3.selectAll(".state, .bar")
+            .classed("hover", false)
+        })
+    function hoverBar(d) { 
+      d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
+        .classed("hover", true)
+    }
     function updateBars(variable) {
       y = d3.scaleLinear().rangeRound([graphHeight, 0]);
       y.domain([0, MAXVALUE[variable]]);
@@ -290,14 +301,17 @@ function drawMap(container_width) {
           .duration(800)
       barG.select(".axis--y")
         .transition(t)
-        .call(d3.axisLeft(y))
+        .call(d3.axisLeft(y).tickSize(-width))
       barG.selectAll(".bar")
         .transition()
         .duration(800)
         .attr("y", function(d) { 
           return y(d[variable])
         })
-        .attr("height", function(d) {return graphHeight - y(d[variable]); });
+        .attr("height", function(d) {
+          console.log(d.state)
+          console.log(graphHeight - y(d[variable])); 
+          return graphHeight - y(d[variable]); });
 
     }
   });
