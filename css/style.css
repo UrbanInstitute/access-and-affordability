@@ -1,6 +1,7 @@
 /* On mouse hover, lighten state color */
 body {
     font-family: "Lato", sans-serif;
+    max-width: 944px;
 }
 
 
@@ -40,11 +41,12 @@ select {
   font-style: italic;
 }
 .tooltip-container {
-  height: 80px;
-  margin-bottom: 20px;
-  padding-bottom: 0;
-  position: relative;
-  z-index: 2;
+    height: 80px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding-bottom: 0;
  
 }
 
@@ -55,17 +57,25 @@ select {
   color: #000;
   font-weight: 400;
 }
-
-.region-text, .stats-text{
+.tooltip-data.average{
+  font-size: 13px;
+  margin-top: 5px;
+  color: #000;
+}
+.region-text{
 	float: left;
   margin-top: 30px;
-  width: 25%;
-}
+/*  width: 25%;
+*/}
+.stats-text{
+  float: left;
+  margin: 30px 25px 0 25px
 
+/*  width: 25%;
+*/}
 .dropdown-text{
   float: left;
   margin-top: 30px;
-  width: 50%;
 
 }
 .dropdown-container {
@@ -114,9 +124,7 @@ select {
 	fill: #fdbf11;
 }
 
-#tooltip-header {
-  width: 100%;
-}
+
 
 /*BAR CHART */
 .bar {

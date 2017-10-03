@@ -85,7 +85,7 @@ function drawMap(container_width) {
     aspect_width = 12;
     aspect_height = 3.5;
     margin = { top: 20, right: 20, bottom: 20, left: 20 };
-    width= (container_width > 680) ? 680 - margin.left - margin.right : container_width - margin.left - margin.right;
+    width= (container_width > 944) ? 944 - margin.left - margin.right : container_width - margin.left - margin.right;
     height = Math.ceil((width * aspect_height) / aspect_width) - margin.top - margin.bottom;
     mapHeight = height*1.5
 // D3 Projection
@@ -196,7 +196,9 @@ function drawMap(container_width) {
     region.append("div")
         .attr('class', 'tooltip-data state')
         .text("United States of America")
-
+    region.append("div")
+        .attr('class', 'tooltip-data average')
+        .text("average")
     var stats = tooltip.append('div')
       .attr('class', 'stats-text')
     stats.append('div')
@@ -219,29 +221,43 @@ function drawMap(container_width) {
 
 
     dispatch.on("hoverState", function (selectedState) { 
-            var stateName = d3.select(this).datum().properties.name
-            var value = d3.select(this).datum().properties[SELECTED_VARIABLE]
-            var abbr = d3.select(this).datum().properties.abbr
-            d3.select(".state." + selectedState)
-              .classed('hover', true)
-            d3.select(".tooltip-data.state")
-    	     	 .html(stateName)
-            d3.select(".tooltip-data.value")
-             .text(format(value))
-            d3.select(this)
-              .classed("hover", true)
-            d3.select(".bar-" + abbr)
-              .classed("hover", true)
-          });
+      var stateName = d3.select(this).datum().properties.name
+      var value = d3.select(this).datum().properties[SELECTED_VARIABLE]
+      var abbr = d3.select(this).datum().properties.abbr
+      d3.select(".state." + selectedState)
+        .classed('hover', true)
+      d3.select(".tooltip-data.state")
+     	   .html(stateName)
+      d3.select(".tooltip-data.value")
+        .text(format(value))
+      region.select(".tooltip-data.average")
+        .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+      d3.select(this)
+        .classed("hover", true)
+      d3.select(".bar-" + abbr)
+        .classed("hover", true)
+      var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+      $(".tooltip-container").css("width", tooltipWidth * 1.15)
+    });
     dispatch.on("dehoverState", function() {
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
       var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
+      var average = (d3.select(".bar.selected").size() > 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
           d3.select(".tooltip-data.state")
             .text(selectedState)
           d3.select(".tooltip-data.value")
             .text(format(value))
+          region.select(".tooltip-data.average")
+            .text(average)
           d3.selectAll(".state, .bar")
             .classed("hover", false)
+      if (selectedState != "United States of America") {
+        var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+          $(".tooltip-container").css("width", tooltipWidth * 1.15 )
+      }else {
+          $(".tooltip-container").css("width", tooltipWidthUSA * 1.15)
+      }  
+
     })
 
 
@@ -301,6 +317,8 @@ function drawMap(container_width) {
         .selectmenu( "menuWidget" )
         .addClass( "ui-menu-icons customicons" );
 
+    tooltipWidthUSA = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+    $(".tooltip-container").css("width", tooltipWidthUSA*1.1)
     //ADD BAR GRAPH
 
     var graphData = data.filter(function(d) {
@@ -308,7 +326,7 @@ function drawMap(container_width) {
     })
     var graphDataSorted = graphData.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
 
-    var graphHeight = height*.7,
+    var graphHeight = height*.5,
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(graphData.map(function(d) { return d.abbr; }));
@@ -318,10 +336,10 @@ function drawMap(container_width) {
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+        .attr("height", graphHeight + margin.top + margin.bottom);
     var barG  = barSvg.append("g")
       .attr("class", "barG")
-      .attr("transform", "translate("+ 30 +","+height/5+")")
+      .attr("transform", "translate("+ 30 +","+graphHeight/5+")")
 
     barG.append("g")
       .attr("class", "axis axis--x")
@@ -367,14 +385,21 @@ function drawMap(container_width) {
         })
 
     function selectState(d) { 
+      if (d3.select(".bar-" + d.abbr).classed("selected") == true) {
       d3.selectAll(".state, .bar")
-        .classed("selected", false)
-      d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
-        .classed("selected", true)
-      region.select(".tooltip-data.state")
-        .text(d.state)
-      stats.select(".tooltip-data.value")
-        .text(format(d[SELECTED_VARIABLE]))
+        .classed("selected", false)      
+      }else {
+        d3.selectAll(".state, .bar")
+          .classed("selected", false)
+        d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
+          .classed("selected", true)
+        region.select(".tooltip-data.state")
+          .text(d.state)
+        stats.select(".tooltip-data.value")
+          .text(format(d[SELECTED_VARIABLE]))
+        region.select(".tooltip-data.average")
+          .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+      }
     }
     function hoverBar(d) { 
       d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
@@ -383,6 +408,10 @@ function drawMap(container_width) {
         .text(d.state)
       stats.select(".tooltip-data.value")
         .text(format(d[SELECTED_VARIABLE]))
+      region.select(".tooltip-data.average")
+        .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+      var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+      $(".tooltip-container").css("width", tooltipWidth * 1.15)
     }
     function updateBars(variable) {
       y = d3.scaleLinear().rangeRound([graphHeight, 0]);
@@ -437,6 +466,13 @@ function drawMap(container_width) {
         .style("fill", function(d) { 
           return COLORS[quantize(d.properties[variable])]
         })
+      d3.selectAll(".legend-labels")
+        .each(function(d,i) {
+          d3.select(this)
+            .text(function(){
+              return format(MAXVALUE[SELECTED_VARIABLE]/6 * i)
+          })
+        })
     }
 
     function format(d) {
@@ -458,7 +494,7 @@ function drawMap(container_width) {
       var keyHeight = (IS_PHONE) ? width*.068: 28;
       var keyWidth = (IS_PHONE) ? 8 : 15;
      for (i=0; i<=5; i++){
-      if(i !== 5){ console.log(COLORS[i])
+      if(i !== 5){ 
         legend.append("rect")
           .attr("width",keyWidth)
           .attr("height",keyHeight)
