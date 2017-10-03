@@ -203,9 +203,7 @@ function drawMap(container_width) {
       .text('VALUE')
     stats.append("div")
         .attr('class', 'tooltip-data value')
-        .text("726")
-
-
+        .text(format(data[0][SELECTED_VARIABLE]))
 
     d3.selectAll(".state")
     	.on("mouseover", function (d) {
@@ -234,9 +232,9 @@ function drawMap(container_width) {
             d3.select(".bar-" + abbr)
               .classed("hover", true)
           });
-    dispatch.on("dehoverState", function(data) {
+    dispatch.on("dehoverState", function() {
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
-      var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : 726;
+      var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
           d3.select(".tooltip-data.state")
             .text(selectedState)
           d3.select(".tooltip-data.value")
@@ -296,6 +294,7 @@ function drawMap(container_width) {
             SELECTED_VARIABLE = data.item.value;
               updateBars(SELECTED_VARIABLE)
               updateMap(SELECTED_VARIABLE)
+              dispatch.call("dehoverState")
             }
         })     
         .selectmenu( "menuWidget" )
