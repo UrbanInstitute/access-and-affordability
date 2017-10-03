@@ -3,11 +3,8 @@ body {
     font-family: "Lato", sans-serif;
 }
 
-path {
-	fill: #1696d2;
-}
+
 path:hover {
-	fill: #fdbf11;
 	pointer-events: all;
 }
 
@@ -102,6 +99,11 @@ select {
   position: relative;
   z-index: 1;
 
+}
+
+.legend-labels {
+  font-size: 12px;
+  font-weight: 700;
 }
 .wrapper {
   margin-left: auto;

@@ -68,13 +68,14 @@ function drawMap(container_width) {
 
   var COLORS = 
   {
-    "q0-6": "#cae0e7",
-    "q1-6": "#95c0cf",
-    "q2-6": "#60a1b6",
-    "q3-6": "#008bb0",
-    "q4-6": "#1d5669",
-    "q5-6": "#0e2b35"
+    "q0-6": "#cfe8f3",
+    "q1-6": "#a2d4ec",
+    "q2-6": "#73bfe2",
+    "q3-6": "#46abdb",
+    "q4-6": "#1696d2",
+    "q5-6": "#12719e"
   }
+
   //Width and height of map
     $mapContainer = $("#map-container")
     $chartContainer = $("#chart-container")
@@ -447,6 +448,49 @@ function drawMap(container_width) {
         return numberFormat(d)
       }
     }
+
+    /*LEGEND*/
+      var legend = mapSvg.append("g")
+        .attr("width", width/3)
+        .attr("height", 50)
+        .attr("transform", "translate("+width*.9+"," + height*.1 + ")")
+
+      var keyHeight = (IS_PHONE) ? width*.068: 28;
+      var keyWidth = (IS_PHONE) ? 8 : 15;
+     for (i=0; i<=5; i++){
+      if(i !== 5){ console.log(COLORS[i])
+        legend.append("rect")
+          .attr("width",keyWidth)
+          .attr("height",keyHeight)
+          .attr("class","rect"+i)
+          .attr("y",keyHeight*i)
+          .style("fill", COLORS["q" + i + "-6"])
+          // .on("mouseover",function(){ mouseEvent({type: "Legend", "class": (d3.select(this).attr("class"))}, "hover") })
+          // .on("mouseleave", function(){
+          //   d3.selectAll(".demphasized").classed("demphasized",false)
+          // })
+      //     .on("click",function(){ mouseEvent(dataID, {type: "Legend", "class": "q" + (this.getAttribute("x")/keyWidth) + "-4"}, "click") })
+        legend.append("text")
+          .attr("x", 20)
+          .attr("class","legend-labels")
+          .attr("y",keyHeight*i + 5)
+          .text(function(){
+              return format(MAXVALUE[SELECTED_VARIABLE]/6 * i)
+          })
+       }
+       if (i == 5) {
+        legend.append("text")
+          .attr("x", 20)
+          .attr("class","legend-labels")
+          .attr("y",keyHeight*i + 5)
+          .text(function(){
+              return format(MAXVALUE[SELECTED_VARIABLE]/6 * i)
+          })
+       }
+     }
+
+
+
 
   });
 
