@@ -135,6 +135,10 @@ path.domain {
 .axis--y > path.domain {
   stroke: #fff;
 }
+
+.axis--x > path.domain {
+  stroke: #fff;
+}
 .tick > line {
   stroke: #cccccc;
 }

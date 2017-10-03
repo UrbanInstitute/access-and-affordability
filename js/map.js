@@ -407,7 +407,7 @@ function drawMap(container_width) {
     }
 
     function sortBars(variable) {
-       var x0 = x.domain(data.sort(function(a, b) { 
+       var x0 = x.domain(graphData.sort(function(a, b) { 
           return b[variable] - a[variable]; 
         })
         .map(function(d) { return d["abbr"]; }))
