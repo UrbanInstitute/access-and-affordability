@@ -11,7 +11,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 var MAXVALUE = {"cs": 800, "homevalue": 600000, "fthb": .7, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 1, "fha": .4, "va": .35, "ltv_fico": .4, "hfa_agencies": 300, "total": 70 }
 var FORMAT = {"cs": d3.format(""), "homevalue": d3.format(".0s"), "fthb": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "hfa_agencies": d3.format(""), "total": d3.format("") }
 var TICKS = {"cs": 5, "homevalue": 7, "fthb": 8, "origltv":6, "dti":5, "orignoterate": 5, "conv": 6, "fha": 5, "va": 4, "ltv_fico": 5, "hfa_agencies": 4, "total":8  }
-
+var SELECTED_VARIABLE = "cs";
 function drawMap(container_width) {
 
 	d3.csv("data.csv", function(data) {
@@ -121,7 +121,7 @@ function drawMap(container_width) {
     	.style("stroke", "#fff")
     	.style("stroke-width", "1")
       .style("fill", function(d) { 
-        return COLORS[quantize(d.properties.cs)]
+        return COLORS[quantize(d.properties[SELECTED_VARIABLE])]
       })
 
   //ADD LEADER LINE FOR DC
@@ -188,7 +188,19 @@ function drawMap(container_width) {
     	.attr('class', 'region-text')
     region.append('div')
     	.attr('class', 'tooltip-title')
-    	.text('STATE')
+    	.text('REGION/STATE')
+    region.append("div")
+        .attr('class', 'tooltip-data state')
+        .text("United States of America")
+
+    var stats = tooltip.append('div')
+      .attr('class', 'stats-text')
+    stats.append('div')
+      .attr('class', 'tooltip-title')
+      .text('VALUE')
+    stats.append("div")
+        .attr('class', 'tooltip-data value')
+        .text("726")
 
     function selectState(selectedState) {
     d3.selectAll(".state")
@@ -203,31 +215,35 @@ function drawMap(container_width) {
     	.on("mouseover", function (d) {
                dispatch.call("hoverState", this, (d3.select(this).attr('class')))
             })
-    	.on("mouseout", function (d) {
+    	.on("mouseout", function () {
                dispatch.call("dehoverState")
             })
 
     var dispatch = d3.dispatch("hoverState", "dehoverState");
 
-    region.append("div")
-    		.attr('class', 'tooltip-data')
-        .text("Click on a state")
 
 
     dispatch.on("hoverState", function (selectedState) {
             var stateName = d3.select(this).datum().properties.name
+            var value = d3.select(this).datum().properties[SELECTED_VARIABLE]
             var abbr = d3.select(this).datum().properties.abbr
             selectState(selectedState);
-            d3.select(".tooltip-data")
+            d3.select(".tooltip-data.state")
     	     	 .html(stateName)
+            d3.select(".tooltip-data.value")
+             .html(value)
             d3.select(this)
               .classed("hover", true)
             d3.select(".bar-" + abbr)
               .classed("hover", true)
           });
-    dispatch.on("dehoverState", function() {
-          d3.select(".tooltip-data")
-            .html("Click on a state")
+    dispatch.on("dehoverState", function(data) {
+      var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
+      var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : 726;
+          d3.select(".tooltip-data.state")
+            .text(selectedState)
+          d3.select(".tooltip-data.value")
+            .text(value)
           d3.selectAll(".state, .bar")
             .classed("hover", false)
     })
@@ -280,9 +296,9 @@ function drawMap(container_width) {
             
             },
            change: function(event, data){ 
-            var variable = data.item.value;
-              updateBars(variable)
-              updateMap(variable)
+            SELECTED_VARIABLE = data.item.value;
+              updateBars(SELECTED_VARIABLE)
+              updateMap(SELECTED_VARIABLE)
             }
         })     
         .selectmenu( "menuWidget" )
@@ -293,7 +309,7 @@ function drawMap(container_width) {
     var graphData = data.filter(function(d) {
       return d.abbr != ""
     })
-    var graphDataSorted = graphData.sort(function(a, b) { return b.cs - a.cs; });  
+    var graphDataSorted = graphData.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
 
     var graphHeight = height*.7,
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
@@ -337,20 +353,36 @@ function drawMap(container_width) {
           return "bar bar-" + d.abbr
         })
         .attr("x", function(d) { return x(d.abbr) })
-        .attr("y", function(d) { return y(d.cs); })
+        .attr("y", function(d) { return y(d[SELECTED_VARIABLE]); })
         .attr("width", x.bandwidth())
-        .attr("height", function(d) {return graphHeight - y(d.cs); })
+        .attr("height", function(d) {return graphHeight - y(d[SELECTED_VARIABLE]); })
         .on('mouseover', function(d) {
           hoverBar(d)
         })
         .on('mouseout', function() {
           d3.selectAll(".state, .bar")
             .classed("hover", false)
+          dispatch.call("dehoverState")
+        })
+        .on('click', function(d) {
+          selectBar(d)
         })
 
-    function hoverBar(d) { 
+    function selectBar(d) {
+      d3.selectAll(".state, .bar")
+        .classed("selected", false)
+      d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
+        .classed("selected", true)
+      region.select(".tooltip-data")
+        .text(d.state)
+    }
+    function hoverBar(d) { console.log(d[SELECTED_VARIABLE])
       d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
         .classed("hover", true)
+      region.select(".tooltip-data.state")
+        .text(d.state)
+      stats.select(".tooltip-data.value")
+        .text(d[SELECTED_VARIABLE])
     }
     function updateBars(variable) {
       y = d3.scaleLinear().rangeRound([graphHeight, 0]);
