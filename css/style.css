@@ -1,4 +1,8 @@
 /* On mouse hover, lighten state color */
+body {
+    font-family: "Lato", sans-serif;
+}
+
 path {
 	fill: #1696d2;
 }
@@ -34,6 +38,10 @@ select {
 	margin-left: 2em;
 }
 
+.y-axis-label {
+  font-size: 12px;
+  font-style: italic;
+}
 .tooltip-container {
   height: 80px;
   margin-bottom: 0px;

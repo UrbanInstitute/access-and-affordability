@@ -8,7 +8,9 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAXVALUE = {"cs": 800, "homevalue": 550000, "fthb": .7, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 1, "fha": .4, "va": .35, "ltv_fico": .4, "hfa_agencies": 300, "total": 70 }
+var MAXVALUE = {"cs": 800, "homevalue": 600000, "fthb": .7, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 1, "fha": .4, "va": .35, "ltv_fico": .4, "hfa_agencies": 300, "total": 70 }
+var FORMAT = {"cs": d3.format(""), "homevalue": d3.format(".0s"), "fthb": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "hfa_agencies": d3.format(""), "total": d3.format("") }
+var TICKS = {"cs": 5, "homevalue": 7, "fthb": 8, "origltv":6, "dti":5, "orignoterate": 5, "conv": 6, "fha": 5, "va": 4, "ltv_fico": 5, "hfa_agencies": 4, "total":8  }
 
 function drawMap(container_width) {
 
@@ -291,6 +293,8 @@ function drawMap(container_width) {
     var graphData = data.filter(function(d) {
       return d.abbr != ""
     })
+    var graphDataSorted = graphData.sort(function(a, b) { return b.cs - a.cs; });  
+
     var graphHeight = height*.7,
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
@@ -313,16 +317,21 @@ function drawMap(container_width) {
 
     barG.append("g")
       .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y).tickSize(-width))
+      .call(d3.axisLeft(y).ticks(TICKS["cs"]).tickSize(-width).tickFormat(d3.format(".2s")))
+    barG
       .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0)
-      .attr("dy", "0.71em")
-      .attr("text-anchor", "end")
-      .text("Units");
+      .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+      .attr("transform", "translate("+ (-9) +","+(-9)+")")  // text is drawn off the screen top left, move down and out and rotate
+      .text("Units")
+      .attr("class", "y-axis-label")
+      // .attr("transform", "rotate(-90)")
+      // .attr("y", 0)
+      // .attr("dy", "0.71em")
+      // .attr("text-anchor", "end")
+      // .text("Units");
 
     barG.selectAll(".bar")
-      .data(graphData)
+      .data(graphDataSorted)
       .enter().append("rect")
         .attr("class", function(d) {
           return "bar bar-" + d.abbr
@@ -338,6 +347,7 @@ function drawMap(container_width) {
           d3.selectAll(".state, .bar")
             .classed("hover", false)
         })
+
     function hoverBar(d) { 
       d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
         .classed("hover", true)
@@ -349,15 +359,43 @@ function drawMap(container_width) {
         .duration(800)
       barG.select(".axis--y")
         .transition(t)
-        .call(d3.axisLeft(y).tickSize(-width))
+        .call(d3.axisLeft(y).ticks(TICKS[variable]).tickSize(-width).tickFormat(FORMAT[variable]))
+        .on('end', function() {
+          sortBars(variable)
+        })
       barG.selectAll(".bar")
         .transition()
-        .duration(800)
+        .duration(450)
         .attr("y", function(d) { 
           return y(d[variable])
         })
         .attr("height", function(d) {
-          return graphHeight - y(d[variable]); });
+          return graphHeight - y(d[variable]); 
+        })
+    }
+
+    function sortBars(variable) {
+       var x0 = x.domain(data.sort(function(a, b) { 
+          return b[variable] - a[variable]; 
+        })
+        .map(function(d) { return d["abbr"]; }))
+        .copy();
+
+      barG.selectAll(".bar")
+          .sort(function(a, b) { return x0(a["abbr"]) - x0(b["abbr"]); });
+
+      var transition = barG.transition().duration(750),
+          delay = function(d, i) { return i * 30; };
+
+      transition.selectAll(".bar")
+          .delay(delay)
+          .attr("x", function(d) { return x0(d["abbr"]); });
+
+      transition.select(".axis--x")
+          .call(d3.axisBottom(x))
+        .selectAll("g")
+          .delay(delay);
+
     }
     function updateMap(variable){
       var quantize = d3.scaleQuantize()
@@ -368,6 +406,7 @@ function drawMap(container_width) {
           return COLORS[quantize(d.properties[variable])]
         })
     }
+
   });
 
 })
