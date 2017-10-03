@@ -123,7 +123,10 @@ function drawMap(container_width) {
       .style("fill", function(d) { 
         return COLORS[quantize(d.properties[SELECTED_VARIABLE])]
       })
-
+      .on('click', function(d) {
+        selectState(d.properties)
+        dispatch.call("dehoverState")
+      })
   //ADD LEADER LINE FOR DC
     var dcData = json.features.filter(function(d) {return d.properties.name == "District of Columbia"})
 
@@ -202,14 +205,7 @@ function drawMap(container_width) {
         .attr('class', 'tooltip-data value')
         .text("726")
 
-    function selectState(selectedState) {
-    d3.selectAll(".state")
-      .classed('deselected', true)
-      .classed('selected', false)
-    d3.select(".state." + selectedState)
-      .classed('selected', true)
-      .classed("deselected", false)
-    }
+
 
     d3.selectAll(".state")
     	.on("mouseover", function (d) {
@@ -223,15 +219,16 @@ function drawMap(container_width) {
 
 
 
-    dispatch.on("hoverState", function (selectedState) {
+    dispatch.on("hoverState", function (selectedState) { 
             var stateName = d3.select(this).datum().properties.name
             var value = d3.select(this).datum().properties[SELECTED_VARIABLE]
             var abbr = d3.select(this).datum().properties.abbr
-            selectState(selectedState);
+            d3.select(".state." + selectedState)
+              .classed('hover', true)
             d3.select(".tooltip-data.state")
     	     	 .html(stateName)
             d3.select(".tooltip-data.value")
-             .html(value)
+             .text(format(value))
             d3.select(this)
               .classed("hover", true)
             d3.select(".bar-" + abbr)
@@ -243,7 +240,7 @@ function drawMap(container_width) {
           d3.select(".tooltip-data.state")
             .text(selectedState)
           d3.select(".tooltip-data.value")
-            .text(value)
+            .text(format(value))
           d3.selectAll(".state, .bar")
             .classed("hover", false)
     })
@@ -365,24 +362,27 @@ function drawMap(container_width) {
           dispatch.call("dehoverState")
         })
         .on('click', function(d) {
-          selectBar(d)
+          selectState(d)
+          dispatch.call("dehoverState")
         })
 
-    function selectBar(d) {
+    function selectState(d) { 
       d3.selectAll(".state, .bar")
         .classed("selected", false)
       d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
         .classed("selected", true)
-      region.select(".tooltip-data")
+      region.select(".tooltip-data.state")
         .text(d.state)
+      stats.select(".tooltip-data.value")
+        .text(format(d[SELECTED_VARIABLE]))
     }
-    function hoverBar(d) { console.log(d[SELECTED_VARIABLE])
+    function hoverBar(d) { 
       d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
         .classed("hover", true)
       region.select(".tooltip-data.state")
         .text(d.state)
       stats.select(".tooltip-data.value")
-        .text(d[SELECTED_VARIABLE])
+        .text(format(d[SELECTED_VARIABLE]))
     }
     function updateBars(variable) {
       y = d3.scaleLinear().rangeRound([graphHeight, 0]);
@@ -437,6 +437,16 @@ function drawMap(container_width) {
         .style("fill", function(d) { 
           return COLORS[quantize(d.properties[variable])]
         })
+    }
+
+    function format(d) {
+      var numberFormat = d3.format(",.0f")
+      var decimalFormat = d3.format(".1f")
+      if (d < 100) {
+        return decimalFormat(d)
+      }else {
+        return numberFormat(d)
+      }
     }
 
   });
