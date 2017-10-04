@@ -149,6 +149,10 @@ select {
 path.domain {
   fill: none;
 }
+
+.tick > text.US {
+  font-weight: 600;
+}
 .tick > text {
   font-size: 11px;
 }
@@ -202,11 +206,13 @@ path.domain {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   #isMobile {
     display: block;
   }
-
+  .axis--x > .tick > text {
+    display: none;
+  }
 
 }
 

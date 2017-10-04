@@ -64,6 +64,7 @@ function drawMap(container_width) {
 	    }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
+  console.log(IS_MOBILE)
   var quantize = d3.scaleQuantize()
     .domain([0, MAXVALUE[SELECTED_VARIABLE]])
     .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
@@ -243,7 +244,7 @@ function drawMap(container_width) {
     dispatch.on("dehoverState", function() {
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
       var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
-      var average = (d3.select(".bar.selected").size() > 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
+      var average = (d3.select(".bar.selected").size() > 0 && selectedState.search("United") < 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
           d3.select(".tooltip-data.state")
             .text(selectedState)
           d3.select(".tooltip-data.value")
@@ -330,7 +331,7 @@ function drawMap(container_width) {
     x.domain(graphData.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
     y.domain([0, MAXVALUE[SELECTED_VARIABLE]])
-
+  $("#chart-container").empty()
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -345,6 +346,11 @@ function drawMap(container_width) {
       .call(d3.axisBottom(x));
     barG.select(".axis--x").selectAll("text")
       .style("text-anchor", "middle")
+      .each(function() {
+        var abbr = d3.select(this).text()
+        d3.select(this)
+          .attr('class', abbr)
+      })
 
     barG.append("g")
       .attr("class", "axis axis--y")
@@ -415,7 +421,9 @@ function drawMap(container_width) {
         stats.select(".tooltip-data.value")
           .text(format(d[SELECTED_VARIABLE]))
         region.select(".tooltip-data.average")
-          .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+          .text(function() {
+            return (d.abbr == "US") ? "" : "US average: " + format(data[0][SELECTED_VARIABLE])
+          })
       }
     }
     function hoverBar(d) { 
@@ -426,7 +434,9 @@ function drawMap(container_width) {
       stats.select(".tooltip-data.value")
         .text(format(d[SELECTED_VARIABLE]))
       region.select(".tooltip-data.average")
-        .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+          .text(function() {
+            return (d.abbr == "US") ? "" : "US average: " + format(data[0][SELECTED_VARIABLE])
+          })      
       var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
       $(".tooltip-container").css("width", tooltipWidth * 1.15)
     }
