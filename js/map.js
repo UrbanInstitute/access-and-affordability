@@ -133,24 +133,24 @@ function drawMap(container_width) {
     var dcData = json.features.filter(function(d) {return d.properties.name == "District of Columbia"})
 
     var dcLine1 = mapSvg.append("line")
-      .attr("x1", .764*(width))
-      .attr("y1", .238*(width))
-      .attr("x2", .835*(width))
-      .attr("y2", .238*(width))
+      .attr("x1", .72*width)
+      .attr("y1", .5*mapHeight)
+      .attr("x2", .77*(width))
+      .attr("y2", .5*mapHeight)
       .attr("stroke-width", 1.2)
       .attr("stroke", "#ec008b")
-    var dcLine2 = mapSvg.append("line")
-      .attr("x1", .835*(width))
-      .attr("y1", .238*(width))
-      .attr("x2", .835*(width))
-      .attr("y2", function() {
-        if (IS_PHONE){
-          return .26*(width)
-      } else { 
-        return .22*(width)}
-      })
-      .attr("stroke-width", 1.2)
-      .attr("stroke", "#ec008b")
+    // var dcLine2 = mapSvg.append("line")
+    //   .attr("x1", .77*(width))
+    //   .attr("y1", .5*mapHeight)
+    //   .attr("x2", .77*(width))
+    //   .attr("y2", function() {
+    //     if (IS_PHONE){
+    //       return .26*(width)
+    //   } else { 
+    //     return .22*(width)}
+    //   })
+    //   .attr("stroke-width", 1.2)
+    //   .attr("stroke", "#ec008b")
     var dcText = mapSvg.append("a")
       .attr("xlink:href", "http://www.dchfa.org")
       .attr('target','_blank')
@@ -162,12 +162,12 @@ function drawMap(container_width) {
       } else {
         return d.properties.name; }
       })
-      .attr("x", .8*(width))
+      .attr("x", .775*(width))
       .attr("y", function() { 
         if (IS_PHONE) {
           return .28*(width)
         } else { 
-          return .215*(width)}
+          return mapHeight*.51}
         })
       .attr("class", "state-label state")    
     var dcText2= mapSvg.append("a")
@@ -298,7 +298,9 @@ function drawMap(container_width) {
         .selectmenu({
 
            open: function( event, ui ) { 
-          
+            $("#state-menu-menu").css("width", "299px")
+            d3.select("body").style("height", (d3.select(".ui-selectmenu-menu.ui-front.ui-selectmenu-open").node().getBoundingClientRect().height*1.5) + "px")
+            pymChild.sendHeight();
             },
             close: function(event, ui){
             
@@ -515,7 +517,7 @@ function drawMap(container_width) {
       var legend = mapSvg.append("g")
         .attr("width", width/3)
         .attr("height", 50)
-        .attr("transform", "translate("+width*.83+"," + height*.1 + ")")
+        .attr("transform", "translate("+width*.9+"," + height*.08 + ")")
 
       var keyHeight = (IS_PHONE) ? width*.068: 28;
       var keyWidth = (IS_PHONE) ? 8 : 15;
