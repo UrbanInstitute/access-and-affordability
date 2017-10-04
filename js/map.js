@@ -298,9 +298,9 @@ function drawMap(container_width) {
         .selectmenu({
 
            open: function( event, ui ) { 
-            $("#state-menu-menu").css("width", "299px")
-            d3.select("body").style("height", (d3.select(".ui-selectmenu-menu.ui-front.ui-selectmenu-open").node().getBoundingClientRect().height*1.5) + "px")
-            pymChild.sendHeight();
+            $("#state-menu-menu").css("width", "322px")
+            // d3.select("body").style("height", (d3.select(".ui-selectmenu-menu.ui-front.ui-selectmenu-open").node().getBoundingClientRect().height*2.3) + "px")
+            // pymChild.sendHeight();
             },
             close: function(event, ui){
             

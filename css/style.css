@@ -82,11 +82,17 @@ select {
 
 }
 .ui-selectmenu-text {
+  font-size: 14px !important;
   width: 85%;
 }
-
+.ui-widget {
+  font-size: 13px !important;
+}
+.ui-selectmenu-button.ui-button{
+  width: 300px !important;
+}
 .ui-button {
-  padding: .4em .8em !important;
+  padding: 8px 12px !important;
 }
 
 .tooltip-data {
