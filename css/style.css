@@ -134,6 +134,7 @@ select {
 /*BAR CHART */
 .bar {
   cursor: pointer;
+  z-index: 0;
 }
 
 .hover, .selected {
@@ -145,7 +146,11 @@ path.domain {
 .tick > text {
   font-size: 11px;
 }
-
+.tick-0 > line{
+  stroke: #000 !important;
+  stroke-width: 1.5px;
+  z-index: 10;
+}
 .axis--y > path.domain {
   stroke: #fff;
 }
@@ -153,8 +158,12 @@ path.domain {
 .axis--x > path.domain {
   stroke: #fff;
 }
-.tick > line {
+.axis--y > .tick > line {
   stroke: #cccccc;
+}
+
+.axis--x > .tick > line {
+  stroke: #fff;
 }
 /**MOBILE SCREEN WIDTHS **/
 

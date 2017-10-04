@@ -347,6 +347,11 @@ function drawMap(container_width) {
     barG.append("g")
       .attr("class", "axis axis--y")
       .call(d3.axisLeft(y).ticks(TICKS[SELECTED_VARIABLE]).tickSize(-width).tickFormat(d3.format(".2s")))
+    barG.select(".axis--y").selectAll(".tick")
+      .each(function(d,i) {
+        d3.select(this)
+          .attr("class", "tick tick-" + i)
+      })
     barG
       .append("text")
       .attr("text-anchor", "start")  
