@@ -392,17 +392,58 @@ function drawMap(container_width) {
     var graphData = data.filter(function(d) {
       return d.abbr != ""
     })
+
+    var dataFilteredMobile = data.filter(function(d) {
+      return d.abbr == "US" || d.abbr == "DC"
+    })
     var graphDataSorted = graphData.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
 
     var graphHeight = height*.5,
+        graphHeightMobile = height,
+        xMobile = d3.scaleLinear().range([0, width*.6]),
+        yMobile = d3.scaleBand().range([graphHeightMobile, 0]),
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(graphData.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
-    y.domain([0, MAXVALUE[SELECTED_VARIABLE]])
+    y.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
+    xMobile.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
+    yMobile.domain(dataFilteredMobile.map(function(d) { return d.abbr; })).padding(0.1);
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
+    if (IS_PHONE){
+      barSvg = d3.select("#chart-container-mobile")
+        .append("svg")
+        .attr("width", width*.8 + margin.left + margin.right)
+        .attr("height", graphHeightMobile + margin.top + margin.bottom);
+      var barG  = barSvg.append("g")
+        .attr("class", "barG")
+        .attr("transform", "translate("+ width/5+","+graphHeightMobile/5+")")
+      barG.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + graphHeightMobile + ")")
+        .call(d3.axisBottom(xMobile).tickSizeInner([-graphHeightMobile]));
+      barG.select(".axis--x").selectAll(".tick")
+        .each(function(d,i) {
+          d3.select(this)
+            .attr("class", "tick tick-" + i)
+        })
+      barG.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(yMobile));
+        console.log(dataFilteredMobile)
+      barG.selectAll(".bar")
+        .data(dataFilteredMobile)
+        .enter().append("rect")
+        .attr("class", function(d, i) {
+          return "bar bar-" + i
+        })
+        .attr("x", 0)
+        .attr("height", yMobile.bandwidth())
+        .attr("y", function(d) { console.log (yMobile(d.abbr)); return yMobile(d.abbr); })
+        .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE]); })
 
+    }else {
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -410,7 +451,6 @@ function drawMap(container_width) {
     var barG  = barSvg.append("g")
       .attr("class", "barG")
       .attr("transform", "translate("+ 30 +","+graphHeight/5+")")
-
     barG.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + graphHeight + ")")
@@ -477,7 +517,7 @@ function drawMap(container_width) {
         selectState(d)
         dispatch.call("dehoverState")
       })
-    /*MOBILE BAR CHART */
+    }
 
     function selectState(d) { 
       if (d3.select(".bar-" + d.abbr).classed("selected") == true) {
