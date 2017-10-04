@@ -343,6 +343,8 @@ function drawMap(container_width) {
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + graphHeight + ")")
       .call(d3.axisBottom(x));
+    barG.select(".axis--x").selectAll("text")
+      .style("text-anchor", "middle")
 
     barG.append("g")
       .attr("class", "axis axis--y")
