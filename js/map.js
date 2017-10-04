@@ -8,13 +8,14 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAXVALUE = {"cs": 800, "homevalue": 600000, "fthb": .7, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 1, "fha": .4, "va": .35, "ltv_fico": .4, "hfa_agencies": 300, "total": 70 }
-var FORMAT = {"cs": d3.format(""), "homevalue": d3.format(".0s"), "fthb": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "hfa_agencies": d3.format(""), "total": d3.format("") }
-var TICKS = {"cs": 5, "homevalue": 7, "fthb": 8, "origltv":6, "dti":5, "orignoterate": 5, "conv": 6, "fha": 5, "va": 4, "ltv_fico": 5, "hfa_agencies": 4, "total":8  }
-var SELECTED_VARIABLE = "cs";
+var MAXVALUE = {"homevalue": 500000, "fthb": 70, "fico": 800, "origltv": 100, "dti": 45, "orignoterate": 4, "conv": 100, "fha": 40, "va": 40, "ltv_fico": 40, "aff_index_20": 2.5, "aff_index_35": 2, "med_income": 100000 },
+    FORMAT = {"homevalue": d3.format("$.1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(""), "aff_index_35": d3.format(""), "med_income": d3.format("$.1s") },
+    TICKS = {"homevalue": 7, "fthb": 8, "fico": 5, "origltv":6, "dti":5, "orignoterate": 5, "conv": 6, "fha": 5, "va": 5, "ltv_fico": 5, "aff_index_20": 6, "aff_index_35": 5, "med_income": 6},
+    UNITS = {"homevalue": "", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Ratio", "conv": "Rate", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": ""},
+    SELECTED_VARIABLE = "homevalue";
 function drawMap(container_width) {
 
-	d3.csv("data.csv", function(data) {
+	d3.csv("data2.csv", function(data) {
 
 	  d3.json("us-states.json", function(json) {
 	    for (var i = 0; i < data.length; i++) {
@@ -23,7 +24,7 @@ function drawMap(container_width) {
 	      var dataLink = data[i].link;
         var data_homevalue = data[i].homevalue;
         var data_fthb = data[i].fthb;
-        var data_cs = data[i].cs;
+        var data_fico = data[i].fico;
         var data_origltv = data[i].origltv;
         var data_dti = data[i].dti;
         var data_orignoterate = data[i].orignoterate;
@@ -31,8 +32,9 @@ function drawMap(container_width) {
         var data_fha = data[i].fha;
         var data_va = data[i].va;
         var data_ltv_fico = data[i].ltv_fico;
-        var data_hfa_agencies = data[i].hfa_agencies;
-        var data_total = data[i].total;
+        var data_aff_index_20 = data[i].aff_index_20;
+        var data_aff_index_35 = data[i].aff_index_35;
+        var data_med_income = data[i].med_income;
 
 	      for (var j = 0; j < json.features.length; j++)  {
 	        var jsonState = json.features[j].properties.name;
@@ -43,7 +45,7 @@ function drawMap(container_width) {
           json.features[j].properties.state= dataState;
           json.features[j].properties.homevalue= data_homevalue;
           json.features[j].properties.fthb= data_fthb;
-          json.features[j].properties.cs= data_cs;
+          json.features[j].properties.fico= data_fico;
           json.features[j].properties.origltv= data_origltv;
           json.features[j].properties.dti= data_dti;
           json.features[j].properties.orignoterate= data_orignoterate;
@@ -51,9 +53,9 @@ function drawMap(container_width) {
           json.features[j].properties.fha= data_fha;
           json.features[j].properties.va= data_va;
           json.features[j].properties.ltv_fico= data_ltv_fico;
-          json.features[j].properties.hfa_agencies= data_hfa_agencies;
-          json.features[j].properties.total= data_total;
-
+          json.features[j].properties.aff_index_20= data_aff_index_20;
+          json.features[j].properties.aff_index_35= data_aff_index_35;
+          json.features[j].properties.med_income= data_med_income;
 	        // Stop looking through the JSON
 	        break;
 	        }
@@ -63,7 +65,7 @@ function drawMap(container_width) {
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
   var quantize = d3.scaleQuantize()
-    .domain([0, MAXVALUE["cs"]])
+    .domain([0, MAXVALUE["homevalue"]])
     .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
 
   var COLORS = 
@@ -198,7 +200,7 @@ function drawMap(container_width) {
         .text("United States of America")
     region.append("div")
         .attr('class', 'tooltip-data average')
-        .text("average")
+        .text("")
     var stats = tooltip.append('div')
       .attr('class', 'stats-text')
     stats.append('div')
@@ -255,7 +257,7 @@ function drawMap(container_width) {
         var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
           $(".tooltip-container").css("width", tooltipWidth * 1.15 )
       }else {
-          $(".tooltip-container").css("width", tooltipWidthUSA * 1.15)
+          $(".tooltip-container").css("width", tooltipWidthUSA * 1.18)
       }  
 
     })
@@ -266,6 +268,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link"
     })
+    var dropdownNames = ["Median Home Value", "First-time Homebuyer Share", "Median FICO Score", "Median Loan-to-Value (LTV) Ratio at Origination", "Debt-to-Income (DTI) Ratio at Origination", "Note Rate at Origination", "Convetional Loan Share", "FHA Loan Share", "VA Loan Share", "Share of Loans with Weak Credit Profile (LTV>95 and FICO<700)", "Affordability Index with 20% down payment", "Affordability Index with 3.5% down payment", "Median Family Income"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
@@ -281,22 +284,16 @@ function drawMap(container_width) {
           .data(dropdownDataFiltered)
           .enter()
           .append("option")
-          .text(function(d, i) {
+          .text(function(d, i) { console.log(dropdownData)
             // data.forEach(function(row) {
-              return dropdownDataFiltered[i]
+              return dropdownNames[i]
             // })
           })
           .attr("value", function(d,i) {
             return dropdownDataFiltered[i]
           })
 
-    d3.select('select')
-          .append("option")
-          .text("Select a category")
-          .attr("value","")
-          .attr("selected", "selected")
-          .attr("disabled", "disabled")
-          .attr("hidden", "hidden")
+    
 
       $("#state-menu")
         .selectmenu({
@@ -318,7 +315,7 @@ function drawMap(container_width) {
         .addClass( "ui-menu-icons customicons" );
 
     tooltipWidthUSA = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-    $(".tooltip-container").css("width", tooltipWidthUSA*1.1)
+    $(".tooltip-container").css("width", tooltipWidthUSA*1.18)
     //ADD BAR GRAPH
 
     var graphData = data.filter(function(d) {
@@ -331,7 +328,7 @@ function drawMap(container_width) {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(graphData.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
-    y.domain([0, MAXVALUE["cs"]])
+    y.domain([0, MAXVALUE["homevalue"]])
 
     barSvg = d3.select("#chart-container")
         .append("svg")
@@ -348,12 +345,21 @@ function drawMap(container_width) {
 
     barG.append("g")
       .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y).ticks(TICKS["cs"]).tickSize(-width).tickFormat(d3.format(".2s")))
+      .call(d3.axisLeft(y).ticks(TICKS["homevalue"]).tickSize(-width).tickFormat(d3.format(".2s")))
     barG
       .append("text")
-      .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-      .attr("transform", "translate("+ (-9) +","+(-9)+")")  // text is drawn off the screen top left, move down and out and rotate
-      .text("Units")
+      .attr("text-anchor", "start")  
+      .attr("transform", function() {
+        // transformLabel()
+        var tickLabels = d3.select(".axis--y").selectAll('.tick text')
+        var lastTick = tickLabels.filter(function(d,i){
+          return i == tickLabels.size() - 1
+        })
+        var lastTickX = lastTick.node().getBBox().x
+        var lastTickY = lastTick.node().getBBox().y
+        return "translate("+ (lastTickX) +","+(lastTickY - 3)+")"
+      })  
+      .text(UNITS[SELECTED_VARIABLE])
       .attr("class", "y-axis-label")
       // .attr("transform", "rotate(-90)")
       // .attr("y", 0)
@@ -368,7 +374,7 @@ function drawMap(container_width) {
           return "bar bar-" + d.abbr
         })
         .attr("x", function(d) { return x(d.abbr) })
-        .attr("y", function(d) { return y(d[SELECTED_VARIABLE]); })
+        .attr("y", function(d) { console.log(d[SELECTED_VARIABLE]); return y(d[SELECTED_VARIABLE]); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) {return graphHeight - y(d[SELECTED_VARIABLE]); })
         .on('mouseover', function(d) {
@@ -422,6 +428,19 @@ function drawMap(container_width) {
         .transition(t)
         .call(d3.axisLeft(y).ticks(TICKS[variable]).tickSize(-width).tickFormat(FORMAT[variable]))
         .on('end', function() {
+          barG.select(".y-axis-label")
+            .text(UNITS[variable])
+            .attr("transform", function() {
+              // transformLabel()
+              var tickLabels = d3.select(".axis--y").selectAll('.tick text')
+              var lastTick = tickLabels.filter(function(d,i){
+                return i == tickLabels.size() - 1
+              })
+              var lastTickX = lastTick.node().getBBox().x
+              var lastTickY = lastTick.node().getBBox().y
+              console.log(lastTickY)
+              return "translate("+ (lastTickX) +","+(lastTickY - 3)+")"
+            })
           sortBars(variable)
         })
       barG.selectAll(".bar")
@@ -489,7 +508,7 @@ function drawMap(container_width) {
       var legend = mapSvg.append("g")
         .attr("width", width/3)
         .attr("height", 50)
-        .attr("transform", "translate("+width*.9+"," + height*.1 + ")")
+        .attr("transform", "translate("+width*.83+"," + height*.1 + ")")
 
       var keyHeight = (IS_PHONE) ? width*.068: 28;
       var keyWidth = (IS_PHONE) ? 8 : 15;

@@ -74,15 +74,20 @@ select {
 /*  width: 25%;
 */}
 .dropdown-text{
-  float: left;
+  float: right;
   margin-top: 30px;
 
 }
 .dropdown-container {
 
 }
+.ui-selectmenu-text {
+  width: 85%;
+}
 
-
+.ui-button {
+  padding: .4em .8em !important;
+}
 
 .tooltip-data {
 	font-family: Lato;
