@@ -513,10 +513,14 @@ function drawMap(container_width) {
     function format(d) {
       var numberFormat = d3.format(",.0f")
       var decimalFormat = d3.format(".1f")
-      if (d < 100) {
-        return decimalFormat(d)
-      }else {
+      if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
+        return "$" + numberFormat(d)
+      } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
+        return decimalFormat(d) + "%"
+      }else if (d > 100) {
         return numberFormat(d)
+      } else {
+        return decimalFormat(d)
       }
     }
 
