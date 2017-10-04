@@ -186,23 +186,60 @@ path.domain {
     top: 0;
     left: 0;
 }
+#chart-container {
+  display: block;
+}
+#chart-container-mobile {
+  display: none;
+}
 
-@media (max-width: 600px) {
+#dropdown-mobile {
+  display: none;
+}
+@media (max-width: 715px) {
+  #category-menu-button {
+    margin-left: 10px;
+  }
+  #state-menu-button {
+    margin-left: 15px;
+  }
+  #dropdown-mobile {
+    display: block;
+  }
+  #chart-container {
+    display: none;
+  }
+
+  #chart-container-mobile {
+    display: block;
+  }
+
+  .dropdown-state {
+    margin-top: 20px;
+    margin-left: 19px;
+  }
+  .dropdown-text {
+    display: none;
+  }
   #isPhone {
     display: block;
   }
   .state-label {
     font-size: 10px;
   }
-  .region-text {
-    width: 100%;
 
-  }
   .dropdown-text {
     width: 100%;
   }
   .tooltip-container {
-    width: 200px;
+    width: 70%;
+
+  }
+  .tooltip-data.average {
+    margin-bottom: 20px;
+  }
+  .stats-text {
+    float: right;
   }
 }
 

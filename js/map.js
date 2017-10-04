@@ -64,7 +64,7 @@ function drawMap(container_width) {
 	    }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
-  console.log(IS_MOBILE)
+  console.log(IS_PHONE)
   var quantize = d3.scaleQuantize()
     .domain([0, MAXVALUE[SELECTED_VARIABLE]])
     .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
@@ -239,7 +239,9 @@ function drawMap(container_width) {
       d3.select(".bar-" + abbr)
         .classed("hover", true)
       var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-      $(".tooltip-container").css("width", tooltipWidth * 1.15)
+      if (IS_PHONE != true) { console.log('hi')
+        $(".tooltip-container").css("width", tooltipWidth * 1.15)
+      }
     });
     dispatch.on("dehoverState", function() {
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
@@ -253,17 +255,19 @@ function drawMap(container_width) {
             .text(average)
           d3.selectAll(".state, .bar")
             .classed("hover", false)
-      if (selectedState != "United States of America") {
-        var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-          $(".tooltip-container").css("width", tooltipWidth * 1.15 )
-      }else {
-          $(".tooltip-container").css("width", tooltipWidthUSA * 1.18)
-      }  
+      if (IS_PHONE != true) { console.log('hi')
+        if (selectedState != "United States of America") {
+          var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+            $(".tooltip-container").css("width", tooltipWidth * 1.15 )
+        }else { console.log('hi')
+            $(".tooltip-container").css("width", tooltipWidthUSA * 1.18)
+        }  
+      }
 
     })
 
-
     //VARIABLE DROPDOWN MENU
+    $("#dropdown-mobile").empty()
     var dropdownData = d3.keys(data[0])
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link"
@@ -272,13 +276,16 @@ function drawMap(container_width) {
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
-    // dropdown.append('div')
-    //       .attr('class', 'tooltip-title')
-        //  .text('SELECT A STATE')
-    var dropdownMenu =dropdown.append('div')
-          .attr('class', 'dropdown-container')
+    var dropdownMobile = d3.select("#dropdown-mobile")
+    if (IS_PHONE){ console.log('hi')
+        var dropdownMenu =dropdownMobile.append('div')
+          .attr('class', 'dropdown-category')
+          .append('text')
+          .text('Category:')
+          .attr('class', 'dropdown-label')
+        dropdownMenu
           .append("select")
-          .attr('id', 'state-menu')
+          .attr('id', 'category-menu')
           // .attr("onChange", "window.open(this.link, '_blank') ")
           .selectAll("option")
           .data(dropdownDataFiltered)
@@ -293,7 +300,67 @@ function drawMap(container_width) {
             return dropdownDataFiltered[i]
           })
 
-    
+        var stateMenu = dropdownMobile.append('div')
+          .attr('class','dropdown-state')
+          .append('text')
+          .text('State: ')
+          .attr('class', 'dropdown-label')
+        stateMenu
+          .append("select")
+          .attr('id', 'state-menu')
+          // .attr("onChange", "window.open(this.link, '_blank') ")
+          .selectAll("option")
+          .data(data)
+          .enter()
+          .append("option")
+          .text(function(d, i) {
+            // data.forEach(function(row) {
+              return d.state
+            // })
+          })
+          .attr("value", function(d,i) {
+            return d.state
+          })
+    }else {
+      var dropdownMenu =dropdown.append('div')
+          .attr('class', 'dropdown-category')
+          .append("select")
+          .attr('id', 'category-menu')
+          // .attr("onChange", "window.open(this.link, '_blank') ")
+          .selectAll("option")
+          .data(dropdownDataFiltered)
+          .enter()
+          .append("option")
+          .text(function(d, i) {
+            // data.forEach(function(row) {
+              return dropdownNames[i]
+            // })
+          })
+          .attr("value", function(d,i) {
+            return dropdownDataFiltered[i]
+          })
+    }
+
+      $("#category-menu")
+        .selectmenu({
+
+           open: function( event, ui ) { 
+            $("#category-menu-menu").css("width", "322px")
+            // d3.select("body").style("height", (d3.select(".ui-selectmenu-menu.ui-front.ui-selectmenu-open").node().getBoundingClientRect().height*2.3) + "px")
+            // pymChild.sendHeight();
+            },
+            close: function(event, ui){
+            
+            },
+           change: function(event, data){ 
+            SELECTED_VARIABLE = data.item.value;
+              updateBars(SELECTED_VARIABLE)
+              updateMap(SELECTED_VARIABLE)
+              dispatch.call("dehoverState")
+            }
+        })     
+        .selectmenu( "menuWidget" )
+        .addClass( "ui-menu-icons customicons" );
 
       $("#state-menu")
         .selectmenu({
@@ -316,8 +383,10 @@ function drawMap(container_width) {
         .selectmenu( "menuWidget" )
         .addClass( "ui-menu-icons customicons" );
 
-    tooltipWidthUSA = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-    $(".tooltip-container").css("width", tooltipWidthUSA*1.18)
+    if (IS_PHONE != true) { console.log('hi')
+      tooltipWidthUSA = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+      $(".tooltip-container").css("width", tooltipWidthUSA*1.18)
+    }
     //ADD BAR GRAPH
 
     var graphData = data.filter(function(d) {
@@ -332,6 +401,8 @@ function drawMap(container_width) {
     // y.domain([0, d3.max(graphData, function(d) { return d.cs; })]);
     y.domain([0, MAXVALUE[SELECTED_VARIABLE]])
   $("#chart-container").empty()
+  $("#chart-container-mobile").empty()
+
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -406,6 +477,7 @@ function drawMap(container_width) {
         selectState(d)
         dispatch.call("dehoverState")
       })
+    /*MOBILE BAR CHART */
 
     function selectState(d) { 
       if (d3.select(".bar-" + d.abbr).classed("selected") == true) {
@@ -437,8 +509,10 @@ function drawMap(container_width) {
           .text(function() {
             return (d.abbr == "US") ? "" : "US average: " + format(data[0][SELECTED_VARIABLE])
           })      
-      var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-      $(".tooltip-container").css("width", tooltipWidth * 1.15)
+      if (IS_PHONE != true) { console.log('hi')
+        var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+        $(".tooltip-container").css("width", tooltipWidth * 1.15)
+      }
     }
     function updateBars(variable) {
       var quantize = d3.scaleQuantize()
