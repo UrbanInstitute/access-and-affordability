@@ -217,6 +217,9 @@ path.domain {
 }
 
 @media (max-width: 715px) {
+  .dropdown-label, .dropdown-div {
+    float: left;
+  }
   .stats-text {
     margin-right: 0px;
   }
@@ -234,6 +237,7 @@ path.domain {
   }*/
   #category-menu-button {
     margin-left: 10px;
+    float: left;
   }
   #state-menu-button {
     margin-left: 15px;
@@ -242,7 +246,7 @@ path.domain {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 400px;
+    width: 420px;
   }
   #chart-container {
     display: none;
@@ -301,6 +305,9 @@ path.domain {
   }
   .dropdown-state {
     float: left;
+  }
+  .dropdown-div {
+    float: none;
   }
 /*  .ui-selectmenu-button.ui-button{
     width: 270px !important;
