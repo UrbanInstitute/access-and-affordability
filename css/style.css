@@ -226,12 +226,12 @@ path.domain {
   .tick > text {
     font-size: 16px;
   }
-  .bar-1 {
+/*  .bar-1 {
     fill: #fdbf11;
   }
   .bar-0 {
     fill: #1696d2;
-  }
+  }*/
   #category-menu-button {
     margin-left: 10px;
   }
