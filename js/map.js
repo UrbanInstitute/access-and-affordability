@@ -399,8 +399,9 @@ function drawMap(container_width) {
     var graphDataSorted = graphData.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
 
     var graphHeight = height*.5,
-        graphHeightMobile = height,
-        xMobile = d3.scaleLinear().range([0, width*.6]),
+        graphHeightMobile = (container_width < 442) ? height*2 : height,
+        barWidth = (container_width < 442) ? width*.9: width * .6,
+        xMobile = d3.scaleLinear().range([0, barWidth]),
         yMobile = d3.scaleBand().range([graphHeightMobile, 0]),
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
@@ -411,14 +412,15 @@ function drawMap(container_width) {
     yMobile.domain(dataFilteredMobile.map(function(d) { return d.abbr; })).padding(0.1);
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
-    if (IS_PHONE){
-      barSvg = d3.select("#chart-container-mobile")
+    if (IS_PHONE){ console.log(container_width)
+      var translateX = (container_width < 442) ? 33 : width/5
+      var barSvg = d3.select("#chart-container-mobile")
         .append("svg")
-        .attr("width", width*.8 + margin.left + margin.right)
+        .attr("width", width + margin.left + margin.right)
         .attr("height", graphHeightMobile + margin.top + margin.bottom);
       var barG  = barSvg.append("g")
         .attr("class", "barG")
-        .attr("transform", "translate("+ width/5+","+graphHeightMobile/5+")")
+        .attr("transform", "translate("+ translateX+","+graphHeightMobile/5+")")
       barG.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + graphHeightMobile + ")")
