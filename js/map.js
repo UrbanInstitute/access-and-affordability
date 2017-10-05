@@ -359,9 +359,11 @@ function drawMap(container_width) {
             },
            change: function(event, data){ 
             SELECTED_VARIABLE = data.item.value;
-              updateBars(SELECTED_VARIABLE)
+              if (IS_PHONE != true) {
+                updateBars(SELECTED_VARIABLE)
+                dispatch.call("dehoverState")
+              } 
               updateMap(SELECTED_VARIABLE)
-              dispatch.call("dehoverState")
             }
         })     
         .selectmenu( "menuWidget" )
