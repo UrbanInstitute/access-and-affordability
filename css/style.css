@@ -164,11 +164,11 @@ path.domain {
   z-index: 10;
 }
 .axis--y > path.domain {
-  stroke: #fff;
+  stroke: none;
 }
 
 .axis--x > path.domain {
-  stroke: #fff;
+  stroke: none;
 }
 .axis--y > .tick > line {
   stroke: #cccccc;
@@ -221,7 +221,7 @@ path.domain {
     margin-right: 0px;
   }
   .axis--y > .tick > line {
-    stroke: #fff;
+    stroke: none;
   }
   .tick > text {
     font-size: 16px;
@@ -312,26 +312,48 @@ path.domain {
   #category-menu-button {
     margin-left: 0px;
     margin-top: 10px;
-    width: 100% !important;
+    width: 270px !important;
   }
   #state-menu-button {
     margin-left: 0px;
     margin-top: 10px;
-    width: 103% !important;
-
+    width: 270px !important;
+  }
+  .tooltip-data {
+    margin-top: 3px;
   }
   .dropdown-state {
     margin-left: 0px;
   }
-
   .tooltip-container {
-    display: none;
+    height: 190px;
+    width: 100%;
+    margin-top: 0px;
   }
+  .stats-text {
+    float: left;
+    margin: 30px 0 0 30px;
+/*    width: 100%;
+*/  }
+/*  .region-text {
+    width: 100%;
+  }*/
   #map-container {
     display: none;
   }
  }
-  @media (max-width: 350px) {
+  @media (max-width: 330px) {
+    #category-menu-button {
+      width: 240px !important;
+    }
+    #state-menu-button {
+      width: 240px !important;
+    }
+    .stats-text {
+      width: 100%;
+      margin-top: 0px;
+      margin-left: 0px;
+    }
 
 
  }
