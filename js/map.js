@@ -281,9 +281,9 @@ function drawMap(container_width) {
         var dropdownMenu =dropdownMobile.append('div')
           .attr('class', 'dropdown-category')
           .append('text')
-          .text('Category:')
+          .text('CATEGORY')
           .attr('class', 'dropdown-label')
-        dropdownMenu
+        dropdownMobile.select('.dropdown-category')
           .append("select")
           .attr('id', 'category-menu')
           // .attr("onChange", "window.open(this.link, '_blank') ")
@@ -303,9 +303,9 @@ function drawMap(container_width) {
         var stateMenu = dropdownMobile.append('div')
           .attr('class','dropdown-state')
           .append('text')
-          .text('State: ')
+          .text('STATE')
           .attr('class', 'dropdown-label')
-        stateMenu
+        dropdownMobile.select('.dropdown-state')
           .append("select")
           .attr('id', 'state-menu')
           // .attr("onChange", "window.open(this.link, '_blank') ")

@@ -242,7 +242,7 @@ path.domain {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 400px;
   }
   #chart-container {
     display: none;
@@ -250,11 +250,15 @@ path.domain {
 
   #chart-container-mobile {
     display: block;
+    margin-top: 20px;
   }
-
+  .dropdown-category {
+    float: right;
+  }
   .dropdown-state {
     margin-top: 20px;
-    margin-left: 19px;
+    float: right;
+    margin-bottom: 20px;
   }
   .dropdown-text {
     display: none;
@@ -286,12 +290,40 @@ path.domain {
   .tooltip-container {
     width: 80%;
   }
-  #dropdown-mobile {
-    width: 100%;
-  }
+
+
+
  }
 
  @media (max-width: 440px) {
+  .dropdown-category {
+    float: left;
+  }
+  .dropdown-state {
+    float: left;
+  }
+/*  .ui-selectmenu-button.ui-button{
+    width: 270px !important;
+    margin-right: 80px;
+  }*/
+  .dropdown-label {
+    font-size: 14px;
+  }
+  #category-menu-button {
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 100% !important;
+  }
+  #state-menu-button {
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 103% !important;
+
+  }
+  .dropdown-state {
+    margin-left: 0px;
+  }
+
   .tooltip-container {
     display: none;
   }
@@ -301,12 +333,5 @@ path.domain {
  }
   @media (max-width: 350px) {
 
-  .region-text {
-    width: 100%;
-    margin-top: 20px;
-  }
-  .stats-text {
-    width: 100%;
-    margin-top: 20px;
-  }
+
  }
