@@ -753,6 +753,16 @@ function drawMap(container_width) {
           .attr("y2", function(d) {
             return y(d[variable])
           })  
+          .on('end', function() {
+            barSvg.select(".us-label")
+              .attr("transform", function(d) {
+                var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
+                console.log(yPos)
+                return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
+              })
+
+          })
+
       }
     }
 
