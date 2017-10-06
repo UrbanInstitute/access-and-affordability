@@ -472,8 +472,8 @@ function drawMap(container_width) {
     var dataSorted = dataFiltered.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
     var graphHeight = height*.5,
         paddingMobile = .2
-        graphHeightMobile = (container_width < 442) ? 140 : 120,
-        barWidth = (container_width < 442) ? width*.8: width * .5,
+        graphHeightMobile = (container_width < 442) ? 130 : 100,
+        barWidth = (container_width < 442) ? width: width * .7,
         xMobile = d3.scaleLinear().range([0, barWidth]),
         yMobile = d3.scaleBand().range([graphHeightMobile, 0]),
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
@@ -486,16 +486,22 @@ function drawMap(container_width) {
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
     if (IS_PHONE){ 
-      var translateX = (container_width < 442) ? 33 : width/5
+      var translateX = (container_width < 442) ? 33 : width/4
       var barSvg = d3.select("#chart-container-mobile")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", graphHeightMobile + margin.top + margin.bottom);
 
-
       var barG  = barSvg.append("g")
         .attr("class", "barG")
         .attr("transform", "translate("+ translateX+","+graphHeightMobile/5+")")
+      barG.selectAll("text")
+        .data(dataSortedMobile)
+        .enter().append("text")
+        .attr("class", "bar-mobile-text")
+      barG.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(yMobile));
       barG.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + graphHeightMobile + ")")
@@ -505,21 +511,30 @@ function drawMap(container_width) {
           d3.select(this)
             .attr("class", "tick tick-" + i)
         })
-      barG.append("g")
-        .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yMobile));
-      barG.selectAll(".bar")
+      var barMobile = barG.selectAll(".bar")
         .data(dataSortedMobile)
         .enter().append("rect")
         .attr("class", function(d, i) {
           return "bar bar-" + i
         })
-        .attr("x", 0)
+        .attr("x", 1)
         .attr("height", yMobile.bandwidth())
         .attr("y", function(d) { return yMobile(d.abbr); })
-        .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE]); })
+        .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
         .style("fill", function(d) { 
           return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
+        })
+
+      d3.selectAll(".bar-mobile-text")
+        .each(function(d,i) {
+          var xPos = d3.select(".bar-" + i).node().getBoundingClientRect().right - 95
+            var yPos = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 183
+          d3.select(this)
+            .attr("x", xPos)
+            .attr("y", yPos)
+          .text(function(d) {
+            return format(d[SELECTED_VARIABLE])
+          })
         })
     }else {
     barSvg = d3.select("#chart-container")
@@ -736,13 +751,26 @@ function drawMap(container_width) {
               return "bar bar-1"
             }
           })
-          .attr("x", 0)
+          .attr("x", 1)
           .attr("height", yMobile.bandwidth())
           .attr("y", function(d) { return yMobile(d.abbr); })
           .attr("width", function(d) { return xMobile(d[variable]); })
           .style("fill", function(d) { 
             return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
           })
+        d3.selectAll(".bar-mobile-text")
+          .data(dataSortedMobile)
+          .each(function(d,i) {
+            var xPos = d3.select(".bar-" + i).node().getBoundingClientRect().right - 95
+              var yPos = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 183
+            d3.select(this)
+              .attr("x", xPos)
+              .attr("y", yPos)
+            .text(function(d) {
+              return format(d[variable])
+            })
+          })
+       
       }else {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
       y.domain([0, MAXVALUE[variable]]);

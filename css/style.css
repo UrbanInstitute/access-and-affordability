@@ -38,6 +38,11 @@ div.map-tooltip {
     pointer-events: none;     
 }
 
+.bar-mobile-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .bar-1 {
   fill: #1696d2;
 }
@@ -56,15 +61,17 @@ div.map-tooltip {
 #link-mobile {
   display: none;
 }
-#link-mobile > div{
+#link-mobile {
   font-size: 12px;
-  width: 400px;
+  width: 380px;
   margin-left: auto;
   margin-right: auto;
 }
 #link-mobile > div> a {
   color: #1696d2;
   text-decoration: none;
+  font-style: italic;
+
 }
 .us-label {
   font-size: 12px;
@@ -190,7 +197,7 @@ path.domain {
 }
 .tick-0 > line{
   stroke: #000 !important;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
   z-index: 10;
 }
 .axis--y > path.domain {
@@ -205,7 +212,7 @@ path.domain {
 }
 
 .axis--x > .tick > line {
-  stroke: #fff;
+  stroke: none;
 }
 /**MOBILE SCREEN WIDTHS **/
 
@@ -340,11 +347,15 @@ path.domain {
  }
 
  @media (max-width: 440px) {
-
   #link-mobile {
     float: left;
-
   }
+
+  #dropdown-mobile {
+    margin-left: unset;
+    margin-right: unset;
+  }
+
   #link-mobile > div {
     width: 300px;
   }
