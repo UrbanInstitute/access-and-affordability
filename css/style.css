@@ -25,12 +25,19 @@ select {
   color: #29abe2;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
- select {
-  background-color: #f8f8f8;
-  }
+div.tooltip { 
+    position: absolute;     
+    text-align: left;     
+    width: 80px;          
+    height: 60px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: #fff; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
 
-  }
 .state-text {
 	float: left;
 	margin-left: 2em;
@@ -40,7 +47,20 @@ select {
   font-size: 12px;
   font-style: italic;
 }
+.bar-label {
+  font-size: 12px;
+}
 
+#link-mobile > div{
+  font-size: 12px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#link-mobile > div> a {
+  color: #1696d2;
+  text-decoration: none;
+}
 .us-label {
   font-size: 12px;
   font-weight: 600;
@@ -225,6 +245,10 @@ path.domain {
   .dropdown-label, .dropdown-div {
     float: left;
   }
+
+  #tooltip-header {
+    display: none;
+  }
   .stats-text {
     margin-right: 0px;
   }
@@ -252,6 +276,7 @@ path.domain {
     margin-left: auto;
     margin-right: auto;
     width: 420px;
+    margin-top: 20px;
   }
   #chart-container {
     display: none;
@@ -259,7 +284,7 @@ path.domain {
 
   #chart-container-mobile {
     display: block;
-    margin-top: 20px;
+    margin-top: 5px;
   }
   .dropdown-category {
     float: right;
@@ -305,6 +330,12 @@ path.domain {
  }
 
  @media (max-width: 440px) {
+  #link-mobile {
+    float: left;
+  }
+  #link-mobile > div {
+    width: 300px;
+  }
   .dropdown-category {
     float: left;
   }

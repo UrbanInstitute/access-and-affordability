@@ -40,6 +40,7 @@ function drawMap(container_width) {
         var data_aff_index_20 = data[i].aff_index_20;
         var data_aff_index_35 = data[i].aff_index_35;
         var data_med_income = data[i].med_income;
+        var data_agency = data[i].agency;
 
 	      for (var j = 0; j < json.features.length; j++)  {
 	        var jsonState = json.features[j].properties.name;
@@ -61,6 +62,8 @@ function drawMap(container_width) {
           json.features[j].properties.aff_index_20= data_aff_index_20;
           json.features[j].properties.aff_index_35= data_aff_index_35;
           json.features[j].properties.med_income= data_med_income;
+          json.features[j].properties.agency= data_agency;
+
 	        // Stop looking through the JSON
 	        break;
 	        }
@@ -90,10 +93,11 @@ function drawMap(container_width) {
   })
   var quantize = d3.scaleThreshold()
     .domain([170000, 196000, 225000, 280000])
-    // .range(d3.range(5).map(function(i) { return "q" + i + "-6"; }));
     .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
 
-
+  var div = d3.select("body").append("div") 
+      .attr("class", "tooltip")       
+      .style("opacity", 0);
   //Width and height of map
     $mapContainer = $("#map-container")
     $chartContainer = $("#chart-container")
@@ -238,12 +242,24 @@ function drawMap(container_width) {
         })
     d3.selectAll(".state")
     	.on("mouseover", function (d) {
-               dispatch.call("hoverState", this, (d3.select(this).attr('class')))
-            })
+        console.log(d.properties.agency)
+        div.transition()   
+          .duration(200)    
+          .style("opacity", .9);    
+        div.html("Click to learn about " + d.properties.agency)  
+          .style("left", (d3.event.pageX) + "px")   
+          .style("top", (d3.event.pageY - 28) + "px");  
+        d3.select('.tooltip').moveToFront();
+         dispatch.call("hoverState", this, (d3.select(this).attr('class')))
+      })
     	.on("mouseout", function () {
-               dispatch.call("dehoverState")
-            })
-
+         dispatch.call("dehoverState")
+      })
+    d3.selection.prototype.moveToFront = function() {  
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
     var dispatch = d3.dispatch("hoverState", "dehoverState");
 
 
@@ -447,8 +463,9 @@ function drawMap(container_width) {
     //ADD BAR GRAPH
     var dataSorted = dataFiltered.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
     var graphHeight = height*.5,
-        graphHeightMobile = (container_width < 442) ? height*2 : height,
-        barWidth = (container_width < 442) ? width*.9: width * .6,
+        paddingMobile = .2
+        graphHeightMobile = (container_width < 442) ? 140 : 120,
+        barWidth = (container_width < 442) ? width*.8: width * .5,
         xMobile = d3.scaleLinear().range([0, barWidth]),
         yMobile = d3.scaleBand().range([graphHeightMobile, 0]),
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
@@ -457,7 +474,7 @@ function drawMap(container_width) {
     // y.domain([0, d3.max(data, function(d) { return d.cs; })]);
     y.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
     xMobile.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
-    yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(0.1);
+    yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(paddingMobile);
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
     if (IS_PHONE){ 
@@ -466,6 +483,8 @@ function drawMap(container_width) {
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", graphHeightMobile + margin.top + margin.bottom);
+
+
       var barG  = barSvg.append("g")
         .attr("class", "barG")
         .attr("transform", "translate("+ translateX+","+graphHeightMobile/5+")")
@@ -678,12 +697,11 @@ function drawMap(container_width) {
           return d3.descending(a.abbr,b.abbr);
         })
         var translateX = (container_width < 442) ? 33 : width/5,
-            graphHeightMobile = (container_width < 442) ? height*2 : height,
             barWidth = (container_width < 442) ? width*.9: width * .6,
             xMobile = d3.scaleLinear().range([0, barWidth]),
             yMobile = d3.scaleBand().range([graphHeightMobile, 0]);
             xMobile.domain([0, MAXVALUE[variable]]);
-            yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(0.1);
+            yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(paddingMobile);
         barG.select(".axis--x")
           .call(d3.axisBottom(xMobile).tickSizeInner([-graphHeightMobile]));
         barG.select(".axis--x").selectAll(".tick")
