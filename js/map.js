@@ -9,11 +9,15 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 //Create SVG element and append map to the SVG
 var MAXVALUE = {"homevalue": 500000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 45, "orignoterate": 4, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
+    BREAKS = {"homevalue": [170000, 196000, 225000, 280000], "fthb": [46, 49, 52, 56], "fico": [723, 729, 734, 740], "origltv": [91, 94, 95, 96], "dti": [36, 37, 38, 39], "orignoterate": [3.6, 3.8, 3.9, 4], "conv": [50, 55, 58,63], "fha": [170000, 196000, 225000, 280000], "va": [170000, 196000, 225000, 280000], "ltv_fico": [170000, 196000, 225000, 280000], "aff_index_20": [170000, 196000, 225000, 280000], "aff_index_35": [170000, 196000, 225000, 280000], "med_income": [170000, 196000, 225000, 280000] },
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "orignoterate": 5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6},
     UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Ratio", "conv": "Rate", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars"},
     SELECTED_VARIABLE = "homevalue";
-    STATE = "District of Columbia"
+    STATE = "District of Columbia";
+    COLORS = ["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"]
+
+
 function drawMap(container_width) {
 
 	d3.csv("data2.csv", function(data) {
@@ -65,18 +69,30 @@ function drawMap(container_width) {
 	    }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
-  var quantize = d3.scaleQuantize()
-    .domain([0, MAXVALUE[SELECTED_VARIABLE]])
-    .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
+  var dataFiltered = data.filter(function(d) {
+    return d.abbr != "US"
+  })
+  var dataFilteredMobile = data.filter(function(d, state) {
+    return d.abbr == "US" || d.abbr == "DC"
+  })
+  var dataSortedMobile = dataFilteredMobile.sort(function(a,b) {
+    return d3.descending(a.abbr,b.abbr);
+  })
 
-  var COLORS = 
-  {
-    "q0-6": "#cfe8f3",
-    "q1-6": "#73bfe2",
-    "q2-6": "#1696d2",
-    "q3-6": "#0a4c6a",
-    "q4-6": "#000000"
-  }
+  MIN = d3.min(dataFiltered, function(d) {
+    return d[SELECTED_VARIABLE]
+  })
+  MAX = d3.max(data, function(d) {
+    return d[SELECTED_VARIABLE]
+  })
+  MAX_MOBILE = d3.max(data, function(d) {
+    return d[SELECTED_VARIABLE]
+  })
+  var quantize = d3.scaleThreshold()
+    .domain([170000, 196000, 225000, 280000])
+    // .range(d3.range(5).map(function(i) { return "q" + i + "-6"; }));
+    .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
+
 
   //Width and height of map
     $mapContainer = $("#map-container")
@@ -87,7 +103,7 @@ function drawMap(container_width) {
     aspect_width = 12;
     aspect_height = 3.5;
     margin = { top: 20, right: 20, bottom: 20, left: 20 };
-    width= (container_width > 944) ? 944 - margin.left - margin.right : container_width - margin.left - margin.right;
+    width= (container_width > 960) ? 960 - margin.left - margin.right : container_width - margin.left - margin.right;
     height = Math.ceil((width * aspect_height) / aspect_width) - margin.top - margin.bottom;
     mapHeight = (IS_PHONE) ? height*1.8: height*1.5;
 // D3 Projection
@@ -124,11 +140,16 @@ function drawMap(container_width) {
     	.style("stroke", "#fff")
     	.style("stroke-width", "1")
       .style("fill", function(d) { 
-        return COLORS[quantize(d.properties[SELECTED_VARIABLE])]
+        return quantize(d.properties[SELECTED_VARIABLE])
       })
       .on('click', function(d) {
-        selectState(d.properties)
-        dispatch.call("dehoverState")
+        if (IS_PHONE) {
+          var state = d.properties.state
+          selectStateMobile(state)
+        }else {
+          selectState(d.properties)
+          dispatch.call("dehoverState")
+        }
       })
   //ADD LEADER LINE FOR DC
     var dcData = json.features.filter(function(d) {return d.properties.name == "District of Columbia"})
@@ -139,7 +160,7 @@ function drawMap(container_width) {
       .attr("x2", .77*(width))
       .attr("y2", .5*mapHeight)
       .attr("stroke-width", 1.2)
-      .attr("stroke", "#ec008b")
+      .attr("stroke", "#000000")
     // var dcLine2 = mapSvg.append("line")
     //   .attr("x1", .77*(width))
     //   .attr("y1", .5*mapHeight)
@@ -198,7 +219,7 @@ function drawMap(container_width) {
     region.append("div")
         .attr('class', 'tooltip-data state')
         .text(function() {
-          return (IS_PHONE) ? STATE : "United States of America";
+          return (IS_PHONE) ? STATE : "United States";
         })
     region.append("div")
         .attr('class', 'tooltip-data average')
@@ -249,7 +270,7 @@ function drawMap(container_width) {
       }
     });
     dispatch.on("dehoverState", function() {
-      var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States of America";
+      var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States";
       var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
       var average = (d3.select(".bar.selected").size() > 0 && selectedState.search("United") < 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
           d3.select(".tooltip-data.state")
@@ -261,7 +282,7 @@ function drawMap(container_width) {
           d3.selectAll(".state, .bar")
             .classed("hover", false)
       if (IS_PHONE != true) { 
-        if (selectedState != "United States of America") {
+        if (selectedState != "United States") {
           var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
             $(".tooltip-container").css("width", tooltipWidth * 1.15 )
         }else { 
@@ -371,15 +392,21 @@ function drawMap(container_width) {
             
             },
            change: function(event, data){ 
-            STATE = STATE;
-            SELECTED_VARIABLE = data.item.value;
+              STATE = STATE;
+              SELECTED_VARIABLE = data.item.value;
+              MIN = d3.min(dataFiltered, function(d) {
+                return d[SELECTED_VARIABLE]
+              })
+              MAX = d3.max(data, function(d) {
+                return d[SELECTED_VARIABLE]
+              })
               if (IS_PHONE != true) {
                 updateBars(SELECTED_VARIABLE)
                 dispatch.call("dehoverState")
               }else {
                 updateTooltip(STATE, SELECTED_VARIABLE)
               }
-              updateMap(SELECTED_VARIABLE)
+              updateMap(SELECTED_VARIABLE, MIN, MAX)
             }
         })     
         .selectmenu( "menuWidget" )
@@ -400,10 +427,12 @@ function drawMap(container_width) {
             // pymChild.sendHeight();
             },
            change: function(event, data){ 
-            STATE = data.item.value
-            SELECTED_VARIABLE = SELECTED_VARIABLE;
+              STATE = data.item.value
+              SELECTED_VARIABLE = SELECTED_VARIABLE;
               updateBars(SELECTED_VARIABLE, STATE)
               updateTooltip(STATE, SELECTED_VARIABLE)
+              selectStateMobile(STATE)
+
               // updateMap(SELECTED_VARIABLE)
               // dispatch.call("dehoverState")
             }
@@ -416,16 +445,7 @@ function drawMap(container_width) {
       $(".tooltip-container").css("width", tooltipWidthUSA*1.18)
     }
     //ADD BAR GRAPH
-
-
-    var dataFilteredMobile = data.filter(function(d, state) {
-      return d.abbr == "US" || d.abbr == "DC"
-    })
-    var dataSortedMobile = dataFilteredMobile.sort(function(a,b) {
-      return d3.descending(a.abbr,b.abbr);
-    })
-    var dataSorted = data.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
-
+    var dataSorted = dataFiltered.sort(function(a, b) { return b[SELECTED_VARIABLE] - a[SELECTED_VARIABLE]; });  
     var graphHeight = height*.5,
         graphHeightMobile = (container_width < 442) ? height*2 : height,
         barWidth = (container_width < 442) ? width*.9: width * .6,
@@ -433,7 +453,7 @@ function drawMap(container_width) {
         yMobile = d3.scaleBand().range([graphHeightMobile, 0]),
         x = d3.scaleBand().range([0, width]).padding(0.1),//.paddingInner([0.15]).align([.1]),
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
-    x.domain(data.map(function(d) { return d.abbr; }));
+    x.domain(dataSorted.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(data, function(d) { return d.cs; })]);
     y.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
     xMobile.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
@@ -472,7 +492,7 @@ function drawMap(container_width) {
         .attr("y", function(d) { return yMobile(d.abbr); })
         .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE]); })
         .style("fill", function(d) { 
-          return COLORS[quantize(d[SELECTED_VARIABLE])]
+          return quantize(d[SELECTED_VARIABLE])
         })
     }else {
     barSvg = d3.select("#chart-container")
@@ -530,7 +550,7 @@ function drawMap(container_width) {
         return "bar bar-" + d.abbr
       })
       .style("fill", function(d) { 
-        return COLORS[quantize(d[SELECTED_VARIABLE])]
+        return quantize(d[SELECTED_VARIABLE])
       })
       .attr("x", function(d) { return x(d.abbr) })
       .attr("y", function(d) { return y(d[SELECTED_VARIABLE]); })
@@ -567,6 +587,23 @@ function drawMap(container_width) {
           return "US average: " + format(data[0][variable])
         })
     }
+    function selectStateMobile(state){
+      console.log(data)
+      var abbr = (function(){
+        for (index in data) {
+            if (data[index].state == state){
+              return data[index]["abbr"];
+            }
+          }
+      })
+      ()
+      console.log(abbr)
+      d3.selectAll("path.state")
+        .classed("selected", false)
+        .classed("hover", false)
+      d3.select("path.state." + abbr)
+        .classed("selected", true)
+    }
     function selectState(d) { 
       if (d3.select(".bar-" + d.abbr).classed("selected") == true) {
       d3.selectAll(".state, .bar")
@@ -602,10 +639,13 @@ function drawMap(container_width) {
         $(".tooltip-container").css("width", tooltipWidth * 1.15)
       }
     }
-    function updateBars(variable, state) {
-      var quantize = d3.scaleQuantize()
-        .domain([0, MAXVALUE[variable]])
-        .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }))
+    function updateBars(variable, state, min, max) {console.log(BREAKS[variable])
+      // var quantize = d3.scaleQuantize()
+      //   .domain([MIN, MAX])
+      //   .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
+      var quantize = d3.scaleThreshold()
+        .domain(BREAKS[variable])
+        .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
       if (IS_PHONE) {
         var dataFilteredMobile = data.filter(function(d) { 
           return d.abbr == "US" || d.state == state
@@ -643,13 +683,13 @@ function drawMap(container_width) {
           .attr("y", function(d) { return yMobile(d.abbr); })
           .attr("width", function(d) { return xMobile(d[variable]); })
           .style("fill", function(d) { 
-            return COLORS[quantize(d[variable])]
+            return quantize(d[variable])
           })
       }else {
-          y = d3.scaleLinear().rangeRound([graphHeight, 0]);
-          y.domain([0, MAXVALUE[variable]]);
+        y = d3.scaleLinear().rangeRound([graphHeight, 0]);
+      y.domain([0, MAXVALUE[variable]]);
         var t = d3.transition()
-          .duration(800)
+          .duration(300)
         barG.select(".axis--y")
           .transition(t)
           .call(d3.axisLeft(y).ticks(TICKS[variable]).tickSize(-width).tickFormat(FORMAT[variable]))
@@ -670,7 +710,7 @@ function drawMap(container_width) {
           })
         barG.selectAll(".bar")
           .transition()
-          .duration(450)
+          .duration(300)
           .attr("y", function(d) { 
             return y(d[variable])
           })
@@ -678,13 +718,13 @@ function drawMap(container_width) {
             return graphHeight - y(d[variable]); 
           })
           .style("fill", function(d) { 
-            return COLORS[quantize(d[variable])]
+            return quantize(d[variable])
           })
       }
     }
 
     function sortBars(variable) {
-       var x0 = x.domain(data.sort(function(a, b) { 
+       var x0 = x.domain(dataFiltered.sort(function(a, b) { 
           return b[variable] - a[variable]; 
         })
         .map(function(d) { return d["abbr"]; }))
@@ -693,32 +733,41 @@ function drawMap(container_width) {
       barG.selectAll(".bar")
           .sort(function(a, b) { return x0(a["abbr"]) - x0(b["abbr"]); });
 
-      var transition = barG.transition().duration(750),
-          delay = function(d, i) { return i * 30; };
+      var transition = barG.transition().duration(750)
+          // delay = function(d, i) { return i * 20; };
 
       transition.selectAll(".bar")
-          .delay(delay)
+          // .delay(delay)
           .attr("x", function(d) { return x0(d["abbr"]); });
 
       transition.select(".axis--x")
           .call(d3.axisBottom(x))
         .selectAll("g")
-          .delay(delay);
+          // .delay(delay);
 
     }
-    function updateMap(variable){
-      var quantize = d3.scaleQuantize()
-        .domain([0, MAXVALUE[variable]])
-        .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
+    function updateMap(variable, min, max){
+      console.log(variable)
+      console.log(BREAKS[variable])
+      var quantize = d3.scaleThreshold()
+        .domain(BREAKS[variable])
+        .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
       mapG.selectAll('path')
         .style("fill", function(d) { 
-          return COLORS[quantize(d.properties[variable])]
+          return quantize(d.properties[variable])
         })
       d3.selectAll(".legend-labels")
         .each(function(d,i) {
           d3.select(this)
             .text(function(){
-              return format(MAXVALUE[SELECTED_VARIABLE]/6 * i)
+              var array = BREAKS[SELECTED_VARIABLE]
+              if (i==0) {
+                return format(MIN)
+              }else if (i==5) {
+                return format(Math.ceil(MAX))
+              }else {
+                return format(array[i-1])
+              }
           })
         })
     }
@@ -742,7 +791,6 @@ function drawMap(container_width) {
         .attr("width", width/3)
         .attr("height", 50)
         .attr("transform", "translate("+width*.9+"," + height*.08 + ")")
-
       var keyHeight = (IS_PHONE) ? width*.068: 28;
       var keyWidth = (IS_PHONE) ? 8 : 15;
      for (i=0; i<=5; i++){
@@ -752,7 +800,7 @@ function drawMap(container_width) {
           .attr("height",keyHeight)
           .attr("class","rect"+i)
           .attr("y",keyHeight*i)
-          .style("fill", COLORS["q" + i + "-6"])
+          .style("fill", COLORS[i])
           // .on("mouseover",function(){ mouseEvent({type: "Legend", "class": (d3.select(this).attr("class"))}, "hover") })
           // .on("mouseleave", function(){
           //   d3.selectAll(".demphasized").classed("demphasized",false)
@@ -763,16 +811,19 @@ function drawMap(container_width) {
           .attr("class","legend-labels")
           .attr("y",keyHeight*i + 5)
           .text(function(){
-              return format(MAXVALUE[SELECTED_VARIABLE]/5 * i)
+            //console.log((i ==0) ? MIN : BREAKS[SELECTED_VARIABLE(1)])
+            //return (i ==0) ? MIN : BREAKS[SELECTED_VARIABLE[i-1]]
+            var array = BREAKS[SELECTED_VARIABLE]
+            return (i==0) ? format(MIN) : format(array[i-1])
           })
        }
-       if (i == 5) {
+       if (i == 5) { console.log(MAX)
         legend.append("text")
           .attr("x", 20)
           .attr("class","legend-labels")
           .attr("y",keyHeight*i + 5)
           .text(function(){
-              return format(MAXVALUE[SELECTED_VARIABLE])
+              return format(Math.ceil(MAX))
           })
        }
      }

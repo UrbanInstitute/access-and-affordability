@@ -1,7 +1,7 @@
 /* On mouse hover, lighten state color */
 body {
     font-family: "Lato", sans-serif;
-    max-width: 944px;
+    max-width: 960px;
 }
 
 
@@ -41,7 +41,7 @@ select {
   font-style: italic;
 }
 .tooltip-container {
-    height: 80px;
+    height: 110px;
     margin-bottom: 0px;
     margin-left: auto;
     margin-right: auto;
