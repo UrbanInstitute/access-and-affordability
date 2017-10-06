@@ -102,7 +102,7 @@ function drawMap(container_width) {
     $tooltipHeader.empty();
     aspect_width = 12;
     aspect_height = 3.5;
-    margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    margin = { top: 20, right: 35, bottom: 30, left: 20 };
     width= (container_width > 960) ? 960 - margin.left - margin.right : container_width - margin.left - margin.right;
     height = Math.ceil((width * aspect_height) / aspect_width) - margin.top - margin.bottom;
     mapHeight = (IS_PHONE) ? height*1.8: height*1.5;
@@ -501,7 +501,7 @@ function drawMap(container_width) {
         .attr("height", graphHeight + margin.top + margin.bottom);
     var barG  = barSvg.append("g")
       .attr("class", "barG")
-      .attr("transform", "translate("+ 30 +","+graphHeight/5+")")
+      .attr("transform", "translate("+ 30 +","+25+")")
     barG.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + graphHeight + ")")
@@ -537,11 +537,6 @@ function drawMap(container_width) {
       })  
       .text(UNITS[SELECTED_VARIABLE])
       .attr("class", "y-axis-label")
-      // .attr("transform", "rotate(-90)")
-      // .attr("y", 0)
-      // .attr("dy", "0.71em")
-      // .attr("text-anchor", "end")
-      // .text("Units");
 
     barG.selectAll(".bar")
       .data(dataSorted)
@@ -568,6 +563,35 @@ function drawMap(container_width) {
         selectState(d)
         dispatch.call("dehoverState")
       })
+    //ADD US AVERAGE LINE
+    barG.append("line")
+      .data(data.filter(function(d) {
+        return d.abbr == "US"
+      }))
+      .style("stroke", "black")
+      .attr("x1", 2)
+      .attr("y1", function(d) {
+        return y(d[SELECTED_VARIABLE])
+      })
+      .attr("x2", width)
+      .attr("y2", function(d) {
+        return y(d[SELECTED_VARIABLE])
+      })   
+      .attr("class", "us-line") 
+      .style("stroke-dasharray", ("5, 3"))
+    barSvg.append("text")
+       .data(data.filter(function(d) {
+          return d.abbr == "US"
+        }))
+      .text("US")
+      .attr("transform", function(d) {
+        // var yPos = d3.select(".us-line").node().getBBox().y
+        var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
+        return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
+      })
+      .attr("class", "us-label")
+
+
     }
     function updateTooltip(state, variable) {
       var text = (function(){
@@ -720,6 +744,15 @@ function drawMap(container_width) {
           .style("fill", function(d) { 
             return quantize(d[variable])
           })
+        barG.select(".us-line")
+          .transition()
+          .duration(300)
+          .attr("y1", function(d) {
+            return y(d[variable])
+          })
+          .attr("y2", function(d) {
+            return y(d[variable])
+          })  
       }
     }
 

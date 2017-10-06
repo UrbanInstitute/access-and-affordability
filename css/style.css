@@ -40,6 +40,11 @@ select {
   font-size: 12px;
   font-style: italic;
 }
+
+.us-label {
+  font-size: 12px;
+  font-weight: 600;
+}
 .tooltip-container {
     height: 110px;
     margin-bottom: 0px;
