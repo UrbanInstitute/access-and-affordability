@@ -25,7 +25,7 @@ select {
   color: #29abe2;
 }
 
-div.tooltip { 
+div.map-tooltip { 
     position: absolute;     
     text-align: left;     
     width: 80px;          
@@ -38,6 +38,9 @@ div.tooltip {
     pointer-events: none;     
 }
 
+.bar-1 {
+  fill: #1696d2;
+}
 .state-text {
 	float: left;
 	margin-left: 2em;
@@ -50,7 +53,9 @@ div.tooltip {
 .bar-label {
   font-size: 12px;
 }
-
+#link-mobile {
+  display: none;
+}
 #link-mobile > div{
   font-size: 12px;
   width: 400px;
@@ -242,10 +247,12 @@ path.domain {
 }
 
 @media (max-width: 715px) {
+  div.map-tooltip {
+    display: none;
+  }
   .dropdown-label, .dropdown-div {
     float: left;
   }
-
   #tooltip-header {
     display: none;
   }
@@ -285,6 +292,9 @@ path.domain {
   #chart-container-mobile {
     display: block;
     margin-top: 5px;
+  }
+  #link-mobile{
+      display: block;
   }
   .dropdown-category {
     float: right;
@@ -330,8 +340,10 @@ path.domain {
  }
 
  @media (max-width: 440px) {
+
   #link-mobile {
     float: left;
+
   }
   #link-mobile > div {
     width: 300px;

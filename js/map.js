@@ -96,7 +96,7 @@ function drawMap(container_width) {
     .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
 
   var div = d3.select("body").append("div") 
-      .attr("class", "tooltip")       
+      .attr("class", "map-tooltip")       
       .style("opacity", 0);
   //Width and height of map
     $mapContainer = $("#map-container")
@@ -148,8 +148,15 @@ function drawMap(container_width) {
       })
       .on('click', function(d) {
         if (IS_PHONE) {
+          var selected =  $("#state-menu").find('option:selected')
           var state = d.properties.state
+          $("#state-menu option:selected").removeAttr("selected")
+          $('#state-menu option[value=' + '"'+ state +'"' + ']').attr("selected",true);
+          $('#state-menu-button > .ui-selectmenu-text').text(state);
+          console.log(SELECTED_VARIABLE)
+          updateBars(SELECTED_VARIABLE, state)
           selectStateMobile(state)
+
         }else {
           selectState(d.properties)
           dispatch.call("dehoverState")
@@ -249,7 +256,7 @@ function drawMap(container_width) {
         div.html("Click to learn about " + d.properties.agency)  
           .style("left", (d3.event.pageX) + "px")   
           .style("top", (d3.event.pageY - 28) + "px");  
-        d3.select('.tooltip').moveToFront();
+        d3.select('.map-tooltip').moveToFront();
          dispatch.call("hoverState", this, (d3.select(this).attr('class')))
       })
     	.on("mouseout", function () {
@@ -416,11 +423,12 @@ function drawMap(container_width) {
               MAX = d3.max(data, function(d) {
                 return d[SELECTED_VARIABLE]
               })
-              if (IS_PHONE != true) {
+              if (IS_PHONE == true) {
+                updateBars(SELECTED_VARIABLE, STATE)
+              }else {
                 updateBars(SELECTED_VARIABLE)
                 dispatch.call("dehoverState")
-              }else {
-                updateTooltip(STATE, SELECTED_VARIABLE)
+                // updateTooltip(STATE, SELECTED_VARIABLE)
               }
               updateMap(SELECTED_VARIABLE, MIN, MAX)
             }
@@ -446,7 +454,7 @@ function drawMap(container_width) {
               STATE = data.item.value
               SELECTED_VARIABLE = SELECTED_VARIABLE;
               updateBars(SELECTED_VARIABLE, STATE)
-              updateTooltip(STATE, SELECTED_VARIABLE)
+              // updateTooltip(STATE, SELECTED_VARIABLE)
               selectStateMobile(STATE)
 
               // updateMap(SELECTED_VARIABLE)
@@ -511,7 +519,7 @@ function drawMap(container_width) {
         .attr("y", function(d) { return yMobile(d.abbr); })
         .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE]); })
         .style("fill", function(d) { 
-          return quantize(d[SELECTED_VARIABLE])
+          return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
         })
     }else {
     barSvg = d3.select("#chart-container")
@@ -612,24 +620,24 @@ function drawMap(container_width) {
 
 
     }
-    function updateTooltip(state, variable) {
-      var text = (function(){
-        for (index in data) {
-            if (data[index].state == state){
-              return data[index][variable];
-            }
-          }
-      })   
-      () 
-      d3.select(".tooltip-data.state")
-        .text(state)
-      d3.select(".tooltip-data.value")
-        .text(format(text))
-      region.select(".tooltip-data.average")
-        .text(function() {
-          return "US average: " + format(data[0][variable])
-        })
-    }
+    // function updateTooltip(state, variable) {
+    //   var text = (function(){
+    //     for (index in data) {
+    //         if (data[index].state == state){
+    //           return data[index][variable];
+    //         }
+    //       }
+    //   })   
+    //   () 
+    //   d3.select(".tooltip-data.state")
+    //     .text(state)
+    //   d3.select(".tooltip-data.value")
+    //     .text(format(text))
+    //   region.select(".tooltip-data.average")
+    //     .text(function() {
+    //       return "US average: " + format(data[0][variable])
+    //     })
+    // }
     function selectStateMobile(state){
       console.log(data)
       var abbr = (function(){
@@ -689,18 +697,26 @@ function drawMap(container_width) {
       var quantize = d3.scaleThreshold()
         .domain(BREAKS[variable])
         .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
+
       if (IS_PHONE) {
         var dataFilteredMobile = data.filter(function(d) { 
           return d.abbr == "US" || d.state == state
         });
         var dataSortedMobile = dataFilteredMobile.sort(function(a,b) {
-          return d3.descending(a.abbr,b.abbr);
+          if((b.abbr).search("U") == 0 || (b.abbr).search("V") == 0 || (b.abbr).search("W") == 0 ) {
+            return d3.ascending(a.abbr,b.abbr)
+          }else {
+            return d3.descending(a.abbr,b.abbr);
+          }
+        })
+        var MAX_MOBILE = d3.max(dataSortedMobile, function(d) {
+          return d[SELECTED_VARIABLE]
         })
         var translateX = (container_width < 442) ? 33 : width/5,
             barWidth = (container_width < 442) ? width*.9: width * .6,
             xMobile = d3.scaleLinear().range([0, barWidth]),
             yMobile = d3.scaleBand().range([graphHeightMobile, 0]);
-            xMobile.domain([0, MAXVALUE[variable]]);
+            xMobile.domain([0, MAX_MOBILE]);
             yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(paddingMobile);
         barG.select(".axis--x")
           .call(d3.axisBottom(xMobile).tickSizeInner([-graphHeightMobile]));
@@ -725,7 +741,7 @@ function drawMap(container_width) {
           .attr("y", function(d) { return yMobile(d.abbr); })
           .attr("width", function(d) { return xMobile(d[variable]); })
           .style("fill", function(d) { 
-            return quantize(d[variable])
+            return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
           })
       }else {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
