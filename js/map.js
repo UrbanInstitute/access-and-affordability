@@ -198,12 +198,7 @@ function drawMap(container_width) {
         return d.properties.name; }
       })
       .attr("x", .775*(width))
-      .attr("y", function() { 
-        if (IS_PHONE) {
-          return .28*(width)
-        } else { 
-          return mapHeight*.51}
-        })
+      .attr("y", mapHeight*.51)
       .attr("class", "state-label state")    
     var dcText2= mapSvg.append("a")
       .attr("xlink:href", "http://www.dchfa.org")
@@ -215,8 +210,10 @@ function drawMap(container_width) {
           return "Columbia"}
           else {return ""}
         })
-      .attr("x", .8*(width))
-      .attr("y", .303*(width))
+      .attr("x", .775*(width))
+      .attr("y", function() {
+        return (container_width < 540) ? mapHeight*.58 : mapHeight*.55;
+      })
       .attr("class", "state-label state")    
   //STATE TOOLTIP
 
