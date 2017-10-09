@@ -11,7 +11,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
     MINVALUE = {"homevalue": 140000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "orignoterate": 3.5, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 13, "aff_index_20": 0.8, "aff_index_35": 0.7, "med_income": 50000 },
     MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "orignoterate": 4.0, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "aff_index_20": 3.0, "aff_index_35": 2.0, "med_income": 100000 },
-    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "orignoterate": [3.625, 3.675, 3.725, 3.775], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000] },
+    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "orignoterate": [3.6, 3.7, 3.8, 3.9 ], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000] },
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "orignoterate": 5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6},
     UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Rate", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars"},
@@ -889,12 +889,9 @@ function drawMap(container_width) {
       var numberFormat = d3.format(",.0f")
       var decimalFormat = d3.format(".1f")
       var currencyFormat = d3.format(".2s")
-      var decimalFormat2 = d3.format(".3f")
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + currencyFormat(d)
-      }else if (SELECTED_VARIABLE == "orignoterate") {
-        return decimalFormat2(d)
       } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
         return numberFormat(d) + "%"
       }else if (d > 5) {
@@ -907,9 +904,12 @@ function drawMap(container_width) {
       var numberFormat = d3.format(",.0f")
       var decimalFormat = d3.format(".1f")
       var currencyFormat = d3.format(".2s")
+      var decimalFormat2 = d3.format(".3f")
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + numberFormat(d)
+      } else if (SELECTED_VARIABLE == "orignoterate"){
+        return decimalFormat2(d)
       } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
         return decimalFormat(d) + "%"
       }else if (d > 100) {
