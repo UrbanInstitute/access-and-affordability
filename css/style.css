@@ -30,6 +30,10 @@ select {
   font-size: 11px;
   font-style: italic;
 }
+
+  #isPhoneSmall {
+    display: none;
+  }
 div.map-tooltip { 
     position: absolute;     
     text-align: center;     
@@ -48,6 +52,7 @@ div.map-tooltip {
 .bar-mobile-text {
   font-size: 14px;
   font-weight: 600;
+  display: none;
 }
 
 .bar-1 {
@@ -279,6 +284,9 @@ path.domain {
   .tick > text {
     font-size: 16px;
   }
+  .bar-mobile-text {
+    display: block;
+  }
 /*  .bar-1 {
     fill: #fdbf11;
   }
@@ -354,6 +362,9 @@ path.domain {
  }
 
  @media (max-width: 440px) {
+  #isPhoneSmall {
+    display: block;
+  }
   #link-mobile {
     float: left;
   }
@@ -414,6 +425,7 @@ path.domain {
   #map-container {
     display: none;
   }
+
  }
   @media (max-width: 330px) {
     #category-menu-button {

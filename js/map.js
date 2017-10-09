@@ -75,6 +75,8 @@ function drawMap(container_width) {
 	    }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
+  var IS_PHONE_SM = d3.select("#isPhoneSmall").style("display") == "block";
+
   var dataFiltered = data.filter(function(d) {
     return d.abbr != "US"
   })
@@ -489,7 +491,7 @@ function drawMap(container_width) {
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
     if (IS_PHONE){ 
-      var translateX = (container_width < 442) ? 33 : width/4
+      var translateX = (IS_PHONE_SM) ? 33 : width/3.5
       var barSvg = d3.select("#chart-container-mobile")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -530,14 +532,20 @@ function drawMap(container_width) {
 
       d3.selectAll(".bar-mobile-text")
         .each(function(d,i) {
-          var xPos = d3.select(".bar-" + i).node().getBoundingClientRect().right - 95
-            var yPos = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 183
+          var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 15,
+              yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 257,
+              xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - width/3.6,
+              yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 180;
           d3.select(this)
-            .attr("x", xPos)
-            .attr("y", yPos)
-          .text(function(d) {
-            return format(d[SELECTED_VARIABLE])
-          })
+            .attr("x", function() {
+              return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
+            })
+            .attr("y", function() {
+              return (IS_PHONE_SM) ? yPosPhoneSm : yPosPhone
+            })
+            .text(function(d) {
+              return format(d[SELECTED_VARIABLE])
+            })
         })
     }else {
     barSvg = d3.select("#chart-container")
@@ -755,21 +763,27 @@ function drawMap(container_width) {
           .attr("x", 1)
           .attr("height", yMobile.bandwidth())
           .attr("y", function(d) { return yMobile(d.abbr); })
-          .attr("width", function(d) { return xMobile(d[variable]); })
+          .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
           .style("fill", function(d) { 
             return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
           })
         d3.selectAll(".bar-mobile-text")
           .data(dataSortedMobile)
           .each(function(d,i) {
-            var xPos = d3.select(".bar-" + i).node().getBoundingClientRect().right - 95
-              var yPos = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 183
+            var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 15,
+                yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 257,
+                xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - 105,
+                yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 180;
             d3.select(this)
-              .attr("x", xPos)
-              .attr("y", yPos)
-            .text(function(d) {
-              return format(d[variable])
-            })
+              .attr("x", function() {
+                return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
+              })
+              .attr("y", function() {
+                return (IS_PHONE_SM) ? yPosPhoneSm : yPosPhone
+              })
+              .text(function(d) {
+                return format(d[SELECTED_VARIABLE])
+              })
           })
        
       }else {
