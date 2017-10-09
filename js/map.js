@@ -111,7 +111,7 @@ function drawMap(container_width) {
     margin = { top: 20, right: 35, bottom: 30, left: 20 };
     width= (container_width > 960) ? 960 - margin.left - margin.right : container_width - margin.left - margin.right;
     height = Math.ceil((width * aspect_height) / aspect_width) - margin.top - margin.bottom;
-    mapHeight = (IS_PHONE) ? height*1.8: height*1.5;
+    mapHeight = (IS_PHONE) ? height*1.8: height*1.55;
 // D3 Projection
     var projection = d3.geoAlbersUsa()
                .translate([width/2, mapHeight/2])    // translate to center of screen
@@ -871,6 +871,10 @@ function drawMap(container_width) {
               }
           })
         })
+      mapNote
+        .style("opacity", function() {
+          return (SELECTED_VARIABLE == "ltv_fico") ? 1 : 0; 
+        })
     }
 
     function legendFormat(d) {
@@ -903,12 +907,22 @@ function drawMap(container_width) {
         return decimalFormat(d)
       }
     }
+    /*NOTE UNDER MAP */
+    var mapNote = mapSvg.append("g")
+      .attr("class", "map-note")
+      .style("opacity", function() {
+        return (SELECTED_VARIABLE == "ltv_fico") ? 1 : 0; 
+      })
+    mapNote.append("text")
+      .text("*Share of loans have a loan-to-value ratio of above 95 and FICO score below 700)")
+      .attr("transform", "translate("+width*.18+"," + mapHeight*1.15 + ")")
+
 
     /*LEGEND*/
       var legend = mapSvg.append("g")
         .attr("width", width/3)
         .attr("height", 50)
-        .attr("transform", "translate("+width*.9+"," + height*.08 + ")")
+        .attr("transform", "translate("+width*.95+"," + height*.08 + ")")
       var keyHeight = (IS_PHONE) ? width*.068: 28;
       var keyWidth = (IS_PHONE) ? 8 : 15;
      for (i=0; i<=5; i++){

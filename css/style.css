@@ -25,6 +25,10 @@ select {
   color: #29abe2;
 }
 
+.map-note {
+  font-size: 11px;
+  font-style: italic;
+}
 div.map-tooltip { 
     position: absolute;     
     text-align: left;     
