@@ -326,7 +326,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency"
     })
-    var dropdownNames = ["Median Home Value", "First-time Homebuyer Share", "Median FICO Score", "Median Loan-to-Value (LTV) Ratio", "Median Debt-to-Income (DTI) Ratio", "Median Note Rate", "Conventional Loan Share", "FHA Loan Share", "VA Loan Share", "Share of Loans with Weak Credit Profile", "Affordability Index with 20% down payment", "Affordability Index with 3.5% down payment", "Median Family Income"]
+    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio", "Median note rate", "Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
@@ -785,6 +785,15 @@ function drawMap(container_width) {
                 return format(d[SELECTED_VARIABLE])
               })
           })
+        $("#link-text").html(function(d) {
+          var linkData = dataSortedMobile.filter(function(d) {
+            return d.state == state
+          })
+          var link = linkData[0]["link"]
+          var agency = linkData[0]["agency"]
+
+          return "<a href=\"" +link+ "\" target=\"_blank\">Click here to learn about " + agency + "</a>"
+        })
        
       }else {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
