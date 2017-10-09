@@ -889,9 +889,12 @@ function drawMap(container_width) {
       var numberFormat = d3.format(",.0f")
       var decimalFormat = d3.format(".1f")
       var currencyFormat = d3.format(".2s")
+      var decimalFormat2 = d3.format(".3f")
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + currencyFormat(d)
+      }else if (SELECTED_VARIABLE == "orignoterate") {
+        return decimalFormat2(d)
       } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
         return numberFormat(d) + "%"
       }else if (d > 5) {
