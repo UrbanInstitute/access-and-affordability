@@ -2,6 +2,7 @@
 body {
     font-family: "Lato", sans-serif;
     max-width: 960px;
+    z-index: 0;
 }
 
 
@@ -31,15 +32,17 @@ select {
 }
 div.map-tooltip { 
     position: absolute;     
-    text-align: left;     
-    width: 80px;          
-    height: 60px;         
-    padding: 2px;       
-    font: 12px sans-serif;    
+    text-align: center;     
+    width: 120px;          
+    height: auto;         
+    padding: 10px;       
+    font: 14px;    
     background: #fff; 
-    border: 0px;    
-    border-radius: 8px;     
-    pointer-events: none;     
+    border: 1px solid #aaa;
+    pointer-events: none;  
+    z-index: 10;   
+    opacity: 0;
+    box-shadow: 3px 3px 6px #777;
 }
 
 .bar-mobile-text {

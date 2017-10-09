@@ -253,14 +253,19 @@ function drawMap(container_width) {
         div.transition()   
           .duration(200)    
           .style("opacity", .9);    
-        div.html("Click to learn about " + d.properties.agency)  
-          .style("left", (d3.event.pageX) + "px")   
-          .style("top", (d3.event.pageY - 28) + "px");  
+        div.html("Click to learn about \"" + d.properties.agency + "\"")  
+          .style("left", (d3.event.pageX - 60) + "px")   
+          .style("top", function() {
+            var height = d3.select(".map-tooltip").node().getBoundingClientRect().height
+            return (d3.event.pageY - height) + "px"});  
         d3.select('.map-tooltip').moveToFront();
          dispatch.call("hoverState", this, (d3.select(this).attr('class')))
       })
     	.on("mouseout", function () {
          dispatch.call("dehoverState")
+         div.transition()   
+          .duration(200)    
+          .style("opacity", 0);   
       })
     d3.selection.prototype.moveToFront = function() {  
       return this.each(function(){
