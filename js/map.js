@@ -8,8 +8,10 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAXVALUE = {"homevalue": 500000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 45, "orignoterate": 4, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
-    BREAKS = {"homevalue": [170000, 196000, 225000, 280000], "fthb": [46, 49, 52, 56], "fico": [723, 729, 734, 740], "origltv": [91, 94, 95, 96], "dti": [36, 37, 38, 39], "orignoterate": [3.6, 3.8, 3.9, 4], "conv": [50, 55, 58,63], "fha": [170000, 196000, 225000, 280000], "va": [170000, 196000, 225000, 280000], "ltv_fico": [170000, 196000, 225000, 280000], "aff_index_20": [170000, 196000, 225000, 280000], "aff_index_35": [170000, 196000, 225000, 280000], "med_income": [170000, 196000, 225000, 280000] },
+var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
+    MINVALUE = {"homevalue": 140000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "orignoterate": 3.5, "conv": 35, "fha": 10, "va": 4, "ltv_fico": 13, "aff_index_20": 0.8, "aff_index_35": 0.7, "med_income": 50000 },
+    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "orignoterate": 4.0, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "aff_index_20": 3.0, "aff_index_35": 2.0, "med_income": 100000 },
+    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "orignoterate": [3.625, 3.675, 3.725, 3.775], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000] },
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "orignoterate": 5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6},
     UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Ratio", "conv": "Rate", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars"},
@@ -153,7 +155,6 @@ function drawMap(container_width) {
           $("#state-menu option:selected").removeAttr("selected")
           $('#state-menu option[value=' + '"'+ state +'"' + ']').attr("selected",true);
           $('#state-menu-button > .ui-selectmenu-text').text(state);
-          console.log(SELECTED_VARIABLE)
           updateBars(SELECTED_VARIABLE, state)
           selectStateMobile(state)
 
@@ -249,7 +250,6 @@ function drawMap(container_width) {
         })
     d3.selectAll(".state")
     	.on("mouseover", function (d) {
-        console.log(d.properties.agency)
         div.transition()   
           .duration(200)    
           .style("opacity", .9);    
@@ -321,7 +321,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link"
     })
-    var dropdownNames = ["Median Home Value", "First-time Homebuyer Share", "Median FICO Score", "Median Loan-to-Value (LTV) Ratio at Origination", "Debt-to-Income (DTI) Ratio at Origination", "Note Rate at Origination", "Conventional Loan Share", "FHA Loan Share", "VA Loan Share", "Share of Loans with Weak Credit Profile (LTV>95 and FICO<700)", "Affordability Index with 20% down payment", "Affordability Index with 3.5% down payment", "Median Family Income"]
+    var dropdownNames = ["Median Home Value", "First-time Homebuyer Share", "Median FICO Score", "Median Loan-to-Value (LTV) Ratio", "Median Debt-to-Income (DTI) Ratio", "Median Note Rate", "Conventional Loan Share", "FHA Loan Share", "VA Loan Share", "Share of Loans with Weak Credit Profile", "Affordability Index with 20% down payment", "Affordability Index with 3.5% down payment", "Median Family Income"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
@@ -420,7 +420,7 @@ function drawMap(container_width) {
               MIN = d3.min(dataFiltered, function(d) {
                 return d[SELECTED_VARIABLE]
               })
-              MAX = d3.max(data, function(d) {
+              MAX = d3.max(dataFiltered, function(d) {
                 return d[SELECTED_VARIABLE]
               })
               if (IS_PHONE == true) {
@@ -480,8 +480,8 @@ function drawMap(container_width) {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
     x.domain(dataSorted.map(function(d) { return d.abbr; }));
     // y.domain([0, d3.max(data, function(d) { return d.cs; })]);
-    y.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
-    xMobile.domain([0, MAXVALUE[SELECTED_VARIABLE]]);
+    y.domain([0, MAX_VALUE[SELECTED_VARIABLE]]);
+    xMobile.domain([0, MAX_VALUE[SELECTED_VARIABLE]]);
     yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(paddingMobile);
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
@@ -654,7 +654,6 @@ function drawMap(container_width) {
     //     })
     // }
     function selectStateMobile(state){
-      console.log(data)
       var abbr = (function(){
         for (index in data) {
             if (data[index].state == state){
@@ -663,7 +662,6 @@ function drawMap(container_width) {
           }
       })
       ()
-      console.log(abbr)
       d3.selectAll("path.state")
         .classed("selected", false)
         .classed("hover", false)
@@ -705,7 +703,7 @@ function drawMap(container_width) {
         $(".tooltip-container").css("width", tooltipWidth * 1.15)
       }
     }
-    function updateBars(variable, state, min, max) {console.log(BREAKS[variable])
+    function updateBars(variable, state, min, max) {
       // var quantize = d3.scaleQuantize()
       //   .domain([MIN, MAX])
       //   .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
@@ -773,7 +771,7 @@ function drawMap(container_width) {
        
       }else {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
-      y.domain([0, MAXVALUE[variable]]);
+      y.domain([0, MAX_VALUE[variable]]);
         var t = d3.transition()
           .duration(300)
         barG.select(".axis--y")
@@ -819,7 +817,6 @@ function drawMap(container_width) {
             barSvg.select(".us-label")
               .attr("transform", function(d) {
                 var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
-                console.log(yPos)
                 return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
               })
 
@@ -852,8 +849,6 @@ function drawMap(container_width) {
 
     }
     function updateMap(variable, min, max){
-      console.log(variable)
-      console.log(BREAKS[variable])
       var quantize = d3.scaleThreshold()
         .domain(BREAKS[variable])
         .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
@@ -865,21 +860,39 @@ function drawMap(container_width) {
         .each(function(d,i) {
           d3.select(this)
             .text(function(){
+              // var format = d3.format(",.0f")
               var array = BREAKS[SELECTED_VARIABLE]
               if (i==0) {
-                return format(MIN)
+                return legendFormat(MINVALUE[SELECTED_VARIABLE])
               }else if (i==5) {
-                return format(Math.ceil(MAX))
+                return legendFormat(MAXVALUE[SELECTED_VARIABLE])
               }else {
-                return format(array[i-1])
+                return legendFormat(array[i-1])
               }
           })
         })
     }
 
+    function legendFormat(d) {
+      var numberFormat = d3.format(",.0f")
+      var decimalFormat = d3.format(".1f")
+      var currencyFormat = d3.format(".2s")
+
+      if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
+        return "$" + currencyFormat(d)
+      } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
+        return numberFormat(d) + "%"
+      }else if (d > 5) {
+        return numberFormat(d)
+      } else {
+        return decimalFormat(d)
+      }
+    }
     function format(d) {
       var numberFormat = d3.format(",.0f")
       var decimalFormat = d3.format(".1f")
+      var currencyFormat = d3.format(".2s")
+
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + numberFormat(d)
       } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
@@ -919,16 +932,16 @@ function drawMap(container_width) {
             //console.log((i ==0) ? MIN : BREAKS[SELECTED_VARIABLE(1)])
             //return (i ==0) ? MIN : BREAKS[SELECTED_VARIABLE[i-1]]
             var array = BREAKS[SELECTED_VARIABLE]
-            return (i==0) ? format(MIN) : format(array[i-1])
+            return (i==0) ? legendFormat(MINVALUE[SELECTED_VARIABLE]) : legendFormat((array[i-1]))
           })
        }
-       if (i == 5) { console.log(MAX)
+       if (i == 5) { 
         legend.append("text")
           .attr("x", 20)
           .attr("class","legend-labels")
           .attr("y",keyHeight*i + 5)
           .text(function(){
-              return format(Math.ceil(MAX))
+              return legendFormat(MAXVALUE[SELECTED_VARIABLE])
           })
        }
      }
