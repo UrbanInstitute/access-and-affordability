@@ -417,7 +417,11 @@ function drawMap(container_width) {
             // pymChild.sendHeight();
             },
             close: function(event, ui){
-            
+              var bodyHeight = (IS_PHONE_SM) ?  parseInt(d3.select("#chart-container-mobile").style("height")) : parseInt(d3.select("body").style("height")) ;
+              if (IS_PHONE) {
+                d3.select("body").style("height", (bodyHeight).toString() + "px")
+                pymChild.sendHeight();
+              }
             },
            change: function(event, data){ 
               STATE = STATE;
@@ -452,8 +456,12 @@ function drawMap(container_width) {
             pymChild.sendHeight();
             },
             close: function(event, ui){ 
-            // d3.select("body").style("height", (bodyHeight*1.3).toString() + "px")
-            // pymChild.sendHeight();
+              var bodyHeight = (IS_PHONE_SM) ? parseInt(d3.select("#chart-container-mobile").style("height")) : parseInt(d3.select("#graph-container").style("height"));
+              console.log(parseInt(d3.select("#graph-container").style("height")))
+              if (IS_MOBILE){
+                d3.select("body").style("height", (bodyHeight).toString() + "px")
+                pymChild.sendHeight();
+              }
             },
            change: function(event, data){ 
               STATE = data.item.value
