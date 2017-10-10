@@ -40,13 +40,13 @@ div.map-tooltip {
     width: 120px;          
     height: auto;         
     padding: 10px;       
-    font: 14px;    
+    font-size: 14px;    
     background: #fff; 
     border: 1px solid #aaa;
     pointer-events: none;  
     z-index: 10;   
     opacity: 0;
-    box-shadow: 3px 3px 6px #777;
+    box-shadow: 1px 1px 5px #d3d3d3;
 }
 
 .bar-mobile-text {
@@ -70,15 +70,16 @@ div.map-tooltip {
 .bar-label {
   font-size: 12px;
 }
-#link-mobile {
-  display: none;
-}
+
 #link-mobile {
   font-size: 12px;
   width: 380px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  display: none;
+  position: relative;
+  bottom: 10px;
 }
 #link-mobile > div> a {
   color: #1696d2;
@@ -336,7 +337,9 @@ path.domain {
   .state-label {
     font-size: 10px;
   }
-
+  #link-mobile {
+    text-align: left;
+  }
   .dropdown-text {
     width: 100%;
   }
