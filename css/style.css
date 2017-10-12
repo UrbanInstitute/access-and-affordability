@@ -73,7 +73,7 @@ div.map-tooltip {
 
 #link-mobile {
   font-size: 12px;
-  width: 380px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -338,7 +338,10 @@ path.domain {
     font-size: 10px;
   }
   #link-mobile {
-    text-align: left;
+    float: left;
+  }
+
+  #link-text {
   }
   .dropdown-text {
     width: 100%;

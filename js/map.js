@@ -772,7 +772,7 @@ function drawMap(container_width) {
           .attr("height", yMobile.bandwidth())
           .attr("y", function(d) { return yMobile(d.abbr); })
           .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
-          .style("fill", function(d) { 
+          .style("fill", function(d) { console.log(SELECTED_VARIABLE)
             return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
           })
         d3.selectAll(".bar-mobile-text")
@@ -835,7 +835,7 @@ function drawMap(container_width) {
           .attr("height", function(d) {
             return graphHeight - y(d[variable]); 
           })
-          .style("fill", function(d) { 
+          .style("fill", function(d) { console.log(variable)
             return quantize(d[variable])
           })
         barG.select(".us-line")
@@ -1006,6 +1006,8 @@ function drawMap(container_width) {
 
 })
 }
-
+$(window).on('resize', function () {
+console.log('hi')
+});
 
 var pymChild = new pym.Child({ renderCallback: drawMap, polling: 500 });
