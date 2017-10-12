@@ -383,6 +383,7 @@ path.domain {
 
   #link-mobile > div {
     width: 300px;
+    text-align: left;
   }
   .dropdown-category {
     float: left;
