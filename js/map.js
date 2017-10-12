@@ -457,7 +457,6 @@ function drawMap(container_width) {
             },
             close: function(event, ui){ 
               var bodyHeight = (IS_PHONE_SM) ? parseInt(d3.select("#chart-container-mobile").style("height")) : parseInt(d3.select("#graph-container").style("height"));
-              console.log(parseInt(d3.select("#graph-container").style("height")))
               if (IS_MOBILE){
                 d3.select("body").style("height", (bodyHeight).toString() + "px")
                 pymChild.sendHeight();
@@ -772,7 +771,7 @@ function drawMap(container_width) {
           .attr("height", yMobile.bandwidth())
           .attr("y", function(d) { return yMobile(d.abbr); })
           .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
-          .style("fill", function(d) { console.log(SELECTED_VARIABLE)
+          .style("fill", function(d) { 
             return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
           })
         d3.selectAll(".bar-mobile-text")
@@ -835,7 +834,7 @@ function drawMap(container_width) {
           .attr("height", function(d) {
             return graphHeight - y(d[variable]); 
           })
-          .style("fill", function(d) { console.log(variable)
+          .style("fill", function(d) { 
             return quantize(d[variable])
           })
         barG.select(".us-line")
@@ -999,15 +998,21 @@ function drawMap(container_width) {
        }
      }
 
-
+$(window).on('resize', function () {
+  var dropdownText =  $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').text()
+  updateBars(SELECTED_VARIABLE, STATE)
+  updateMap(SELECTED_VARIABLE, MIN, MAX)  
+  $("#category-menu option:selected").removeAttr("selected")
+  $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').attr("selected",true);
+  $('#category-menu-button > .ui-selectmenu-text').text(dropdownText);
+  // $(".ui-state-active").removeClass("ui-state-active")
+});
 
 
   });
 
 })
 }
-$(window).on('resize', function () {
-console.log('hi')
-});
+
 
 var pymChild = new pym.Child({ renderCallback: drawMap, polling: 500 });
