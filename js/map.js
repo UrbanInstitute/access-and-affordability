@@ -8,14 +8,14 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "orignoterate": 4, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
-    MINVALUE = {"homevalue": 140000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "orignoterate": 3.5, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 13, "aff_index_20": 0.8, "aff_index_35": 0.7, "med_income": 50000 },
-    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "orignoterate": 4.0, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "aff_index_20": 3.0, "aff_index_35": 2.0, "med_income": 100000 },
-    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "orignoterate": [3.6, 3.7, 3.8, 3.9 ], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000] },
-    FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "orignoterate": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s") },
-    TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "orignoterate": 5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6},
-    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Rate", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars"},
-    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "orignoterate": "Rate", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income"},
+var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000 },
+    MINVALUE = {"homevalue": 140000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 13, "aff_index_20": 0.8, "aff_index_35": 0.7, "med_income": 50000 },
+    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "aff_index_20": 3.0, "aff_index_35": 2.0, "med_income": 100000 },
+    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000] },
+    FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s") },
+    TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6},
+    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars"},
+    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income"},
     SELECTED_VARIABLE = "homevalue";
     STATE = "District of Columbia";
     COLORS = ["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"]
@@ -35,7 +35,6 @@ function drawMap(container_width) {
         var data_fico = data[i].fico;
         var data_origltv = data[i].origltv;
         var data_dti = data[i].dti;
-        var data_orignoterate = data[i].orignoterate;
         var data_conv = data[i].conv;
         var data_fha = data[i].fha;
         var data_va = data[i].va;
@@ -57,7 +56,6 @@ function drawMap(container_width) {
           json.features[j].properties.fico= data_fico;
           json.features[j].properties.origltv= data_origltv;
           json.features[j].properties.dti= data_dti;
-          json.features[j].properties.orignoterate= data_orignoterate;
           json.features[j].properties.conv= data_conv;
           json.features[j].properties.fha= data_fha;
           json.features[j].properties.va= data_va;
@@ -294,7 +292,7 @@ function drawMap(container_width) {
         .classed("hover", true)
       var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
       if (IS_PHONE != true) { 
-        $(".tooltip-container").css("width", tooltipWidth * 1.15)
+        $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     });
     dispatch.on("dehoverState", function() {
@@ -310,12 +308,8 @@ function drawMap(container_width) {
           d3.selectAll(".state, .bar")
             .classed("hover", false)
       if (IS_PHONE != true) { 
-        if (selectedState != "United States") {
           var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-            $(".tooltip-container").css("width", tooltipWidth * 1.15 )
-        }else { 
-            $(".tooltip-container").css("width", tooltipWidthUSA * 1.18)
-        }  
+            $(".tooltip-container").css("width", tooltipWidth * 1.18 )
       }
 
     })
@@ -324,9 +318,10 @@ function drawMap(container_width) {
     $("#dropdown-mobile").empty()
     var dropdownData = d3.keys(data[0])
     var dropdownDataFiltered = dropdownData.filter(function(d){
-      return d != "state" && d != "abbr" && d != "link" && d != "agency"
+      return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio", "Median note rate", "Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income"]
+    console.log(dropdownDataFiltered)
+    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
@@ -438,6 +433,10 @@ function drawMap(container_width) {
                 updateBars(SELECTED_VARIABLE)
                 dispatch.call("dehoverState")
                 // updateTooltip(STATE, SELECTED_VARIABLE)
+              }
+              if (IS_PHONE != true) { console.log(IS_PHONE)
+                  var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+                    $(".tooltip-container").css("width", tooltipWidth * 1.18 )
               }
               updateMap(SELECTED_VARIABLE, MIN, MAX)
             }
@@ -718,7 +717,7 @@ function drawMap(container_width) {
           })      
       if (IS_PHONE != true) { 
         var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-        $(".tooltip-container").css("width", tooltipWidth * 1.15)
+        $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     }
     function updateBars(variable, state, min, max) {
@@ -729,7 +728,7 @@ function drawMap(container_width) {
         .domain(BREAKS[variable])
         .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
 
-      if (IS_PHONE) {
+      if (IS_PHONE) { 
         var dataFilteredMobile = data.filter(function(d) { 
           return d.abbr == "US" || d.state == state
         });
@@ -847,11 +846,13 @@ function drawMap(container_width) {
             return y(d[variable])
           })  
           .on('end', function() {
-            barSvg.select(".us-label")
-              .attr("transform", function(d) {
-                var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
-                return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
-              })
+            if (!(IS_PHONE)) {
+              barSvg.select(".us-label")
+                .attr("transform", function(d) {
+                  var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
+                  return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
+                })
+            }
 
           })
 
@@ -935,9 +936,7 @@ function drawMap(container_width) {
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + numberFormat(d)
-      } else if (SELECTED_VARIABLE == "orignoterate"){
-        return decimalFormat2(d)
-      } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
+      }  else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
         return decimalFormat(d) + "%"
       }else if (d > 100) {
         return numberFormat(d)
@@ -998,8 +997,10 @@ function drawMap(container_width) {
        }
      }
 
-$(window).on('resize', function () {
+$(window).on('resize', function () { 
   var dropdownText =  $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').text()
+  console.log($('#category-menu-button > .ui-selectmenu-text').text())
+  console.log(SELECTED_VARIABLE)
   updateBars(SELECTED_VARIABLE, STATE)
   updateMap(SELECTED_VARIABLE, MIN, MAX)  
   $("#category-menu option:selected").removeAttr("selected")
