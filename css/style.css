@@ -30,7 +30,9 @@ select {
   font-size: 11px;
   font-style: italic;
 }
-
+.mapG > path {
+  cursor: pointer;
+}
   #isPhoneSmall {
     display: none;
   }
