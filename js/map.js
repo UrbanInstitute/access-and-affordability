@@ -434,8 +434,9 @@ function drawMap(container_width) {
                 dispatch.call("dehoverState")
                 // updateTooltip(STATE, SELECTED_VARIABLE)
               }
-              if (IS_PHONE != true) { console.log(IS_PHONE)
+              if (IS_PHONE != true) {
                   var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+                  console.log(tooltipWidth)
                     $(".tooltip-container").css("width", tooltipWidth * 1.18 )
               }
               updateMap(SELECTED_VARIABLE, MIN, MAX)
@@ -475,7 +476,7 @@ function drawMap(container_width) {
         .selectmenu( "menuWidget" )
         .addClass( "ui-menu-icons customicons" );
 
-    if (IS_PHONE != true) { 
+    if (IS_PHONE != true) {
       tooltipWidthUSA = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
       $(".tooltip-container").css("width", tooltipWidthUSA*1.18)
     }
@@ -717,6 +718,7 @@ function drawMap(container_width) {
           })      
       if (IS_PHONE != true) { 
         var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
+        console.log(tooltipWidth)
         $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     }
