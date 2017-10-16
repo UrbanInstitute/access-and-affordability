@@ -73,17 +73,18 @@ div.map-tooltip {
   font-size: 12px;
 }
 
-#link-mobile {
+#link-div {
   font-size: 12px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  display: none;
   position: relative;
   bottom: 10px;
+  margin-top: 20px;
+  height: 15px;
 }
-#link-mobile > div> a {
+#link-div > div> a {
   color: #1696d2;
   text-decoration: none;
   font-style: italic;
@@ -98,7 +99,6 @@ div.map-tooltip {
     margin-bottom: 0px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
     padding-bottom: 0;
     display: block;
  
@@ -319,7 +319,7 @@ path.domain {
     display: block;
     margin-top: 5px;
   }
-  #link-mobile{
+  #link-div{
       display: block;
   }
   .dropdown-category {
@@ -339,7 +339,7 @@ path.domain {
   .state-label {
     font-size: 10px;
   }
-  #link-mobile {
+  #link-div {
     float: left;
   }
 
@@ -374,7 +374,7 @@ path.domain {
   #isPhoneSmall {
     display: block;
   }
-  #link-mobile {
+  #link-div {
     float: left;
   }
 
@@ -383,7 +383,7 @@ path.domain {
     margin-right: unset;
   }
 
-  #link-mobile > div {
+  #link-div > div {
     width: 300px;
     text-align: left;
   }

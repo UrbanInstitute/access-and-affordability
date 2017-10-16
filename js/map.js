@@ -164,6 +164,9 @@ function drawMap(container_width) {
         }else {
           selectState(d.properties)
           dispatch.call("dehoverState")
+          $("#link-text").html(function() {
+            return "<a href=\"" +d.properties.link+ "\" target=\"_blank\">Click here to learn about " + d.properties.agency + "</a>"
+          })
         }
       })
   //ADD LEADER LINE FOR DC
@@ -254,9 +257,6 @@ function drawMap(container_width) {
       })
     	.on("mouseout", function () {
          dispatch.call("dehoverState")
-         div.transition()   
-          .duration(200)    
-          .style("opacity", 0);   
       })
     d3.selection.prototype.moveToFront = function() {  
       return this.each(function(){
@@ -303,6 +303,14 @@ function drawMap(container_width) {
       if (IS_PHONE != true) { 
           var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
             $(".tooltip-container").css("width", tooltipWidth * 1.18 )
+          $("#link-text").html(function(d) {
+            var linkData = data.filter(function(d) {
+              return d.state == selectedState
+            })
+            var link = linkData[0]["link"]
+            var agency = linkData[0]["agency"]
+            return (link == "") ? "" : "<a href=\"" +link+ "\" target=\"_blank\">Click here to learn about " + agency + "</a>"
+          })
       }
 
     })
@@ -605,6 +613,9 @@ function drawMap(container_width) {
       .attr("height", function(d) {return graphHeight - y(d[SELECTED_VARIABLE]); })
       .on('mouseover', function(d) {
         hoverBar(d)
+        $("#link-text").html(function() {
+          return "<a href=\"" +d.link+ "\" target=\"_blank\">Click here to learn about " + d.agency + "</a>"
+        })
       })
       .on('mouseout', function() {
         d3.selectAll(".state, .bar")
@@ -793,7 +804,6 @@ function drawMap(container_width) {
 
             return "<a href=\"" +link+ "\" target=\"_blank\">Click here to learn about " + agency + "</a>"
           })
-       
       }else {
         y = d3.scaleLinear().rangeRound([graphHeight, 0]);
       y.domain([0, MAX_VALUE[variable]]);
