@@ -320,7 +320,6 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    console.log(dropdownDataFiltered)
     var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
@@ -436,7 +435,6 @@ function drawMap(container_width) {
               }
               if (IS_PHONE != true) {
                   var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-                  console.log(tooltipWidth)
                     $(".tooltip-container").css("width", tooltipWidth * 1.18 )
               }
               updateMap(SELECTED_VARIABLE, MIN, MAX)
@@ -718,7 +716,6 @@ function drawMap(container_width) {
           })      
       if (IS_PHONE != true) { 
         var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
-        console.log(tooltipWidth)
         $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     }
@@ -1001,8 +998,6 @@ function drawMap(container_width) {
 
 $(window).on('resize', function () { 
   var dropdownText =  $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').text()
-  console.log($('#category-menu-button > .ui-selectmenu-text').text())
-  console.log(SELECTED_VARIABLE)
   updateBars(SELECTED_VARIABLE, STATE)
   updateMap(SELECTED_VARIABLE, MIN, MAX)  
   $("#category-menu option:selected").removeAttr("selected")
