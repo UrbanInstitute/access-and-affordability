@@ -5,6 +5,32 @@ body {
     z-index: 0;
 }
 
+.data-button {
+    background-color: #000;
+    display: inline;
+    margin-left: 1px;
+    float: right;
+    font-size: 14px;
+    padding: 14px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    line-height: 12px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.button-div {
+  height: 40px;
+}
+
+button:hover {
+  background-color: #1696d2;
+}
+button {
+  margin: 0;
+  vertical-align: baseline;
+}
 
 path:hover {
 	pointer-events: all;
