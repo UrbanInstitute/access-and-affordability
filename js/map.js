@@ -914,7 +914,7 @@ function drawMap(container_width) {
         return "$" + currencyFormat(d)
       } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
         return numberFormat(d) + "%"
-      }else if (d > 5) {
+      }else if (d > 5 || SELECTED_VARIABLE == "total" || SELECTED_VARIABLE == "hfas") {
         return numberFormat(d)
       } else {
         return decimalFormat(d)
