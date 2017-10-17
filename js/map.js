@@ -254,6 +254,9 @@ function drawMap(container_width) {
     d3.selectAll(".state")
       .on("mouseover", function (d) {
          dispatch.call("hoverState", this, (d3.select(this).attr('class')))
+          $("#link-text").html(function() { 
+          return "<a href=\"" +d.properties.link+ "\" target=\"_blank\">Click here to learn about " + d.properties.agency + "</a>"
+        })
       })
       .on("mouseout", function () {
          dispatch.call("dehoverState")
