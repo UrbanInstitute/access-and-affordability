@@ -12,12 +12,16 @@
 	<style type="text/css">
 	 body {
             margin: 20px;
+            max-width: 960px ;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: "Lato", sans-serif;
         }
 
 
     
     .pym {
-        max-width: 680px;
+        max-width: 960px;
         max-height: 700px;
     }
 
@@ -37,19 +41,57 @@
 	    }
      
 	} */
+.data-button {
+    background-color: #000;
+    display: inline;
+    margin: 5px;
+    float: right;
+    font-size: 14px;
+    padding: 14px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    line-height: 12px;
+    text-transform: uppercase;
+    text-align: center;
+}
 
+.button-div {
+  height: 40px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #1696d2;
+}
+button {
+  margin: 0;
+  vertical-align: baseline;
+}
+.p-div {
+    margin: 0 5px;
+}
 
 
 	</style>
 </head>
 <body>
-<div>Lorem ipsum dolor sit amet, cum dicat verterem neglegentur ut. Ea liber appareat pertinax vix. Ut dicant detraxit accusamus sea, per ea adhuc consectetuer, ex accumsan recteque similique qui. Per modus gloriatur ei, eos ex labores qualisque delicatissimi, probo deleniti no qui. Dicit vocent usu ad. Meis salutatus expetendis at vel, sed ne vidisse insolens accusamus.
+<div class="p-div">
+<p>Lorem ipsum dolor sit amet, cum dicat verterem neglegentur ut. Ea liber appareat pertinax vix. Ut dicant detraxit accusamus sea, per ea adhuc consectetuer, ex accumsan recteque similique qui. Per modus gloriatur ei, eos ex labores qualisque delicatissimi, probo deleniti no qui. Dicit vocent usu ad. Meis salutatus expetendis at vel, sed ne vidisse insolens accusamus.</p>
 
-Vel et iisque dolorum, dico fugit scripta in pro. Pri lobortis iudicabit quaerendum ne, ad pro ubique evertitur instructior. Autem debet inciderint has at, ei sonet dolore qui, et gloriatur efficiantur qui. His et solum harum, an vel sanctus dissentiet, ornatus intellegat ex mea. Per id rebum equidem luptatum, no agam dicant eos. Debitis phaedrum </div>
+<p>Vel et iisque dolorum, dico fugit scripta in pro. Pri lobortis iudicabit quaerendum ne, ad pro ubique evertitur instructior. Autem debet inciderint has at, ei sonet dolore qui, et gloriatur efficiantur qui. His et solum harum, an vel sanctus dissentiet, ornatus intellegat ex mea. Per id rebum equidem luptatum, no agam dicant eos. Debitis phaedrum </p>
+</div>
 <div id = "map"></div>
-<div>Lorem ipsum dolor sit amet, cum dicat verterem neglegentur ut. Ea liber appareat pertinax vix. Ut dicant detraxit accusamus sea, per ea adhuc consectetuer, ex accumsan recteque similique qui. Per modus gloriatur ei, eos ex labores qualisque delicatissimi, probo deleniti no qui. Dicit vocent usu ad. Meis salutatus expetendis at vel, sed ne vidisse insolens accusamus.
+    <div class="button-div">
+      <a href="data2.csv">
+        <button class="data-button">Download the Data</button>
+      </a>
+    </div>
+<div class="p-div">
+<p>Lorem ipsum dolor sit amet, cum dicat verterem neglegentur ut. Ea liber appareat pertinax vix. Ut dicant detraxit accusamus sea, per ea adhuc consectetuer, ex accumsan recteque similique qui. Per modus gloriatur ei, eos ex labores qualisque delicatissimi, probo deleniti no qui. Dicit vocent usu ad. Meis salutatus expetendis at vel, sed ne vidisse insolens accusamus.</p>
 
-Vel et iisque dolorum, dico fugit scripta in pro. Pri lobortis iudicabit quaerendum ne, ad pro ubique evertitur instructior. Autem debet inciderint has at, ei sonet dolore qui, et gloriatur efficiantur qui. His et solum harum, an vel sanctus dissentiet, ornatus intellegat ex mea. Per id rebum equidem luptatum, no agam dicant eos. Debitis phaedrum </div>
+<p>Vel et iisque dolorum, dico fugit scripta in pro. Pri lobortis iudicabit quaerendum ne, ad pro ubique evertitur instructior. Autem debet inciderint has at, ei sonet dolore qui, et gloriatur efficiantur qui. His et solum harum, an vel sanctus dissentiet, ornatus intellegat ex mea. Per id rebum equidem luptatum, no agam dicant eos. Debitis phaedrum</p> 
+</div>
 
 	<script type="text/javascript" src="js/pym.min.js"></script>
 	<script>
