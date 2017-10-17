@@ -23,13 +23,13 @@ var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "
 
 function drawMap(container_width) {
 
-	d3.csv("data2.csv", function(data) {
+  d3.csv("data2.csv", function(data) {
 
-	  d3.json("us-states.json", function(json) {
-	    for (var i = 0; i < data.length; i++) {
-	      var dataState = data[i].state;
-	      var dataAbbr = data[i].abbr;
-	      var dataLink = data[i].link;
+    d3.json("us-states.json", function(json) {
+      for (var i = 0; i < data.length; i++) {
+        var dataState = data[i].state;
+        var dataAbbr = data[i].abbr;
+        var dataLink = data[i].link;
         var data_homevalue = data[i].homevalue;
         var data_fthb = data[i].fthb;
         var data_fico = data[i].fico;
@@ -46,12 +46,12 @@ function drawMap(container_width) {
         var data_hfas = data[i].hfas;
         var data_total = data[i].total;
 
-	      for (var j = 0; j < json.features.length; j++)  {
-	        var jsonState = json.features[j].properties.name;
-	        if (dataState == jsonState) {
-	        // Copy the data value into the JSON
-	        json.features[j].properties.abbr = dataAbbr; 
-	        json.features[j].properties.link= dataLink;
+        for (var j = 0; j < json.features.length; j++)  {
+          var jsonState = json.features[j].properties.name;
+          if (dataState == jsonState) {
+          // Copy the data value into the JSON
+          json.features[j].properties.abbr = dataAbbr; 
+          json.features[j].properties.link= dataLink;
           json.features[j].properties.state= dataState;
           json.features[j].properties.homevalue= data_homevalue;
           json.features[j].properties.fthb= data_fthb;
@@ -69,12 +69,12 @@ function drawMap(container_width) {
           json.features[j].properties.hfas= data_hfas;
           json.features[j].properties.total= data_total;
 
-	        // Stop looking through the JSON
-	        break;
-	        }
-	      }
-	      
-	    }
+          // Stop looking through the JSON
+          break;
+          }
+        }
+        
+      }
   var IS_MOBILE = d3.select("#isMobile").style("display") ==  "block";
   var IS_PHONE = d3.select("#isPhone").style("display") == "block";
   var IS_PHONE_SM = d3.select("#isPhoneSmall").style("display") == "block";
@@ -134,20 +134,20 @@ function drawMap(container_width) {
 
     // Bind the data to the SVG and create one path per GeoJSON feature
     var states = mapG.selectAll("path")
-    	.data(json.features)
-    	.enter()
-    	// .append("svg:a")    
+      .data(json.features)
+      .enter()
+      // .append("svg:a")    
      //  .attr("xlink:href", function(d) {
-     //    	return d.properties.link
+     //     return d.properties.link
      //  })
       // .attr('target','_blank')
-    	.append("path")
-    	.attr("d", path)
-    	.attr("class", function(d) {
-    		return "state " + d.properties.abbr;
-    	})
-    	.style("stroke", "#fff")
-    	.style("stroke-width", "1")
+      .append("path")
+      .attr("d", path)
+      .attr("class", function(d) {
+        return "state " + d.properties.abbr;
+      })
+      .style("stroke", "#fff")
+      .style("stroke-width", "1")
       .style("fill", function(d) { 
         return quantize(d.properties[SELECTED_VARIABLE])
       })
@@ -227,10 +227,10 @@ function drawMap(container_width) {
 
 
     var region = tooltip.append('div')
-    	.attr('class', 'region-text')
+      .attr('class', 'region-text')
     region.append('div')
-    	.attr('class', 'tooltip-title')
-    	.text('REGION/STATE')
+      .attr('class', 'tooltip-title')
+      .text('REGION/STATE')
     region.append("div")
         .attr('class', 'tooltip-data state')
         .text(function() {
@@ -252,10 +252,10 @@ function drawMap(container_width) {
           return (IS_PHONE) ? format(data[9][SELECTED_VARIABLE]) : format(data[0][SELECTED_VARIABLE])
         })
     d3.selectAll(".state")
-    	.on("mouseover", function (d) {
+      .on("mouseover", function (d) {
          dispatch.call("hoverState", this, (d3.select(this).attr('class')))
       })
-    	.on("mouseout", function () {
+      .on("mouseout", function () {
          dispatch.call("dehoverState")
       })
     d3.selection.prototype.moveToFront = function() {  
@@ -274,7 +274,7 @@ function drawMap(container_width) {
       d3.select(".state." + selectedState)
         .classed('hover', true)
       d3.select(".tooltip-data.state")
-     	   .html(stateName)
+         .html(stateName)
       d3.select(".tooltip-data.value")
         .text(format(value))
       region.select(".tooltip-data.average")
