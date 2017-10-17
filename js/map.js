@@ -288,7 +288,7 @@ function drawMap(container_width) {
         $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     });
-    dispatch.on("dehoverState", function() {
+    dispatch.on("dehoverState", function() { 
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States";
       var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
       var average = (d3.select(".bar.selected").size() > 0 && selectedState.search("United") < 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
@@ -321,7 +321,6 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    console.log(dropdownDataFiltered)
     var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income", "HFAs/Agencies", "Total Active Programs"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
@@ -351,6 +350,8 @@ function drawMap(container_width) {
           .attr("value", function(d,i) {
             return dropdownDataFiltered[i]
           })
+        $('#category-menu option[value=' + '"' + SELECTED_VARIABLE + '"' +']').attr("selected",true);
+
         var stateDropdownData = data.filter(function(d) { 
           return d.abbr != "US"
         })
@@ -377,7 +378,8 @@ function drawMap(container_width) {
           .attr("value", function(d,i) {
             return d.state
           })
-        $('#state-menu option[value="District of Columbia"]').attr("selected",true);
+
+        $('#state-menu option[value=' + '"' + STATE + '"' +']').attr("selected",true);
         // d3.select("#state-menu")
         //   .append("option")
         //   .text("Select a state")
@@ -412,7 +414,7 @@ function drawMap(container_width) {
             // d3.select("body").style("height", (d3.select(".ui-selectmenu-menu.ui-front.ui-selectmenu-open").node().getBoundingClientRect().height*2.3) + "px")
             // pymChild.sendHeight();
             },
-            close: function(event, ui){
+            close: function(event, ui){ 
               var bodyHeight = (IS_PHONE_SM) ?  parseInt(d3.select("#chart-container-mobile").style("height")) : parseInt(d3.select("body").style("height")) ;
               if (IS_PHONE) {
                 d3.select("body").style("height", (bodyHeight).toString() + "px")
@@ -497,13 +499,12 @@ function drawMap(container_width) {
     yMobile.domain(dataSortedMobile.map(function(d) { return d.abbr; })).padding(paddingMobile);
   $("#chart-container").empty()
   $("#chart-container-mobile").empty()
-    if (IS_PHONE){ 
+    if (IS_PHONE){  
       var translateX = (IS_PHONE_SM) ? 33 : width/3.5
       var barSvg = d3.select("#chart-container-mobile")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", graphHeightMobile + margin.top + margin.bottom);
-
       var barG  = barSvg.append("g")
         .attr("class", "barG")
         .attr("transform", "translate("+ translateX+","+graphHeightMobile/5+")")
@@ -536,25 +537,11 @@ function drawMap(container_width) {
         .style("fill", function(d) { 
           return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
         })
+    if (IS_PHONE_SM) {
+      updateBars(SELECTED_VARIABLE, STATE)
+    }
 
-      d3.selectAll(".bar-mobile-text")
-        .each(function(d,i) {
-          var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 15,
-              yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 257,
-              xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - width/3.6,
-              yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 180;
-          d3.select(this)
-            .attr("x", function() {
-              return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
-            })
-            .attr("y", function() {
-              return (IS_PHONE_SM) ? yPosPhoneSm : yPosPhone
-            })
-            .text(function(d) {
-              return format(d[SELECTED_VARIABLE])
-            })
-        })
-    }else {
+    }else { 
     barSvg = d3.select("#chart-container")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -613,7 +600,7 @@ function drawMap(container_width) {
       .attr("height", function(d) {return graphHeight - y(d[SELECTED_VARIABLE]); })
       .on('mouseover', function(d) {
         hoverBar(d)
-        $("#link-text").html(function() {
+        $("#link-text").html(function() { console.log('mouseover')
           return "<a href=\"" +d.link+ "\" target=\"_blank\">Click here to learn about " + d.agency + "</a>"
         })
       })
@@ -724,7 +711,9 @@ function drawMap(container_width) {
         $(".tooltip-container").css("width", tooltipWidth * 1.18)
       }
     }
-    function updateBars(variable, state, min, max) {
+
+
+    function updateBars(variable, state, min, max) { 
       // var quantize = d3.scaleQuantize()
       //   .domain([MIN, MAX])
       //   .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
@@ -781,11 +770,11 @@ function drawMap(container_width) {
             .data(dataSortedMobile)
             .each(function(d,i) {
               var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 15,
-                  yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 257,
-                  xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - 105,
-                  yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 180;
+                  yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 265,
+                  xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - width/4,
+                  yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 196;
               d3.select(this)
-                .attr("x", function() {
+                .attr("x", function() { 
                   return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
                 })
                 .attr("y", function() {
@@ -1007,11 +996,17 @@ function drawMap(container_width) {
 
 $(window).on('resize', function () { 
   var dropdownText =  $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').text()
-  updateBars(SELECTED_VARIABLE, STATE)
-  updateMap(SELECTED_VARIABLE, MIN, MAX)  
   $("#category-menu option:selected").removeAttr("selected")
   $('#category-menu option[value=' + '"'+ SELECTED_VARIABLE +'"' + ']').attr("selected",true);
   $('#category-menu-button > .ui-selectmenu-text').text(dropdownText);
+    updateBars(SELECTED_VARIABLE, STATE)
+    if (!IS_PHONE_SM) {
+      updateMap(SELECTED_VARIABLE, MIN, MAX)  
+    }
+    if (!IS_PHONE) {
+      $("#link-text").html("")
+    }
+
   // $(".ui-state-active").removeClass("ui-state-active")
 });
 
