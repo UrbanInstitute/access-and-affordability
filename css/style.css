@@ -190,6 +190,7 @@ div.map-tooltip {
   font-weight: 800;
   margin-top: 10px;
   pointer-events: all;
+  cursor: pointer;
 }
 
 #map-container {
@@ -362,6 +363,10 @@ path.domain {
   #isPhone {
     display: block;
   }
+  .state-label.hover {
+    fill: #000000 !important;
+  }
+
   .state-label {
     font-size: 10px;
   }

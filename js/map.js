@@ -191,9 +191,10 @@ function drawMap(container_width) {
     //   })
     //   .attr("stroke-width", 1.2)
     //   .attr("stroke", "#ec008b")
-    var dcText = mapSvg.append("a")
-      .attr("xlink:href", "http://www.dchfa.org")
-      .attr('target','_blank')
+    var dcText = mapSvg
+      // .append("a")
+      // .attr("xlink:href", "http://www.dchfa.org")
+      // .attr('target','_blank')
       .data(dcData)
       .append("text")
       .text(function(d) { 
@@ -204,10 +205,30 @@ function drawMap(container_width) {
       })
       .attr("x", .775*(width))
       .attr("y", mapHeight*.51)
-      .attr("class", "state-label state")    
-    var dcText2= mapSvg.append("a")
-      .attr("xlink:href", "http://www.dchfa.org")
-      .attr('target','_blank')
+      .attr("class", "state-label state")   
+      .on('click', function(d) {
+        if (IS_PHONE) {
+          var selected =  $("#state-menu").find('option:selected')
+          var state = d.properties.state
+          $("#state-menu option:selected").removeAttr("selected")
+          $('#state-menu option[value=' + '"'+ state +'"' + ']').attr("selected",true);
+          $('#state-menu-button > .ui-selectmenu-text').text(state);
+          updateBars(SELECTED_VARIABLE, state)
+          selectStateMobile(state)
+
+        }else {
+          selectState(d.properties)
+          dispatch.call("dehoverState")
+          $("#link-text").html(function() {
+            return "<a href=\"" +d.properties.link+ "\" target=\"_blank\">Click here to learn about " + d.properties.agency + "</a>"
+          })
+        }
+      })
+
+    var dcText2= mapSvg
+      // .append("a")
+      // .attr("xlink:href", "http://www.dchfa.org")
+      // .attr('target','_blank')
       .data(dcData)
       .append("text")
       .text(function(d) { 
@@ -220,6 +241,24 @@ function drawMap(container_width) {
         return (container_width < 540) ? mapHeight*.58 : mapHeight*.55;
       })
       .attr("class", "state-label state")    
+      .on('click', function(d) {
+        if (IS_PHONE) {
+          var selected =  $("#state-menu").find('option:selected')
+          var state = d.properties.state
+          $("#state-menu option:selected").removeAttr("selected")
+          $('#state-menu option[value=' + '"'+ state +'"' + ']').attr("selected",true);
+          $('#state-menu-button > .ui-selectmenu-text').text(state);
+          updateBars(SELECTED_VARIABLE, state)
+          selectStateMobile(state)
+
+        }else {
+          selectState(d.properties)
+          dispatch.call("dehoverState")
+          $("#link-text").html(function() {
+            return "<a href=\"" +d.properties.link+ "\" target=\"_blank\">Click here to learn about " + d.properties.agency + "</a>"
+          })
+        }
+      })
   //STATE TOOLTIP
 
 
