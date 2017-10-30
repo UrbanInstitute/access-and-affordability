@@ -205,7 +205,7 @@ function drawMap(container_width) {
       })
       .attr("x", .775*(width))
       .attr("y", mapHeight*.51)
-      .attr("class", "state-label state")   
+      .attr("class", "state-label DC state")   
       .on('click', function(d) {
         if (IS_PHONE) {
           var selected =  $("#state-menu").find('option:selected')
@@ -215,8 +215,7 @@ function drawMap(container_width) {
           $('#state-menu-button > .ui-selectmenu-text').text(state);
           updateBars(SELECTED_VARIABLE, state)
           selectStateMobile(state)
-
-        }else {
+        }else { 
           selectState(d.properties)
           dispatch.call("dehoverState")
           $("#link-text").html(function() {
@@ -240,7 +239,7 @@ function drawMap(container_width) {
       .attr("y", function() {
         return (container_width < 540) ? mapHeight*.58 : mapHeight*.55;
       })
-      .attr("class", "state-label state")    
+      .attr("class", "state-label DC state")    
       .on('click', function(d) {
         if (IS_PHONE) {
           var selected =  $("#state-menu").find('option:selected')
@@ -725,7 +724,7 @@ function drawMap(container_width) {
       }else {
         d3.selectAll(".state, .bar")
           .classed("selected", false)
-        d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr)
+        d3.selectAll(".state." + d.abbr + ", .bar-" + d.abbr + ", .state-label." + d.abbr)
           .classed("selected", true)
         region.select(".tooltip-data.state")
           .text(d.state)

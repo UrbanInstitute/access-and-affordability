@@ -213,7 +213,7 @@ div.map-tooltip {
   margin-right: auto;
 }
 
-.state-label:hover {
+.state-label:hover, .state-label.selected {
 	fill: #fdbf11;
 }
 
