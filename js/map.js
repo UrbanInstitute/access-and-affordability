@@ -645,7 +645,7 @@ function drawMap(container_width) {
       .attr("height", function(d) {return graphHeight - y(d[SELECTED_VARIABLE]); })
       .on('mouseover', function(d) {
         hoverBar(d)
-        $("#link-text").html(function() { console.log('mouseover')
+        $("#link-text").html(function() { 
           return "<a href=\"" +d.link+ "\" target=\"_blank\">Click here to learn about " + d.agency + "</a>"
         })
       })
