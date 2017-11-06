@@ -8,14 +8,14 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAX_VALUE = {"homevalue": 600000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "aff_index_20": 2, "aff_index_35": 2, "med_income": 100000, "hfas": 250, "total": 300},
-    MINVALUE = {"homevalue": 140000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 13, "aff_index_20": 0.8, "aff_index_35": 0.7, "med_income": 50000, "hfas": 0, "total": 0},
-    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "aff_index_20": 3.0, "aff_index_35": 2.0, "med_income": 100000, "hfas": 243, "total": 262},
-    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "aff_index_20": [1, 1.3, 1.6, 1.8], "aff_index_35": [1, 1.3, 1.6, 1.8], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
-    FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s"), "hfas": d3.format(",.0f"), "total": d3.format(",.0f") },
-    TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6, "hfas": 6, "total": 7},
-    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
-    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income", "hfas": "Agencies", "total": "Programs"},
+var MAX_VALUE = {"homevalue": 550000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "share_loans_20": 50, "share_loans_35" : 50,  "aff_index_20": 4, "aff_index_35": 4.5, "med_income": 100000, "hfas": 250, "total": 300},
+    MINVALUE = {"homevalue": 138000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 6, "share_loans_20": 15, "share_loans_35" : 10, "aff_index_20": 1.3, "aff_index_35": 1.5, "med_income": 50000, "hfas": 0, "total": 0},
+    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "share_loans_20": 50, "share_loans_35" : 50, "aff_index_20": 4, "aff_index_35": 4.5, "med_income": 100000, "hfas": 243, "total": 262},
+    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "share_loans_20": [24, 28, 31, 35], "share_loans_35" : [24, 28, 31, 35], "aff_index_20": [1.6, 1.8, 2.0, 2.2], "aff_index_35": [1.8, 2.0, 2.2, 2.4], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
+    FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "share_loans_20": d3.format(".1f"), "share_loans_35" : d3.format(".1f"), "aff_index_20": d3.format(".1f"), "aff_index_35": d3.format(".1f"), "med_income": d3.format(".1s"), "hfas": d3.format(",.0f"), "total": d3.format(",.0f") },
+    TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "share_loans_20": 5, "share_loans_35" : 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6, "hfas": 6, "total": 7},
+    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "share_loans_20": "Percent", "share_loans_35" : "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
+    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "share_loans_20": "Share", "share_loans_35" : "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income", "hfas": "Agencies", "total": "Programs"},
     SELECTED_VARIABLE = "homevalue";
     STATE = "District of Columbia";
     COLORS = ["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"]
@@ -39,6 +39,8 @@ function drawMap(container_width) {
         var data_fha = data[i].fha;
         var data_va = data[i].va;
         var data_ltv_fico = data[i].ltv_fico;
+        var data_share_loans_20 = data[i].share_loans_20;
+        var data_share_loans_35 = data[i].share_loans_35;
         var data_aff_index_20 = data[i].aff_index_20;
         var data_aff_index_35 = data[i].aff_index_35;
         var data_med_income = data[i].med_income;
@@ -62,6 +64,8 @@ function drawMap(container_width) {
           json.features[j].properties.fha= data_fha;
           json.features[j].properties.va= data_va;
           json.features[j].properties.ltv_fico= data_ltv_fico;
+          json.features[j].properties.share_loans_20= data_share_loans_20;
+          json.features[j].properties.share_loans_35= data_share_loans_35;
           json.features[j].properties.aff_index_20= data_aff_index_20;
           json.features[j].properties.aff_index_35= data_aff_index_35;
           json.features[j].properties.med_income= data_med_income;
@@ -362,7 +366,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income", "HFAs/Agencies", "Total Active Programs"]
+    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile","Share of Loans with 20% or more down payment", "Share of Loans with 3.5% or more down payment", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income", "HFAs/Agencies", "Total Active Programs"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
