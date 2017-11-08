@@ -103,7 +103,7 @@ function drawMap(container_width) {
     return Number(d[SELECTED_VARIABLE])
   })
   var quantize = d3.scaleThreshold()
-    .domain([170000, 196000, 225000, 280000])
+    .domain(BREAKS[SELECTED_VARIABLE])
     .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
 
 
@@ -134,7 +134,9 @@ function drawMap(container_width) {
         .attr("height", mapHeight + margin.top + margin.bottom);
     var mapG  = mapSvg.append("g")
       .attr("class", "mapG")
-      .attr("transform", "translate(0," + height*.1 + ")")
+      .attr("transform", function() {
+        return (IS_MOBILE) ? "translate(0," + height*.15 + ")" : "translate(0," + height*.1 + ")"
+      })
 
     // Bind the data to the SVG and create one path per GeoJSON feature
     var states = mapG.selectAll("path")
@@ -759,9 +761,6 @@ function drawMap(container_width) {
 
 
     function updateBars(variable, state, min, max) { 
-      // var quantize = d3.scaleQuantize()
-      //   .domain([MIN, MAX])
-      //   .range(d3.range(6).map(function(i) { return "q" + i + "-6"; }));
       var quantize = d3.scaleThreshold()
         .domain(BREAKS[variable])
         .range(["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"])
@@ -809,28 +808,31 @@ function drawMap(container_width) {
             .duration(300)
             .attr("height", yMobile.bandwidth())
             .attr("y", function(d) { return yMobile(d.abbr); })
-            .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
+            .attr("width", function(d) { return xMobile(d[variable])*.7; })
             .style("fill", function(d) { 
-              return (container_width < 442) ? "" : quantize(d[SELECTED_VARIABLE])
+              return (container_width < 442) ? "" : quantize(d[variable])
             })
-          d3.selectAll(".bar-mobile-text")
-            .data(dataSortedMobile)
-            .each(function(d,i) {
-              var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 15,
-                  yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 265,
-                  xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - width/4,
-                  yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 196;
-              d3.select(this)
-                .attr("x", function() { 
-                  return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
-                })
-                .attr("y", function() {
-                  return (IS_PHONE_SM) ? yPosPhoneSm : yPosPhone
-                })
-                .text(function(d) {
-                  return format(d[SELECTED_VARIABLE])
+            .on('end', function() {
+              d3.selectAll(".bar-mobile-text")
+                .data(dataSortedMobile)
+                .each(function(d,i) {
+                  var xPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().right - 35,
+                      yPosPhoneSm = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 230,
+                      xPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().right - width/4,
+                      yPosPhone = d3.select(".bar-" + i).node().getBoundingClientRect().bottom - 196;
+                  d3.select(this)
+                    .attr("x", function() { 
+                      return (IS_PHONE_SM) ? xPosPhoneSm : xPosPhone
+                    })
+                    .attr("y", function() {
+                      return (IS_PHONE_SM) ? yPosPhoneSm : yPosPhone
+                    })
+                    .text(function(d) {
+                      return format(d[SELECTED_VARIABLE])
+                    })
                 })
             })
+
           $("#link-text").html(function(d) {
             var linkData = dataSortedMobile.filter(function(d) {
               return d.state == state
@@ -888,7 +890,7 @@ function drawMap(container_width) {
             if (!(IS_PHONE)) {
               barSvg.select(".us-label")
                 .attr("transform", function(d) {
-                  var yPos = (d3.select(".us-line").node().getBoundingClientRect().top)
+                  var yPos = (d3.select(".us-line").node() != null) ? (d3.select(".us-line").node().getBoundingClientRect().top) : "";
                   return "translate("+(width + 35)+"," + (yPos + 5)+ ")"
                 })
             }
@@ -934,11 +936,11 @@ function drawMap(container_width) {
           d3.select(this)
             .text(function(){
               // var format = d3.format(",.0f")
-              var array = BREAKS[SELECTED_VARIABLE]
+              var array = BREAKS[variable]
               if (i==0) {
-                return legendFormat(MINVALUE[SELECTED_VARIABLE])
+                return legendFormat(MINVALUE[variable])
               }else if (i==5) {
-                return legendFormat(MAXVALUE[SELECTED_VARIABLE])
+                return legendFormat(MAXVALUE[variable])
               }else {
                 return legendFormat(array[i-1])
               }
