@@ -203,7 +203,7 @@ function drawMap(container_width) {
       .append("text")
       .text(function(d) { 
       if (IS_PHONE) {
-        return "District of";
+        return "D.C.";
       } else {
         return d.properties.name; }
       })
@@ -236,7 +236,7 @@ function drawMap(container_width) {
       .append("text")
       .text(function(d) { 
         if (IS_PHONE) {
-          return "Columbia"}
+          return ""}
           else {return ""}
         })
       .attr("x", .775*(width))
@@ -805,6 +805,8 @@ function drawMap(container_width) {
               }
             })
             .attr("x", 1)
+            .transition()
+            .duration(300)
             .attr("height", yMobile.bandwidth())
             .attr("y", function(d) { return yMobile(d.abbr); })
             .attr("width", function(d) { return xMobile(d[SELECTED_VARIABLE])*.7; })
@@ -957,7 +959,7 @@ function drawMap(container_width) {
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + currencyFormat(d)
-      } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
+      } else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico" || SELECTED_VARIABLE == "share_loans_20" || SELECTED_VARIABLE == "share_loans_35") {
         return numberFormat(d) + "%"
       }else if (d > 5 || SELECTED_VARIABLE == "total" || SELECTED_VARIABLE == "hfas") {
         return numberFormat(d)
@@ -973,7 +975,7 @@ function drawMap(container_width) {
 
       if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
         return "$" + numberFormat(d)
-      }  else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico") {
+      }  else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico" || SELECTED_VARIABLE == "share_loans_20" || SELECTED_VARIABLE == "share_loans_35") {
         return decimalFormat(d) + "%"
       }else if (d > 100 || SELECTED_VARIABLE == "hfas" || SELECTED_VARIABLE == "total") {
         return numberFormat(d)
@@ -993,7 +995,7 @@ function drawMap(container_width) {
         return (SELECTED_VARIABLE == "ltv_fico") ? 1 : 0; 
       })
     mapNote.append("text")
-      .text("*Share of loans have a loan-to-value ratio of above 95 and FICO score below 700")
+      .text("Note: Share of loans have a loan-to-value ratio of above 95 and FICO score below 700")
       .attr("transform", "translate("+noteX+"," + noteY + ")")
 
 

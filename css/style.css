@@ -100,7 +100,7 @@ div.map-tooltip {
 }
 
 #link-div {
-  font-size: 12px;
+  font-size: 14px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -217,12 +217,18 @@ div.map-tooltip {
 	fill: #fdbf11;
 }
 
-
+.us-line {
+  stroke-width: 1.5px;
+}
 
 /*BAR CHART */
 .bar {
   cursor: pointer;
   z-index: 0;
+  stroke-width: 2px;
+  stroke-opacity: 0;
+  stroke: #000;
+
 }
 
 .hover, .selected {
@@ -303,6 +309,10 @@ path.domain {
   .dropdown-label, .dropdown-div {
     float: left;
   }
+  .dropdown-label {
+    line-height: 34px;
+    height: 34px;
+  }
   #tooltip-header {
     display: none;
   }
@@ -367,9 +377,6 @@ path.domain {
     fill: #000000 !important;
   }
 
-  .state-label {
-    font-size: 10px;
-  }
   #link-div {
     float: left;
   }
@@ -402,6 +409,13 @@ path.domain {
  }
 
  @media (max-width: 440px) {
+  .dropdown-label {
+    line-height: 0px;
+    height: 0px;
+  }
+  .wrapper {
+    margin: 0 30px;
+  }
   #isPhoneSmall {
     display: block;
   }
