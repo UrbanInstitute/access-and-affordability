@@ -11,7 +11,7 @@
       <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic,900" rel="stylesheet" type="text/css">  
 	<style type="text/css">
 	 body {
-            margin: 20px;
+            padding: 20px 30px;
             max-width: 960px ;
             margin-left: auto;
             margin-right: auto;
@@ -60,11 +60,13 @@
     line-height: 12px;
     text-transform: uppercase;
     text-align: center;
+    line-height: 1.2em;
 }
 
 .button-div {
   height: 40px;
-  width: 100%;
+  width: 30%;
+  float: right;
 }
 
 button:hover {
@@ -74,7 +76,13 @@ button {
   margin: 0;
   vertical-align: baseline;
 }
+#source {
+  font-size: 11px;
+  font-style: italic;
+  width: 60%;
+  float: left;
 
+}
 
 
 	</style>
@@ -116,8 +124,12 @@ button {
 </div>
 
 <div id = "map"></div>
+<div id="source">
+    <div><b>Source:</b> eMBS, CoreLogic, U.S. Census, Current Population Survey, American Community Survey, American Community Survey, Moody’s Analytics, Freddie Mac Primary Mortgage Market Survey, Down Payment Resource and the Urban Institute.</div>
+    <div><b>Note:</b> Data based on agency purchase money originations in 2016.</div>
+</div>
     <div class="button-div">
-      <a href="data2.csv">
+      <a href="Breaking down homeownership barriers_state by state_Down Payment, Credit, and Affordabilit.xlsx">
         <button class="data-button">Download the Data</button>
       </a>
     </div>
