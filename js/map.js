@@ -14,8 +14,8 @@ var MAX_VALUE = {"homevalue": 550000, "fthb": 60, "fico": 800, "origltv": 100, "
     BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "share_loans_20": [24, 28, 31, 35], "share_loans_35" : [24, 28, 31, 35], "aff_index_20": [16, 18, 20, 22], "aff_index_35": [18, 20, 22, 24], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "share_loans_20": d3.format(".0f"), "share_loans_35" : d3.format(".0f"), "aff_index_20": d3.format(".0f"), "aff_index_35": d3.format(".0f"), "med_income": d3.format(".1s"), "hfas": d3.format(",.0f"), "total": d3.format(",.0f") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "share_loans_20": 5, "share_loans_35" : 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6, "hfas": 6, "total": 7},
-    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "share_loans_20": "Percent", "share_loans_35" : "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
-    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "FICO Score", "origltv": "Ratio", "dti": "Ratio", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "share_loans_20": "Share", "share_loans_35" : "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income", "hfas": "Agencies", "total": "Programs"},
+    UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "Credit score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "share_loans_20": "Percent", "share_loans_35" : "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
+    UNITSMAP = {"homevalue": "Value", "fthb": "Share", "fico": "Credit score", "origltv": "Ratio", "dti": "Ratio", "conv": "Share", "fha": "Share", "va": "Share", "ltv_fico": "Share", "share_loans_20": "Share", "share_loans_35" : "Share", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Income", "hfas": "Agencies", "total": "Programs"},
     SELECTED_VARIABLE = "homevalue";
     STATE = "District of Columbia";
     COLORS = ["#cfe8f3", "#a2d4ec", "#73bfe2", "#1696d2", "#12719e"]
@@ -137,7 +137,7 @@ function drawMap(container_width) {
       .attr("transform", function() {
         return (IS_MOBILE) ? "translate(0," + height*.15 + ")" : "translate(0," + height*.1 + ")"
       })
-
+  
     // Bind the data to the SVG and create one path per GeoJSON feature
     var states = mapG.selectAll("path")
       .data(json.features)
@@ -368,7 +368,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    var dropdownNames = ["Median home value", "First-time homebuyer share", "Median FICO score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile","Share of Loans with 20% or more down payment", "Share of Loans with 3.5% or more down payment", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "Median family income", "HFAs/Agencies", "Total Active Programs"]
+    var dropdownNames = ["Median home value", "Median family income", "First-time homebuyer share", "Median credit score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile","Share of Loans with 20% or more down payment", "Share of Loans with 3.5% or less down payment", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "State Housing Finance Agencies and other agencies", "Total Active Programs"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')

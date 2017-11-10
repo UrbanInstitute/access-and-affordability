@@ -1,53 +1,53 @@
-state,abbr,link,homevalue,fthb,fico,origltv,dti,orignoterate,conv,fha,va,ltv_fico,share_loans_20,share_loans_35,aff_index_20,aff_index_35,med_income,agency,hfas,total
-United States,US,,227100,51.1,729,95,37.8,3.75,57.9,27.2,11.2,22.9,32.8,29.9,20.53,23.61,71297,,36,37
-Alabama,AL,http://www.ahfa.com/,167359,48.3,722,95,35,3.625,46.7,30.4,15.1,29.6,23.4,37.2,18.15,20.88,59413,the Alabama Housing Finance Authority,9,15
-Alaska,AK,https://www.ahfc.us/,275101,50,729,96.5,38.7,3.5,39.4,21.7,30.2,27.7,18.9,49.3,20.29,23.34,87382,the Alaska Housing Finance Corp.,2,2
-Arizona,AZ,https://housing.az.gov/,218000,48.4,723,95,38,3.875,57.6,28.8,12.2,23.4,32.5,29.6,22.13,25.46,63485,the Arizona Department of Housing,30,38
-Arkansas,AR,http://adfa.arkansas.gov/,144045,48.2,720,95,34.8,3.625,46.2,28.5,12.3,29.7,23.8,38.3,17.2,19.79,53963,the Arkansas Development Finance Authority,4,13
-California,CA,http://www.calhfa.ca.gov/,425000,53.9,730,90,41,3.875,60.5,29.2,9.5,19.3,41.9,27.5,35.09,40.36,78066,the California Housing Finance Agency,243,262
-Colorado,CO,https://www.chfainfo.com/,304950,45.8,741,90,38,3.75,63.2,22.1,13.4,18.6,39.5,27.6,24.06,27.67,81697,the Colorado Housing and Finance Authority,29,63
-Connecticut,CT,http://www.chfa.org,228400,60.3,732,95,38,3.625,62.3,29.5,6.3,20.1,33.1,28.1,15.39,17.7,95658,the Connecticut Housing Finance Agency,14,37
-Delaware,DE,http://www.destatehousing.com,230000,47.6,736,95,37.1,3.75,56.4,28,10.2,23.9,35.2,29.8,18.93,21.78,78297,the Delaware State Housing Authority,6,19
-District of Columbia,DC,http://www.dchfa.org,529497,61.5,764,85,36,3.75,83.3,10.7,6,6.1,46.5,12.9,37.56,43.21,90842,the District of Columbia Housing Finance Agency,3,18
-Florida,FL,http://www.floridahousing.org,202500,48.7,722,95,39,3.875,56.5,29.1,12.8,23.2,35,29.5,20.92,24.06,62395,the Florida Housing Finance Corporation,117,236
-Georgia,GA,http://www.dca.ga.gov,183000,52.2,720,95,37,3.75,50.4,31.9,14,28.8,27.2,33.6,18.39,21.15,64133,the Georgia Department of Community Affairs/Georgia Housing Finance Authority,34,59
-Hawaii,HI,http://www.hawaii.gov/dbedt/hhfdc,485000,49.2,751,90,41,3.75,59.5,7.2,27.2,13.5,42,32,35.55,40.89,87918,the Hawaii Housing Finance and Development Corporation,4,7
-Idaho,ID,http://www.idahohousing.com,197406,44.4,728,95,37,3.625,59.6,24.9,11.5,24.1,30.5,33.4,20.33,23.39,62567,the Idaho Housing and Finance Association,5,17
-Illinois,IL,http://www.ihda.org,185000,56.1,732,94,37,3.75,66.5,25.5,6,19.4,34.7,22.9,17.96,20.66,66390,the Illinois Housing Development Authority,25,38
-Indiana,IN,http://www.ihcda.in.gov,151963,51.3,717,95,35,3.75,52.8,32.1,8.1,29.8,24.9,33.3,12.63,14.52,77572,the Indiana Housing and Community Development Authority,12,25
-Iowa,IA,http://www.iowafinanceauthority.gov,155000,48.1,737,95,35,3.625,68.1,18.4,7.9,19.7,32.5,27.4,13.88,15.97,71959,the Iowa Finance Authority,10,20
-Kansas,KS,http://www.kshousingcorp.org,179947,48,731,95,35,3.625,57.7,25.9,12.4,23.2,26.8,31.2,16.2,18.64,71579,the Kansas Housing Resources Corporation,9,13
-Kentucky,KY,http://www.kyhousing.org,147500,50.3,721,95,35,3.75,50.1,29.7,10.6,28.5,26.7,36.1,16.18,18.62,58734,the Kentucky Housing Corporation,9,18
-Louisiana,LA,http://www.lhc.la.gov,179950,54.3,714,95,37,3.75,47,30.3,11.2,31.6,24.3,39.6,19.08,21.95,60779,the Louisiana Housing Corporation,17,25
-Maine,ME,http://www.mainehousing.org,196626,46.5,733,95,37.3,3.75,55.1,22.8,11.9,23.8,33,32.7,18.65,21.45,67953,MaineHousing,3,9
-Maryland,MD,http://www.dhcd.maryland.gov,269000,58,728,95,39,3.75,49.6,33.8,13.1,26.8,25.7,36.7,18.01,20.72,96241,the Maryland Department of Housing and Community Development,26,86
-Massachusetts,MA,http://www.masshousing.com,345000,56.7,739,90,38,3.75,70.6,22.7,5.3,15.7,39.8,22.8,23.15,26.63,96034,the MassHousing,57,77
-Michigan,MI,http://www.michigan.gov/mshda,154950,50.1,725,95,35.7,3.875,63,25.4,6.4,23.3,30.7,29.4,14.76,16.98,67651,the Michigan State Housing Development Authority,25,36
-Minnesota,MN,http://www.mnhousing.gov,202000,50.2,741,95,36,3.625,67.2,22,6.4,18,31.1,25.9,15.7,18.06,82928,Minnesota Housing,31,39
-Mississippi,MS,http://www.mshomecorp.com,179291,52.4,707,96.5,36.1,3.625,36.3,35.1,14.3,36.3,18.8,45.5,22.36,25.72,51665,Mississippi Home Corporation,8,14
-Missouri,MO,http://www.mhdc.com,164008,48.5,729,95,35,3.75,54.6,27.8,10.3,25.7,28.3,31.9,16.03,18.44,65948,the Missouri Housing Development Commission,11,28
-Montana,MT,http://www.housing.mt.gov,234973,42.8,745,92,37,3.625,63,16.2,13.5,16.7,36.7,27.2,22.8,26.22,66422,the Montana Board of Housing/Housing Division,5,8
-Nebraska,NE,http://www.nifa.org,160000,48.9,738,95,35.6,3.625,60,23.4,12.4,20.1,28.9,31.7,14.29,16.44,72162,the Nebraska Investment Finance Authority,4,14
-Nevada,NV,http://www.housing.nv.gov,225000,52.6,716,95,39,3.875,50.4,34.2,14.1,25.8,30.4,35,21.84,25.12,66401,the Nevada Housing Division,11,24
-New Hampshire,NH,http://www.nhhfa.org,249933,50.8,735,95,39,3.75,60.3,26.1,9.7,20.6,33,30.3,17.64,20.29,91333,the New Hampshire Housing Finance Authority,3,8
-New Jersey,NJ,http://www.nj-hmfa.com,285000,58.3,735,90,39,3.75,64.7,30,4.5,17.8,41.8,23.1,19.37,22.29,94801,the New Jersey Housing and Mortgage Finance Agency,31,43
-New Mexico,NM,http://www.housingnm.org,191284,51.7,725,95,37,3.75,50,31.6,16.4,27.6,27.3,36.2,21.28,24.47,57944,the New Mexico Mortgage Finance Authority,9,15
-New York,NY,http://www.nyshcr.org,298920,60.9,739,90,39,3.75,65.8,27.1,5.4,16.3,42.9,21.2,24.94,28.69,77228,New York State Homes and Community Renewal,59,83
-North Carolina,NC,http://www.nchfa.com,190000,45.6,738,95,36,3.75,59.9,19.3,15.5,20.9,33.3,29.6,19.62,22.57,62396,the North Carolina Housing Finance Agency,34,55
-North Dakota,ND,http://www.ndhfa.org,216500,42.7,747,91.3,36,3.625,69.8,14.9,12.5,14.3,37.6,23.1,17.84,20.52,78230,the North Dakota Housing Finance Agency,1,7
-Ohio,OH,http://www.ohiohome.org,138000,53,723,95,36,3.75,55.4,31.3,9,26.6,26.3,30.4,13.01,14.97,68341,the Ohio Housing Finance Agency,31,42
-Oklahoma,OK,http://www.ohfa.org,150000,47.2,719,95.1,35.7,3.75,44.7,30.5,14.6,29.6,24.1,38.3,15.77,18.14,61302,the Oklahoma Housing Finance Agency,21,31
-Oregon,OR,http://www.ohcs.oregon.gov,292000,46.7,745,90,38,3.75,66.3,19.9,10,15.9,40.9,24.4,26.85,30.89,70077,Oregon Housing and Community Services,28,29
-Pennsylvania,PA,http://www.phfa.org,176000,56.4,735,95,36.3,3.75,57.4,30.8,7.8,22.5,30.4,29.7,15.32,17.62,74046,the Pennsylvania Housing Finance Agency,41,79
-Rhode Island,RI,http://www.rhodeislandhousing.org,236500,56.4,729,95,39,3.75,54.3,38.3,6.7,24.7,30.9,34.2,19.06,21.92,79980,Rhode Island Housing,4,10
-South Carolina,SC,http://www.schousing.com,179600,45,728,95,36.3,3.75,54.5,24.3,15.4,25.5,30.6,31.7,18.59,21.38,62270,the South Carolina State Housing Finance and Development Authority,16,29
-South Dakota,SD,http://www.sdhda.org,179300,48.3,740,95,37,3.5,55.2,19.7,13.3,20.3,27.5,34.6,16.54,19.03,69856,the South Dakota Housing Development Authority,5,12
-Tennessee,TN,http://www.thda.org,172500,45.8,727,95,36,3.75,51.3,26.4,13.5,26.1,29,34.1,18.25,21,60904,the Tennessee Housing Development Agency,13,31
-Texas,TX,http://www.tdhca.state.tx.us,215000,49,722,95,38.2,3.75,55.9,29.8,12.9,25.9,33,28.8,20.53,23.61,67500,the Texas Department of Housing and Community Affairs,93,164
-Utah,UT,http://www.utahhousingcorp.org,242968,48.2,736,95,38,3.75,58.6,29.8,8,21.3,28.4,30.6,20.64,23.74,75875,the Utah Housing Corporation,13,22
-Vermont,VT,http://www.vhfa.org,215500,47.8,743,90,37.1,3.625,70.5,14.1,8.9,15,39.2,25.7,17.88,20.57,77677,the Vermont Housing Finance Agency,9,24
-Virginia,VA,http://www.vhda.com,276500,53.7,737,95,38,3.625,49.2,25,21.9,23.8,26.9,37.6,21.14,24.31,84308,the Virginia Housing Development Authority,27,38
-Washington,WA,http://www.wshfc.org,305000,51.2,736,95,38,3.75,61.6,21.5,14.7,20.4,34.1,30.8,24.42,28.09,80490,the Washington State Housing Finance Commission,27,55
-West Virginia,WV,http://www.wvhdf.com,149975,54.6,713,96.1,35,3.75,43,24.6,14.6,30.9,22.5,42.8,17.43,20.05,55449,the West Virginia Housing Development Fund,5,10
-Wisconsin,WI,http://www.wheda.com,157000,49.6,742,94,35,3.75,73.2,15.9,7.2,17,33.7,23.1,13.65,15.71,74101,the Wisconsin Housing and Economic Development Authority,24,48
-Wyoming,WY,http://www.wyomingcda.com,222517,47.4,730,95,36,3.625,51.6,19.2,16.9,25.3,26.5,40.4,19.06,21.92,75236,the Wyoming Community Development Authority,2,12
+state,abbr,link,homevalue,med_income,fthb,fico,origltv,dti,orignoterate,conv,fha,va,ltv_fico,share_loans_20,share_loans_35,aff_index_20,aff_index_35,agency,hfas,total
+United States,US,,227100,71297,51.1,729,95,37.8,3.75,57.9,27.2,11.2,22.9,32.8,29.9,20.53,23.61,,36,37
+Alabama,AL,http://www.ahfa.com/,167359,59413,48.3,722,95,35,3.625,46.7,30.4,15.1,29.6,23.4,37.2,18.15,20.88,the Alabama Housing Finance Authority,9,15
+Alaska,AK,https://www.ahfc.us/,275101,87382,50,729,96.5,38.7,3.5,39.4,21.7,30.2,27.7,18.9,49.3,20.29,23.34,the Alaska Housing Finance Corp.,2,2
+Arizona,AZ,https://housing.az.gov/,218000,63485,48.4,723,95,38,3.875,57.6,28.8,12.2,23.4,32.5,29.6,22.13,25.46,the Arizona Department of Housing,30,38
+Arkansas,AR,http://adfa.arkansas.gov/,144045,53963,48.2,720,95,34.8,3.625,46.2,28.5,12.3,29.7,23.8,38.3,17.2,19.79,the Arkansas Development Finance Authority,4,13
+California,CA,http://www.calhfa.ca.gov/,425000,78066,53.9,730,90,41,3.875,60.5,29.2,9.5,19.3,41.9,27.5,35.09,40.36,the California Housing Finance Agency,243,262
+Colorado,CO,https://www.chfainfo.com/,304950,81697,45.8,741,90,38,3.75,63.2,22.1,13.4,18.6,39.5,27.6,24.06,27.67,the Colorado Housing and Finance Authority,29,63
+Connecticut,CT,http://www.chfa.org,228400,95658,60.3,732,95,38,3.625,62.3,29.5,6.3,20.1,33.1,28.1,15.39,17.7,the Connecticut Housing Finance Agency,14,37
+Delaware,DE,http://www.destatehousing.com,230000,78297,47.6,736,95,37.1,3.75,56.4,28,10.2,23.9,35.2,29.8,18.93,21.78,the Delaware State Housing Authority,6,19
+District of Columbia,DC,http://www.dchfa.org,529497,90842,61.5,764,85,36,3.75,83.3,10.7,6,6.1,46.5,12.9,37.56,43.21,the District of Columbia Housing Finance Agency,3,18
+Florida,FL,http://www.floridahousing.org,202500,62395,48.7,722,95,39,3.875,56.5,29.1,12.8,23.2,35,29.5,20.92,24.06,the Florida Housing Finance Corporation,117,236
+Georgia,GA,http://www.dca.ga.gov,183000,64133,52.2,720,95,37,3.75,50.4,31.9,14,28.8,27.2,33.6,18.39,21.15,the Georgia Department of Community Affairs/Georgia Housing Finance Authority,34,59
+Hawaii,HI,http://www.hawaii.gov/dbedt/hhfdc,485000,87918,49.2,751,90,41,3.75,59.5,7.2,27.2,13.5,42,32,35.55,40.89,the Hawaii Housing Finance and Development Corporation,4,7
+Idaho,ID,http://www.idahohousing.com,197406,62567,44.4,728,95,37,3.625,59.6,24.9,11.5,24.1,30.5,33.4,20.33,23.39,the Idaho Housing and Finance Association,5,17
+Illinois,IL,http://www.ihda.org,185000,66390,56.1,732,94,37,3.75,66.5,25.5,6,19.4,34.7,22.9,17.96,20.66,the Illinois Housing Development Authority,25,38
+Indiana,IN,http://www.ihcda.in.gov,151963,77572,51.3,717,95,35,3.75,52.8,32.1,8.1,29.8,24.9,33.3,12.63,14.52,the Indiana Housing and Community Development Authority,12,25
+Iowa,IA,http://www.iowafinanceauthority.gov,155000,71959,48.1,737,95,35,3.625,68.1,18.4,7.9,19.7,32.5,27.4,13.88,15.97,the Iowa Finance Authority,10,20
+Kansas,KS,http://www.kshousingcorp.org,179947,71579,48,731,95,35,3.625,57.7,25.9,12.4,23.2,26.8,31.2,16.2,18.64,the Kansas Housing Resources Corporation,9,13
+Kentucky,KY,http://www.kyhousing.org,147500,58734,50.3,721,95,35,3.75,50.1,29.7,10.6,28.5,26.7,36.1,16.18,18.62,the Kentucky Housing Corporation,9,18
+Louisiana,LA,http://www.lhc.la.gov,179950,60779,54.3,714,95,37,3.75,47,30.3,11.2,31.6,24.3,39.6,19.08,21.95,the Louisiana Housing Corporation,17,25
+Maine,ME,http://www.mainehousing.org,196626,67953,46.5,733,95,37.3,3.75,55.1,22.8,11.9,23.8,33,32.7,18.65,21.45,MaineHousing,3,9
+Maryland,MD,http://www.dhcd.maryland.gov,269000,96241,58,728,95,39,3.75,49.6,33.8,13.1,26.8,25.7,36.7,18.01,20.72,the Maryland Department of Housing and Community Development,26,86
+Massachusetts,MA,http://www.masshousing.com,345000,96034,56.7,739,90,38,3.75,70.6,22.7,5.3,15.7,39.8,22.8,23.15,26.63,the MassHousing,57,77
+Michigan,MI,http://www.michigan.gov/mshda,154950,67651,50.1,725,95,35.7,3.875,63,25.4,6.4,23.3,30.7,29.4,14.76,16.98,the Michigan State Housing Development Authority,25,36
+Minnesota,MN,http://www.mnhousing.gov,202000,82928,50.2,741,95,36,3.625,67.2,22,6.4,18,31.1,25.9,15.7,18.06,Minnesota Housing,31,39
+Mississippi,MS,http://www.mshomecorp.com,179291,51665,52.4,707,96.5,36.1,3.625,36.3,35.1,14.3,36.3,18.8,45.5,22.36,25.72,Mississippi Home Corporation,8,14
+Missouri,MO,http://www.mhdc.com,164008,65948,48.5,729,95,35,3.75,54.6,27.8,10.3,25.7,28.3,31.9,16.03,18.44,the Missouri Housing Development Commission,11,28
+Montana,MT,http://www.housing.mt.gov,234973,66422,42.8,745,92,37,3.625,63,16.2,13.5,16.7,36.7,27.2,22.8,26.22,the Montana Board of Housing/Housing Division,5,8
+Nebraska,NE,http://www.nifa.org,160000,72162,48.9,738,95,35.6,3.625,60,23.4,12.4,20.1,28.9,31.7,14.29,16.44,the Nebraska Investment Finance Authority,4,14
+Nevada,NV,http://www.housing.nv.gov,225000,66401,52.6,716,95,39,3.875,50.4,34.2,14.1,25.8,30.4,35,21.84,25.12,the Nevada Housing Division,11,24
+New Hampshire,NH,http://www.nhhfa.org,249933,91333,50.8,735,95,39,3.75,60.3,26.1,9.7,20.6,33,30.3,17.64,20.29,the New Hampshire Housing Finance Authority,3,8
+New Jersey,NJ,http://www.nj-hmfa.com,285000,94801,58.3,735,90,39,3.75,64.7,30,4.5,17.8,41.8,23.1,19.37,22.29,the New Jersey Housing and Mortgage Finance Agency,31,43
+New Mexico,NM,http://www.housingnm.org,191284,57944,51.7,725,95,37,3.75,50,31.6,16.4,27.6,27.3,36.2,21.28,24.47,the New Mexico Mortgage Finance Authority,9,15
+New York,NY,http://www.nyshcr.org,298920,77228,60.9,739,90,39,3.75,65.8,27.1,5.4,16.3,42.9,21.2,24.94,28.69,New York State Homes and Community Renewal,59,83
+North Carolina,NC,http://www.nchfa.com,190000,62396,45.6,738,95,36,3.75,59.9,19.3,15.5,20.9,33.3,29.6,19.62,22.57,the North Carolina Housing Finance Agency,34,55
+North Dakota,ND,http://www.ndhfa.org,216500,78230,42.7,747,91.3,36,3.625,69.8,14.9,12.5,14.3,37.6,23.1,17.84,20.52,the North Dakota Housing Finance Agency,1,7
+Ohio,OH,http://www.ohiohome.org,138000,68341,53,723,95,36,3.75,55.4,31.3,9,26.6,26.3,30.4,13.01,14.97,the Ohio Housing Finance Agency,31,42
+Oklahoma,OK,http://www.ohfa.org,150000,61302,47.2,719,95.1,35.7,3.75,44.7,30.5,14.6,29.6,24.1,38.3,15.77,18.14,the Oklahoma Housing Finance Agency,21,31
+Oregon,OR,http://www.ohcs.oregon.gov,292000,70077,46.7,745,90,38,3.75,66.3,19.9,10,15.9,40.9,24.4,26.85,30.89,Oregon Housing and Community Services,28,29
+Pennsylvania,PA,http://www.phfa.org,176000,74046,56.4,735,95,36.3,3.75,57.4,30.8,7.8,22.5,30.4,29.7,15.32,17.62,the Pennsylvania Housing Finance Agency,41,79
+Rhode Island,RI,http://www.rhodeislandhousing.org,236500,79980,56.4,729,95,39,3.75,54.3,38.3,6.7,24.7,30.9,34.2,19.06,21.92,Rhode Island Housing,4,10
+South Carolina,SC,http://www.schousing.com,179600,62270,45,728,95,36.3,3.75,54.5,24.3,15.4,25.5,30.6,31.7,18.59,21.38,the South Carolina State Housing Finance and Development Authority,16,29
+South Dakota,SD,http://www.sdhda.org,179300,69856,48.3,740,95,37,3.5,55.2,19.7,13.3,20.3,27.5,34.6,16.54,19.03,the South Dakota Housing Development Authority,5,12
+Tennessee,TN,http://www.thda.org,172500,60904,45.8,727,95,36,3.75,51.3,26.4,13.5,26.1,29,34.1,18.25,21,the Tennessee Housing Development Agency,13,31
+Texas,TX,http://www.tdhca.state.tx.us,215000,67500,49,722,95,38.2,3.75,55.9,29.8,12.9,25.9,33,28.8,20.53,23.61,the Texas Department of Housing and Community Affairs,93,164
+Utah,UT,http://www.utahhousingcorp.org,242968,75875,48.2,736,95,38,3.75,58.6,29.8,8,21.3,28.4,30.6,20.64,23.74,the Utah Housing Corporation,13,22
+Vermont,VT,http://www.vhfa.org,215500,77677,47.8,743,90,37.1,3.625,70.5,14.1,8.9,15,39.2,25.7,17.88,20.57,the Vermont Housing Finance Agency,9,24
+Virginia,VA,http://www.vhda.com,276500,84308,53.7,737,95,38,3.625,49.2,25,21.9,23.8,26.9,37.6,21.14,24.31,the Virginia Housing Development Authority,27,38
+Washington,WA,http://www.wshfc.org,305000,80490,51.2,736,95,38,3.75,61.6,21.5,14.7,20.4,34.1,30.8,24.42,28.09,the Washington State Housing Finance Commission,27,55
+West Virginia,WV,http://www.wvhdf.com,149975,55449,54.6,713,96.1,35,3.75,43,24.6,14.6,30.9,22.5,42.8,17.43,20.05,the West Virginia Housing Development Fund,5,10
+Wisconsin,WI,http://www.wheda.com,157000,74101,49.6,742,94,35,3.75,73.2,15.9,7.2,17,33.7,23.1,13.65,15.71,the Wisconsin Housing and Economic Development Authority,24,48
+Wyoming,WY,http://www.wyomingcda.com,222517,75236,47.4,730,95,36,3.625,51.6,19.2,16.9,25.3,26.5,40.4,19.06,21.92,the Wyoming Community Development Authority,2,12

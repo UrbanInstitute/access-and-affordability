@@ -4,7 +4,13 @@ body {
     max-width: 960px;
     z-index: 0;
 }
-
+#source {
+  font-size: 11px;
+}
+.title-main {
+  font-size: 18px;
+  font-style: bold;
+}
 .data-button {
     background-color: #000;
     display: inline;
