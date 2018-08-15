@@ -8,10 +8,84 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 
 
 //Create SVG element and append map to the SVG
-var MAX_VALUE = {"homevalue": 550000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "share_loans_20": 50, "share_loans_35" : 50,  "aff_index_20": 40, "aff_index_35": 45, "med_income": 100000, "hfas": 250, "total": 300},
-    MINVALUE = {"homevalue": 138000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 6, "share_loans_20": 15, "share_loans_35" : 10, "aff_index_20": 13, "aff_index_35": 15, "med_income": 50000, "hfas": 0, "total": 0},
-    MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "share_loans_20": 50, "share_loans_35" : 50, "aff_index_20": 40, "aff_index_35": 45, "med_income": 100000, "hfas": 243, "total": 262},
-    BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "share_loans_20": [24, 28, 31, 35], "share_loans_35" : [24, 28, 31, 35], "aff_index_20": [16, 18, 20, 22], "aff_index_35": [18, 20, 22, 24], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
+// var MAX_VALUE = {"homevalue": 550000, "fthb": 60, "fico": 800, "origltv": 100, "dti": 40, "conv": 80, "fha": 40, "va": 30, "ltv_fico": 40, "share_loans_20": 50, "share_loans_35" : 50,  "aff_index_20": 40, "aff_index_35": 45, "med_income": 100000, "hfas": 250, "total": 300},
+//     MINVALUE = {"homevalue": 138000, "fthb": 42, "fico": 705, "origltv": 85, "dti": 34, "conv": 35, "fha": 0, "va": 4, "ltv_fico": 6, "share_loans_20": 15, "share_loans_35" : 10, "aff_index_20": 13, "aff_index_35": 15, "med_income": 50000, "hfas": 0, "total": 0},
+//     MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "share_loans_20": 50, "share_loans_35" : 50, "aff_index_20": 40, "aff_index_35": 45, "med_income": 100000, "hfas": 243, "total": 262},
+//     BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "share_loans_20": [24, 28, 31, 35], "share_loans_35" : [24, 28, 31, 35], "aff_index_20": [16, 18, 20, 22], "aff_index_35": [18, 20, 22, 24], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
+
+var MAX_VALUE = {"homevalue": 550000,
+  "fthb": 65,
+  "fico": 800,
+  "origltv": 100,
+  "dti": 45,
+  "conv": 85,
+  "fha": 40,
+  "va": 35,
+  "ltv_fico": 40,
+  "share_loans_20": 50,
+  "share_loans_35" : 50,
+   "aff_index_20": 40,
+  "aff_index_35": 45,
+  "med_income": 105000,
+  "hfas": 400,
+  "total": 250}
+
+var MAXVALUE = {"homevalue": 550000,
+  "fthb": 62,
+  "fico": 765,
+  "origltv": 97,
+  "dti": 41,
+  "conv": 85,
+  "fha": 40,
+  "va": 31,
+  "ltv_fico": 37,
+  "share_loans_20": 50,
+  "share_loans_35" : 50,
+  "aff_index_20": 40,
+  "aff_index_35": 45,
+  "med_income": 105000,
+  "hfas": 397,
+  "total": 250}
+
+
+var MINVALUE = {"homevalue": 138000,
+  "fthb": 42,
+  "fico": 705,
+  "origltv": 85,
+  "dti": 34,
+  "conv": 35,
+  "fha": 0,
+  "va": 4,
+  "ltv_fico": 6,
+  "share_loans_20": 15,
+  "share_loans_35" : 10,
+  "aff_index_20": 13,
+  "aff_index_35": 15,
+  "med_income": 50000,
+  "hfas": 0,
+  "total": 0}
+
+
+var BREAKS = {
+"homevalue": [248072,318626,389180,459734],
+"fthb": [48,52,56,60],
+"fico": [719,730,741,752],
+"origltv": [87,89,91,93],
+"dti": [37,38,39,40],
+"conv": [48,57,66,75],
+"fha": [13,19,25,31],
+"va": [10,15,20,25],
+"ltv_fico": [12,18,24,30],
+"share_loans_20": [25,30,35,40],
+"share_loans_35": [23,30,37,44],
+"aff_index_20": [17,22,27,32],
+"aff_index_35": [20,26,32,38],
+"med_income": [63390,72895,82400,91905],
+"hfas": [85,163,241,319],
+"total": [49,97,145,193]
+}
+
+
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "share_loans_20": d3.format(".0f"), "share_loans_35" : d3.format(".0f"), "aff_index_20": d3.format(".0f"), "aff_index_35": d3.format(".0f"), "med_income": d3.format(".1s"), "hfas": d3.format(",.0f"), "total": d3.format(",.0f") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "share_loans_20": 5, "share_loans_35" : 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6, "hfas": 6, "total": 7},
     UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "Credit score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "share_loans_20": "Percent", "share_loans_35" : "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
@@ -23,7 +97,7 @@ var MAX_VALUE = {"homevalue": 550000, "fthb": 60, "fico": 800, "origltv": 100, "
 
 function drawMap(container_width) {
 
-  d3.csv("data2.csv", function(data) {
+  d3.csv("data3.csv", function(data) {
 
     d3.json("us-states.json", function(json) {
       for (var i = 0; i < data.length; i++) {
