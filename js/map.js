@@ -85,7 +85,6 @@ var BREAKS = {
 "total": [49,97,145,193]
 }
 
-
     FORMAT = {"homevalue": d3.format(".1s"), "fthb": d3.format(""), "fico": d3.format(""), "origltv": d3.format(""), "dti": d3.format(""), "conv": d3.format(""), "fha": d3.format(""), "va": d3.format(""), "ltv_fico": d3.format(""), "share_loans_20": d3.format(".0f"), "share_loans_35" : d3.format(".0f"), "aff_index_20": d3.format(".0f"), "aff_index_35": d3.format(".0f"), "med_income": d3.format(".1s"), "hfas": d3.format(",.0f"), "total": d3.format(",.0f") },
     TICKS = {"homevalue": 7, "fthb": 7, "fico": 5, "origltv":6, "dti":5, "conv": 5, "fha": 5, "va": 4, "ltv_fico": 5, "share_loans_20": 5, "share_loans_35" : 5, "aff_index_20": 5, "aff_index_35": 5, "med_income": 6, "hfas": 6, "total": 7},
     UNITS = {"homevalue": "Dollars", "fthb": "Percent", "fico": "Credit score", "origltv": "Ratio", "dti": "Ratio", "conv": "Percent", "fha": "Percent", "va": "Percent", "ltv_fico": "Percent", "share_loans_20": "Percent", "share_loans_35" : "Percent", "aff_index_20": "Index", "aff_index_35": "Index", "med_income": "Dollars", "hfas": "Number", "total": "Number"},
