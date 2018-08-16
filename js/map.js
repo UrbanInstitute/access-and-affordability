@@ -356,7 +356,7 @@ function drawMap(container_width) {
     region.append("div")
         .attr('class', 'tooltip-data average')
         .text(function() {
-           return (IS_PHONE) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
+           return (IS_PHONE) ? "US: " + format(data[0][SELECTED_VARIABLE]) : ""
         })
     var stats = tooltip.append('div')
       .attr('class', 'stats-text')
@@ -398,7 +398,7 @@ function drawMap(container_width) {
       d3.select(".tooltip-data.value")
         .text(format(value))
       region.select(".tooltip-data.average")
-        .text("US average: " + format(data[0][SELECTED_VARIABLE]))
+        .text("US: " + format(data[0][SELECTED_VARIABLE]))
       d3.select(this)
         .classed("hover", true)
       d3.select(".bar-" + abbr)
@@ -411,7 +411,7 @@ function drawMap(container_width) {
     dispatch.on("dehoverState", function() { 
       var selectedState = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum().state : "United States";
       var value = (d3.select(".bar.selected").size() > 0) ? d3.select(".bar.selected").datum()[SELECTED_VARIABLE] : data[0][SELECTED_VARIABLE]
-      var average = (d3.select(".bar.selected").size() > 0 && selectedState.search("United") < 0) ? "US average: " + format(data[0][SELECTED_VARIABLE]) : ""
+      var average = (d3.select(".bar.selected").size() > 0 && selectedState.search("United") < 0) ? "US: " + format(data[0][SELECTED_VARIABLE]) : ""
           d3.select(".tooltip-data.state")
             .text(selectedState)
           d3.select(".tooltip-data.value")
@@ -778,7 +778,7 @@ function drawMap(container_width) {
     //     .text(format(text))
     //   region.select(".tooltip-data.average")
     //     .text(function() {
-    //       return "US average: " + format(data[0][variable])
+    //       return "US: " + format(data[0][variable])
     //     })
     // }
     function selectStateMobile(state){
@@ -811,7 +811,7 @@ function drawMap(container_width) {
           .text(format(d[SELECTED_VARIABLE]))
         region.select(".tooltip-data.average")
           .text(function() {
-            return (d.abbr == "US") ? "" : "US average: " + format(data[0][SELECTED_VARIABLE])
+            return (d.abbr == "US") ? "" : "US: " + format(data[0][SELECTED_VARIABLE])
           })
       }
     }
@@ -824,7 +824,7 @@ function drawMap(container_width) {
         .text(format(d[SELECTED_VARIABLE]))
       region.select(".tooltip-data.average")
           .text(function() {
-            return (d.abbr == "US") ? "" : "US average: " + format(data[0][SELECTED_VARIABLE])
+            return (d.abbr == "US") ? "" : "US: " + format(data[0][SELECTED_VARIABLE])
           })      
       if (IS_PHONE != true) { 
         var tooltipWidth = $(".region-text").width() + $(".stats-text").width() + $(".dropdown-text").width()
@@ -1058,6 +1058,25 @@ function drawMap(container_width) {
         return decimalFormat(d)
       }
     }
+
+   //  function "US: " + format(d) {
+   // var numberFormat = d3.format(",.0f")
+   //    var decimalFormat = d3.format(".1f")
+   //    var currencyFormat = d3.format(".2s")
+   //    var decimalFormat2 = d3.format(".3f")
+
+   //    if (SELECTED_VARIABLE == "homevalue" || SELECTED_VARIABLE == "med_income") {
+   //      return "US median: $" + numberFormat(d)   
+   //    }  else if (SELECTED_VARIABLE == "fthb" || SELECTED_VARIABLE == "conv" || SELECTED_VARIABLE == "va" || SELECTED_VARIABLE == "fha" || SELECTED_VARIABLE == "ltv_fico" || SELECTED_VARIABLE == "share_loans_20" || SELECTED_VARIABLE == "share_loans_35") {
+   //      return "US share: " + decimalFormat(d) + "%"
+   //    }else if (d > 100 || SELECTED_VARIABLE == "hfas" || SELECTED_VARIABLE == "total") {
+   //      return "US total: " + numberFormat(d)
+   //    } else {
+   //      return decimalFormat(d)
+   //    }
+   //  }
+
+
     /*NOTE UNDER MAP */
     var graphHeightMobile = (container_width < 442) ? 130 : 100
     var mapSvgMobile = d3.select("#chart-container-mobile").select("svg")
