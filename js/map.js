@@ -27,8 +27,8 @@ var MAX_VALUE = {"homevalue": 550000,
    "aff_index_20": 40,
   "aff_index_35": 45,
   "med_income": 105000,
-  "hfas": 400,
-  "total": 250}
+  "hfas": 250,
+  "total": 400}
 
 var MAXVALUE = {"homevalue": 550000,
   "fthb": 62,
@@ -44,8 +44,8 @@ var MAXVALUE = {"homevalue": 550000,
   "aff_index_20": 40,
   "aff_index_35": 45,
   "med_income": 105000,
-  "hfas": 397,
-  "total": 250}
+  "hfas": 250,
+  "total": 397}
 
 
 var MINVALUE = {"homevalue": 138000,
@@ -96,7 +96,7 @@ var BREAKS = {
 
 function drawMap(container_width) {
 
-  d3.csv("data3.csv", function(data) {
+  d3.csv("data4.csv", function(data) {
 
     d3.json("us-states.json", function(json) {
       for (var i = 0; i < data.length; i++) {
@@ -441,7 +441,7 @@ function drawMap(container_width) {
     var dropdownDataFiltered = dropdownData.filter(function(d){
       return d != "state" && d != "abbr" && d != "link" && d != "agency" && d!= "orignoterate"
     })
-    var dropdownNames = ["Median home value", "Median family income", "First-time homebuyer share", "Median credit score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile","Share of Loans with 20% or more down payment", "Share of Loans with 3.5% or less down payment", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "State Housing Finance Agencies and other agencies", "Total Active Programs"]
+    var dropdownNames = ["Median home value", "Median family income", "First-time homebuyer share", "Median credit score", "Median loan-to-value (LTV) ratio", "Median debt-to-income (DTI) ratio","Conventional loan share", "FHA loan share", "VA loan share", "Share of loans with weak credit profile","Share of loans with 20% or more down payment", "Share of loans with 3.5% or less down payment", "Affordability index with 20% down payment", "Affordability index with 3.5% down payment", "State Housing Finance Agencies and other agencies", "Total Active Programs"]
     var defaultOptionName = ""
     var dropdown = tooltip.append('div')
           .attr('class', 'dropdown-text')
