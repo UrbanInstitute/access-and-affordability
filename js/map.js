@@ -13,7 +13,7 @@ http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
 //     MAXVALUE = {"homevalue": 550000, "fthb": 62, "fico": 765, "origltv": 97, "dti": 41, "conv": 85, "fha": 40, "va": 31, "ltv_fico": 37, "share_loans_20": 50, "share_loans_35" : 50, "aff_index_20": 40, "aff_index_35": 45, "med_income": 100000, "hfas": 243, "total": 262},
 //     BREAKS = {"homevalue": [160000, 190000, 220000, 270000], "fthb": [47, 49, 51, 55], "fico": [720, 730, 735, 740], "origltv": [90, 94, 95, 96], "dti": [35, 36, 37, 38], "conv": [50, 55, 60, 65], "fha": [20, 25, 30, 35], "va": [8, 10, 13, 15], "ltv_fico": [18, 21, 24, 27], "share_loans_20": [24, 28, 31, 35], "share_loans_35" : [24, 28, 31, 35], "aff_index_20": [16, 18, 20, 22], "aff_index_35": [18, 20, 22, 24], "med_income": [60000, 65000, 75000, 80000], "hfas": [50,100, 150, 200], "total": [60, 120, 180, 240] },
 
-var MAX_VALUE = {"homevalue": 550000,
+var MAX_VALUE = {"homevalue": 685000,
   "fthb": 65,
   "fico": 800,
   "origltv": 100,
@@ -24,13 +24,13 @@ var MAX_VALUE = {"homevalue": 550000,
   "ltv_fico": 40,
   "share_loans_20": 50,
   "share_loans_35" : 50,
-   "aff_index_20": 40,
-  "aff_index_35": 45,
+   "aff_index_20": 50,
+  "aff_index_35": 55,
   "med_income": 105000,
   "hfas": 250,
   "total": 400}
 
-var MAXVALUE = {"homevalue": 550000,
+var MAXVALUE = {"homevalue": 685000,
   "fthb": 62,
   "fico": 765,
   "origltv": 97,
@@ -41,8 +41,8 @@ var MAXVALUE = {"homevalue": 550000,
   "ltv_fico": 37,
   "share_loans_20": 50,
   "share_loans_35" : 50,
-  "aff_index_20": 40,
-  "aff_index_35": 45,
+  "aff_index_20": 50,
+  "aff_index_35": 55,
   "med_income": 105000,
   "hfas": 250,
   "total": 397}
@@ -96,7 +96,7 @@ var BREAKS = {
 
 function drawMap(container_width) {
 
-  d3.csv("data4.csv", function(data) {
+  d3.csv("state-interactive-2018_v2_clean.csv", function(data) {
 
     d3.json("us-states.json", function(json) {
       for (var i = 0; i < data.length; i++) {
